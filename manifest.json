@@ -1,0 +1,9 @@
+{
+  "id": "momoan-todo",
+  "name": "Momoan Todo",
+  "version": "0.9.58",
+  "minAppVersion": "1.6.0",
+  "description": "Plan daily tasks, recurring routines, categories, groups, and monthly reviews in your Obsidian vault.",
+  "author": "Momoan",
+  "isDesktopOnly": false
+}

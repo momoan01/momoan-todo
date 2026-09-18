@@ -1,0 +1,7000 @@
+.momoan-todo-view{
+  padding:0!important;
+  overflow:auto;
+  background:var(--background-primary);
+}
+.momo-td-shell{
+  display:grid;
+  grid-template-columns:minmax(270px,320px) minmax(420px,1fr);
+  min-height:100%;
+  max-width:1180px;
+  margin:0 auto;
+}
+.momo-td-calendar-panel{
+  padding:34px 24px 28px;
+  border-right:1px solid var(--background-modifier-border);
+  background:var(--background-secondary-alt);
+}
+.momo-td-task-panel{
+  padding:34px 44px 40px;
+  min-width:0;
+}
+.momo-td-cal-head,.momo-td-task-head,.momo-td-cat-head,.momo-td-cat-actions{
+  display:flex;
+  align-items:center;
+}
+.momo-td-cal-head{
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+.momo-td-cal-head h2{
+  font-size:1.08rem;
+  margin:0;
+  font-weight:760;
+  letter-spacing:-.02em;
+}
+.momo-td-cal-head .clickable-icon{
+  width:30px;
+  height:30px;
+  border-radius:999px;
+}
+.momo-td-weekdays,.momo-td-month-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+}
+.momo-td-weekdays{margin-bottom:8px}
+.momo-td-weekdays span{
+  text-align:center;
+  font-size:.68rem;
+  color:var(--text-faint);
+  font-weight:650;
+}
+.momo-td-day{
+  position:relative;
+  min-height:38px;
+  border-radius:999px;
+  padding:3px 1px;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+}
+.momo-td-day:hover{background:var(--background-modifier-hover)}
+.momo-td-day.is-empty{cursor:default}
+.momo-td-day.is-selected{
+  background:var(--interactive-accent);
+  color:var(--text-on-accent);
+}
+.momo-td-day.is-today:not(.is-selected){
+  box-shadow:inset 0 0 0 1.5px var(--interactive-accent);
+}
+.momo-td-day-number{
+  font-size:.79rem;
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.momo-td-day-dots{
+  display:flex;
+  gap:2px;
+  align-items:center;
+  justify-content:center;
+  height:5px;
+}
+.momo-td-day-count{
+  min-width:16px;
+  height:16px;
+  padding:0 4px;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.58rem;
+  line-height:1;
+  font-weight:400;
+  color:var(--text-muted);
+  background:var(--background-modifier-hover);
+  font-variant-numeric:tabular-nums;
+}
+.momo-td-day.is-selected .momo-td-day-count{
+  color:var(--text-on-accent);
+  background:rgba(255,255,255,.18);
+}
+
+.momo-td-month-summary{
+  display:flex;
+  align-items:baseline;
+  justify-content:center;
+  gap:5px;
+  margin-top:18px;
+  color:var(--text-muted);
+  font-size:.76rem;
+}
+.momo-td-month-summary-number{
+  font-size:1.18rem;
+  font-weight:800;
+  color:var(--text-normal);
+  font-variant-numeric:tabular-nums;
+}
+.momo-td-month-summary-text{color:var(--text-muted)}
+
+.momo-td-month-category-summary{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:5px;
+  margin-top:10px;
+  padding:0 6px;
+}
+.momo-td-month-cat-stat{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  font-size:.64rem;
+  color:var(--text-muted);
+  white-space:nowrap;
+}
+.momo-td-month-cat-dot{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  flex:none;
+}
+.momo-td-month-cat-name{color:var(--text-muted)}
+.momo-td-month-cat-count{
+  font-weight:760;
+  color:var(--text-normal);
+  font-variant-numeric:tabular-nums;
+}
+
+.momo-td-cal-foot{
+  display:flex;
+  gap:7px;
+  justify-content:center;
+  margin-top:20px;
+}
+.momo-td-cal-foot button{
+  border-radius:999px;
+  font-size:.75rem;
+  padding:5px 11px;
+}
+.momo-td-task-head{
+  justify-content:space-between;
+  margin-bottom:26px;
+}
+.momo-td-task-head h2{
+  margin:0;
+  font-size:1.6rem;
+  letter-spacing:-.045em;
+  font-weight:780;
+}
+.momo-td-task-kicker{
+  font-size:.72rem;
+  color:var(--text-faint);
+  margin-top:4px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.momo-td-main-add{
+  border-radius:50%!important;
+  width:38px;
+  height:38px;
+  padding:0!important;
+  font-size:1.25rem;
+  line-height:1;
+  background:var(--background-secondary)!important;
+  color:var(--text-normal)!important;
+  box-shadow:none!important;
+}
+.momo-td-main-add:hover{background:var(--background-modifier-hover)!important}
+.momo-td-body{max-width:760px}
+.momo-td-category{
+  --cat:#888;
+  margin:0 0 22px;
+}
+.momo-td-cat-head{
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+.momo-td-cat-name{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-height:30px;
+  padding:4px 11px 4px 9px;
+  border-radius:999px;
+  background:color-mix(in srgb,var(--cat) 13%,transparent);
+  font-size:.83rem;
+  font-weight:760;
+  color:var(--text-normal);
+}
+.momo-td-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--cat);
+  flex:none;
+}
+.momo-td-cat-actions{gap:6px}
+.momo-td-cat-actions button{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  padding:0;
+  font-size:1rem;
+  background:transparent;
+  box-shadow:none;
+}
+.momo-td-count{
+  font-size:.68rem;
+  color:var(--text-faint);
+  font-variant-numeric:tabular-nums;
+}
+.momo-td-group{margin:3px 0 9px}
+.momo-td-group-head{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  margin:9px 0 3px 35px;
+  min-height:22px;
+}
+.momo-td-group-title{
+  font-size:.69rem;
+  color:var(--text-faint);
+  font-weight:650;
+}
+.momo-td-group-remove{
+  width:18px!important;
+  height:18px!important;
+  min-width:18px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:50%!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:var(--text-faint)!important;
+  font-size:.8rem!important;
+  line-height:1!important;
+  opacity:.45;
+}
+.momo-td-group-head:hover .momo-td-group-remove{opacity:.9}
+.momo-td-group-remove:hover{background:var(--background-modifier-hover)!important;color:var(--text-muted)!important}
+.momo-td-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-height:38px;
+  padding:4px 7px;
+  border-radius:10px;
+}
+.momo-td-item:hover{background:var(--background-secondary)}
+.momo-td-item input[type=checkbox]{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  flex:none;
+}
+.momo-td-item.is-done{opacity:.38}
+.momo-td-item.is-done .momo-td-item-title{
+  text-decoration:line-through;
+  text-decoration-thickness:1px;
+}
+.momo-td-time{
+  font-size:.74rem;
+  color:var(--text-muted);
+  font-variant-numeric:tabular-nums;
+  min-width:36px;
+}
+.momo-td-item-title{
+  flex:1;
+  min-width:0;
+  font-size:.94rem;
+  line-height:1.35;
+}
+.momo-td-location{
+  font-size:.68rem;
+  color:var(--text-faint);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:100px;
+}
+.momo-td-empty{
+  padding:80px 10px;
+  text-align:center;
+  color:var(--text-muted);
+}
+.momo-td-empty button{
+  margin-top:14px;
+  border-radius:999px;
+}
+@media(max-width:900px){
+  .momo-td-shell{grid-template-columns:260px minmax(360px,1fr)}
+  .momo-td-calendar-panel{padding:26px 18px}
+  .momo-td-task-panel{padding:28px 28px 36px}
+}
+@media(max-width:700px){
+  .momo-td-shell{grid-template-columns:1fr}
+  .momo-td-calendar-panel{
+    border-right:0;
+    border-bottom:1px solid var(--background-modifier-border);
+  }
+  .momo-td-task-panel{padding:22px 18px 30px}
+  .momo-td-day{min-height:36px}
+}
+
+
+/* Mobile single-pane layout */
+.momo-td-mobile-nav{display:none}
+.momo-td-month-summary-rate{color:var(--text-muted);font-variant-numeric:tabular-nums}
+@media (max-width:720px){
+  .momoan-todo-view{overflow-x:hidden!important}
+  .momoan-todo-view .momo-td-shell{display:block!important;grid-template-columns:none!important;max-width:none!important;width:100%!important;min-width:0!important;margin:0!important}
+  .momoan-todo-view .momo-td-calendar-panel,
+  .momoan-todo-view .momo-td-task-panel{width:100%!important;min-width:0!important;box-sizing:border-box!important;border:0!important;background:var(--background-primary)!important;padding:18px 18px 96px!important}
+  .momoan-todo-view .momo-td-calendar-panel{padding-top:12px!important}
+  .momoan-todo-view .momo-td-day{min-height:46px}
+  .momoan-todo-view .momo-td-day-number{font-size:.9rem}
+  .momoan-todo-view .momo-td-month-category-summary{display:none!important}
+  .momoan-todo-view .momo-td-month-summary{margin-top:16px;padding-top:12px}
+  .momoan-todo-view .momo-td-month-summary-number{font-size:1rem}
+  .momoan-todo-view .momo-td-month-summary-text,
+  .momoan-todo-view .momo-td-month-summary-rate{font-size:.72rem}
+  .momoan-todo-view .momo-td-cal-foot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:16px}
+  .momoan-todo-view .momo-td-task-head{margin-bottom:20px}
+  .momoan-todo-view .momo-td-task-kicker{margin-top:0;font-size:.78rem}
+  .momoan-todo-view .momo-td-main-add{width:40px;height:40px}
+  .momoan-todo-view .momo-td-body{width:100%;max-width:none}
+  .momoan-todo-view .momo-td-category{margin-bottom:26px}
+  .momoan-todo-view .momo-td-item{min-height:44px;padding:6px 4px;gap:9px}
+  .momoan-todo-view .momo-td-item-title{font-size:.96rem}
+  .momoan-todo-view .momo-td-time{font-size:.82rem;min-width:38px}
+  .momoan-todo-view .momo-td-group-head{margin-left:38px}
+  .momoan-todo-view .momo-td-group-title{font-size:.74rem}
+  .momoan-todo-view .momo-td-cat-name{font-size:.83rem}
+}
+
+/* Mobile stacked layout — Obsidian mobile class fallback */
+body.is-mobile .momoan-todo-view,
+.is-mobile .momoan-todo-view{
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+}
+body.is-mobile .momoan-todo-view .momo-td-shell,
+.is-mobile .momoan-todo-view .momo-td-shell{
+  display:flex!important;
+  flex-direction:column!important;
+  grid-template-columns:none!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:0!important;
+  overflow-x:hidden!important;
+}
+body.is-mobile .momoan-todo-view .momo-td-calendar-panel,
+body.is-mobile .momoan-todo-view .momo-td-task-panel,
+.is-mobile .momoan-todo-view .momo-td-calendar-panel,
+.is-mobile .momoan-todo-view .momo-td-task-panel{
+  display:block!important;
+  position:relative!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+  border-right:0!important;
+  background:var(--background-primary)!important;
+}
+body.is-mobile .momoan-todo-view .momo-td-calendar-panel,
+.is-mobile .momoan-todo-view .momo-td-calendar-panel{
+  padding:18px 18px 22px!important;
+  border-bottom:1px solid var(--background-modifier-border)!important;
+}
+body.is-mobile .momoan-todo-view .momo-td-task-panel,
+.is-mobile .momoan-todo-view .momo-td-task-panel{
+  padding:24px 18px 96px!important;
+}
+body.is-mobile .momoan-todo-view .momo-td-body,
+.is-mobile .momoan-todo-view .momo-td-body{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+}
+body.is-mobile .momoan-todo-view .momo-td-cal-foot,
+.is-mobile .momoan-todo-view .momo-td-cal-foot{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  width:100%!important;
+  gap:7px!important;
+}
+body.is-mobile .momoan-todo-view .momo-td-cal-foot button,
+.is-mobile .momoan-todo-view .momo-td-cal-foot button{
+  min-width:0!important;
+  width:100%!important;
+  padding:7px 6px!important;
+  white-space:nowrap!important;
+}
+body.is-mobile .momoan-todo-view .momo-td-task-head h2,
+.is-mobile .momoan-todo-view .momo-td-task-head h2{
+  font-size:1.45rem!important;
+}
+body.is-mobile .momoan-todo-view .momo-td-item,
+.is-mobile .momoan-todo-view .momo-td-item{
+  width:100%!important;
+  min-width:0!important;
+}
+body.is-mobile .momoan-todo-view .momo-td-item-title,
+.is-mobile .momoan-todo-view .momo-td-item-title{
+  min-width:0!important;
+  overflow-wrap:anywhere;
+}
+
+/* v0.5.0 · 루틴 관리 */
+.momo-routine-manager { min-width: min(760px, 92vw); }
+.momo-routine-manager-head {
+  display:flex; justify-content:space-between; gap:16px; align-items:flex-start;
+  margin-bottom:18px;
+}
+.momo-routine-manager-head h2 { margin:0 0 4px; }
+.momo-routine-manager-sub { color:var(--text-muted); font-size:.86em; line-height:1.45; }
+.momo-routine-manager-list { max-height:62vh; overflow:auto; padding-right:4px; }
+.momo-routine-manager-section { margin:0 0 18px; }
+.momo-routine-manager-section h3 {
+  margin:0 0 8px; font-size:.86em; color:var(--text-muted); font-weight:650;
+}
+.momo-routine-row {
+  display:flex; align-items:center; gap:12px; padding:10px 0;
+  border-bottom:1px solid var(--background-modifier-border);
+}
+.momo-routine-row.is-paused { opacity:.52; }
+.momo-routine-info { flex:1; min-width:0; }
+.momo-routine-title-line { display:flex; align-items:center; gap:7px; }
+.momo-routine-state { font-size:.7em; color:var(--interactive-accent); }
+.momo-routine-title { font-weight:620; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.momo-routine-meta { margin-top:3px; color:var(--text-muted); font-size:.82em; }
+.momo-routine-actions { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+.momo-routine-actions button { padding:4px 9px; font-size:.82em; }
+.momo-routine-delete { color:var(--text-error); }
+.momo-routine-manager-empty { padding:28px 0; text-align:center; color:var(--text-muted); }
+.momo-routine-manager-empty button { margin-top:12px; }
+
+.momo-routine-editor { min-width:min(560px, 92vw); }
+.momo-routine-editor-form { display:grid; gap:10px; margin-top:16px; }
+.momo-routine-editor-row {
+  display:grid; grid-template-columns:92px minmax(0,1fr); gap:12px; align-items:center;
+}
+.momo-routine-editor-label { color:var(--text-muted); font-size:.86em; }
+.momo-routine-editor-control input[type="text"],
+.momo-routine-editor-control input[type="time"],
+.momo-routine-editor-control input[type="number"],
+.momo-routine-editor-control select { width:100%; }
+.momo-routine-day-wrap { display:flex; flex-wrap:wrap; gap:10px; }
+.momo-routine-day-wrap label { display:inline-flex; align-items:center; gap:3px; }
+.momo-routine-editor-buttons {
+  display:flex; justify-content:flex-end; gap:8px; margin-top:20px;
+}
+@media (max-width: 720px) {
+  .momo-routine-manager { min-width:0; }
+  .momo-routine-manager-head { flex-direction:column; }
+  .momo-routine-row { align-items:flex-start; flex-direction:column; }
+  .momo-routine-actions { width:100%; justify-content:flex-start; }
+  .momo-routine-editor { min-width:0; }
+  .momo-routine-editor-row { grid-template-columns:1fr; gap:4px; }
+}
+
+
+/* v0.5.2 · 개별 할 일 액션 */
+.momo-td-item-title.is-actionable { cursor:pointer; }
+.momo-td-item-title.is-actionable:hover { text-decoration:underline; text-underline-offset:3px; }
+.momo-td-item-more {
+  margin-left:auto; border:0; background:transparent; box-shadow:none;
+  color:var(--text-muted); font-size:1.2em; line-height:1; padding:2px 6px;
+}
+.momo-td-item-more:hover { color:var(--text-normal); background:var(--background-modifier-hover); }
+
+.momo-task-actions-modal { min-width:min(380px, 90vw); }
+.momo-task-actions-modal h2 { margin-bottom:14px; }
+.momo-task-actions-list { display:grid; gap:8px; }
+.momo-task-actions-list button {
+  width:100%; text-align:left; padding:10px 12px; justify-content:flex-start;
+}
+.momo-task-action-danger { color:var(--text-error); }
+
+.momo-task-editor-modal { min-width:min(520px, 92vw); }
+.momo-task-editor-form { display:grid; gap:10px; margin-top:16px; }
+.momo-task-editor-row {
+  display:grid; grid-template-columns:88px minmax(0,1fr); gap:12px; align-items:center;
+}
+.momo-task-editor-label { color:var(--text-muted); font-size:.86em; }
+.momo-task-editor-control input,
+.momo-task-editor-control select { width:100%; }
+.momo-task-editor-buttons {
+  display:flex; justify-content:flex-end; gap:8px; margin-top:20px;
+}
+@media (max-width:720px) {
+  .momo-task-editor-modal { min-width:0; }
+  .momo-task-editor-row { grid-template-columns:1fr; gap:4px; }
+}
+
+.momo-td-item-more,.momo-td-item-more:hover,.momo-td-item-more:focus,.momo-td-item-more:focus-visible,.momo-td-item-more:active{
+appearance:none!important;-webkit-appearance:none!important;border:none!important;outline:none!important;box-shadow:none!important;background:transparent!important;border-radius:0!important;padding:0 4px!important;min-width:0!important;height:auto!important}
+.momo-td-item.is-suppressed{opacity:.30}
+.momo-td-item.is-suppressed:hover{opacity:.50}
+.momo-td-suppressed-mark{width:18px;flex:0 0 18px;text-align:center;color:var(--text-faint)}
+
+
+/* v0.5.5 · 루틴 잔상 즉시 복원 / 전체 삭제 */
+.momo-td-item.is-restorable { cursor:pointer; }
+.momo-td-item.is-restorable:hover { opacity:.58; }
+.momo-routine-editor-buttons {
+  align-items:center;
+}
+.momo-routine-editor-spacer { flex:1; }
+.momo-routine-delete-all {
+  color:var(--text-error) !important;
+}
+
+
+/* v0.5.6 · 미니멀 액션/편집 모달 */
+.momo-task-actions-modal,
+.momo-task-editor-modal,
+.momo-routine-editor,
+.momo-routine-manager {
+  --momo-modal-radius: 18px;
+}
+
+.modal:has(.momo-task-actions-modal) .modal-content,
+.modal:has(.momo-task-editor-modal) .modal-content,
+.modal:has(.momo-routine-editor) .modal-content,
+.modal:has(.momo-routine-manager) .modal-content {
+  padding: 26px 28px 24px !important;
+}
+
+.momo-task-actions-modal h2,
+.momo-task-editor-modal h2,
+.momo-routine-editor h2,
+.momo-routine-manager h2 {
+  margin: 0 0 16px !important;
+  font-size: 1.45rem !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em;
+}
+
+.momo-task-actions-list {
+  gap: 2px !important;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.momo-task-actions-list button {
+  border: 0 !important;
+  border-bottom: 1px solid var(--background-modifier-border) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  min-height: 42px;
+  padding: 10px 4px !important;
+  font-size: .96rem;
+}
+
+.momo-task-actions-list button:hover {
+  background: var(--background-modifier-hover) !important;
+}
+
+.momo-task-editor-form,
+.momo-routine-editor-form {
+  gap: 8px !important;
+  margin-top: 4px !important;
+}
+
+.momo-task-editor-row,
+.momo-routine-editor-row {
+  grid-template-columns: 78px minmax(0, 1fr) !important;
+  gap: 12px !important;
+  min-height: 42px;
+}
+
+.momo-task-editor-label,
+.momo-routine-editor-label {
+  font-size: .88rem !important;
+  color: var(--text-muted);
+}
+
+.momo-task-editor-control input,
+.momo-task-editor-control select,
+.momo-routine-editor-control input,
+.momo-routine-editor-control select,
+.momo-time-select {
+  min-height: 38px !important;
+  border: 1px solid var(--background-modifier-border) !important;
+  border-radius: 10px !important;
+  background: var(--background-primary) !important;
+  box-shadow: none !important;
+  padding: 6px 10px !important;
+}
+
+.momo-task-editor-control input:focus,
+.momo-task-editor-control select:focus,
+.momo-routine-editor-control input:focus,
+.momo-routine-editor-control select:focus,
+.momo-time-select:focus {
+  border-color: var(--interactive-accent) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--interactive-accent) 18%, transparent) !important;
+}
+
+.momo-task-editor-buttons,
+.momo-routine-editor-buttons {
+  margin-top: 18px !important;
+  gap: 8px !important;
+}
+
+.momo-task-editor-buttons button,
+.momo-routine-editor-buttons button {
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  min-height: 38px;
+  padding: 7px 14px !important;
+}
+
+.momo-routine-delete-all {
+  background: transparent !important;
+  border: 1px solid color-mix(in srgb, var(--text-error) 28%, transparent) !important;
+}
+
+@media (max-width:720px) {
+  .modal:has(.momo-task-actions-modal) .modal-content,
+  .modal:has(.momo-task-editor-modal) .modal-content,
+  .modal:has(.momo-routine-editor) .modal-content,
+  .modal:has(.momo-routine-manager) .modal-content {
+    padding: 22px 20px 20px !important;
+  }
+}
+
+
+/* v0.5.7 · compact modal system */
+.modal:has(.momo-task-actions-modal),
+.modal:has(.momo-task-editor-modal),
+.modal:has(.momo-routine-editor),
+.modal:has(.momo-routine-delete-modal) {
+  width: min(500px, calc(100vw - 32px)) !important;
+  max-width: min(500px, calc(100vw - 32px)) !important;
+}
+
+.modal:has(.momo-routine-editor) {
+  width: min(540px, calc(100vw - 32px)) !important;
+  max-width: min(540px, calc(100vw - 32px)) !important;
+}
+
+.momo-task-actions-modal,
+.momo-task-editor-modal,
+.momo-routine-editor,
+.momo-routine-delete-modal {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  padding: 2px 2px 0 !important;
+}
+
+.momo-task-actions-modal h2,
+.momo-task-editor-modal h2,
+.momo-routine-editor h2,
+.momo-routine-delete-modal h2 {
+  margin: 0 0 12px !important;
+  font-size: 1.16rem !important;
+  line-height: 1.28 !important;
+  font-weight: 650 !important;
+  letter-spacing: -0.015em !important;
+}
+
+.momo-task-actions-list {
+  gap: 0 !important;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.momo-task-actions-list button {
+  min-height: 36px !important;
+  height: 36px !important;
+  margin: 0 !important;
+  padding: 0 8px !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--background-modifier-border) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: .93rem !important;
+}
+
+.momo-task-editor-form,
+.momo-routine-editor-form {
+  gap: 6px !important;
+  margin-top: 2px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.momo-task-editor-row,
+.momo-routine-editor-row {
+  grid-template-columns: 72px minmax(0, 1fr) !important;
+  gap: 10px !important;
+  min-height: 36px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.momo-task-editor-label,
+.momo-routine-editor-label {
+  font-size: .84rem !important;
+  white-space: nowrap;
+}
+
+.momo-task-editor-control,
+.momo-routine-editor-control {
+  min-width: 0 !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+.momo-task-editor-control input,
+.momo-task-editor-control select,
+.momo-routine-editor-control input,
+.momo-routine-editor-control select,
+.momo-time-select {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  min-height: 34px !important;
+  height: 34px !important;
+  padding: 4px 9px !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  font-size: .91rem !important;
+  box-sizing: border-box !important;
+}
+
+.momo-routine-day-wrap {
+  gap: 5px !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+.momo-routine-day-wrap label {
+  font-size: .84rem !important;
+  white-space: nowrap;
+}
+
+.momo-task-editor-buttons,
+.momo-routine-editor-buttons {
+  margin-top: 14px !important;
+  gap: 6px !important;
+  min-height: 34px !important;
+}
+
+.momo-task-editor-buttons button,
+.momo-routine-editor-buttons button {
+  min-height: 34px !important;
+  height: 34px !important;
+  padding: 0 12px !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  font-size: .9rem !important;
+}
+
+.momo-routine-editor-spacer {
+  flex: 1 1 auto !important;
+  min-width: 8px !important;
+}
+
+.momo-routine-delete-all {
+  background: transparent !important;
+  color: var(--text-error) !important;
+  border: 0 !important;
+  padding-left: 2px !important;
+}
+
+.momo-delete-sub {
+  margin: -4px 0 12px;
+  color: var(--text-muted);
+  font-size: .84rem;
+}
+
+.momo-delete-choices {
+  display: grid;
+  gap: 6px;
+}
+
+.momo-delete-choice {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 10px 12px !important;
+  text-align: left !important;
+  border: 1px solid var(--background-modifier-border) !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.momo-delete-choice:hover {
+  background: var(--background-modifier-hover) !important;
+}
+
+.momo-delete-choice-title {
+  font-size: .92rem;
+  font-weight: 620;
+  color: var(--text-normal);
+}
+
+.momo-delete-choice-desc {
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: .78rem;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.momo-delete-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.momo-delete-footer button {
+  min-height: 32px !important;
+  height: 32px !important;
+  padding: 0 10px !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 600px) {
+  .momo-task-editor-row,
+  .momo-routine-editor-row {
+    grid-template-columns: 64px minmax(0, 1fr) !important;
+  }
+}
+
+
+/* v0.5.8 · neutral minimal palette
+   Minimal/Obsidian의 쨍한 --interactive-accent를 직접 쓰지 않고,
+   플러그인 내부에서만 저채도 slate accent를 사용한다. */
+body {
+  --momo-accent: #7f8792;
+  --momo-accent-strong: #69727f;
+  --momo-accent-soft: rgba(127, 135, 146, .14);
+  --momo-neutral-pill: rgba(127, 127, 127, .10);
+  --momo-neutral-dot: #949aa3;
+}
+body.theme-dark {
+  --momo-accent: #9aa2ad;
+  --momo-accent-strong: #adb4be;
+  --momo-accent-soft: rgba(154, 162, 173, .16);
+  --momo-neutral-pill: rgba(255, 255, 255, .08);
+  --momo-neutral-dot: #8f969f;
+}
+
+/* 캘린더: 선택일만 저채도 강조, 오늘은 얇은 중립 링 */
+.momoan-todo-view .momo-td-day.is-selected {
+  background: var(--momo-accent-soft) !important;
+  color: var(--text-normal) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--momo-accent) 55%, transparent) !important;
+}
+.momoan-todo-view .momo-td-day.is-today:not(.is-selected) {
+  box-shadow: inset 0 0 0 1px var(--momo-accent) !important;
+}
+.momoan-todo-view .momo-td-day-dots {
+  height: 17px !important;
+  margin-top: 2px;
+}
+.momoan-todo-view .momo-td-day-dot {
+  display: none !important;
+}
+.momoan-todo-view .momo-td-day-count,
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-count {
+  color: var(--text-muted) !important;
+  background: var(--momo-neutral-pill) !important;
+}
+
+/* 카테고리: 색상별 팔레트 제거. 전부 무채색. */
+.momoan-todo-view .momo-td-cat-name {
+  background: var(--momo-neutral-pill) !important;
+}
+.momoan-todo-view .momo-td-dot,
+.momoan-todo-view .momo-td-month-cat-dot {
+  background: var(--momo-neutral-dot) !important;
+}
+.momoan-todo-view .momo-td-month-category-summary {
+  color: var(--text-muted) !important;
+}
+
+/* 완료 체크도 쨍한 테마 accent 대신 동일한 slate */
+.momoan-todo-view input[type="checkbox"]:checked {
+  background-color: var(--momo-accent) !important;
+  border-color: var(--momo-accent) !important;
+}
+
+/* 주요 버튼/모달 CTA도 같은 저채도 accent */
+.momoan-todo-view .momo-td-cal-foot .momo-td-foot-btn.is-primary,
+.momo-task-editor-modal .mod-cta,
+.momo-routine-editor .mod-cta,
+.momo-routine-manager .mod-cta {
+  background: var(--momo-accent) !important;
+  border-color: var(--momo-accent) !important;
+  color: white !important;
+  box-shadow: none !important;
+}
+.momo-task-editor-modal .mod-cta:hover,
+.momo-routine-editor .mod-cta:hover,
+.momo-routine-manager .mod-cta:hover {
+  background: var(--momo-accent-strong) !important;
+}
+
+/* + 버튼은 강조색을 쓰지 않고 무채색 */
+.momoan-todo-view .momo-td-main-add {
+  background: var(--background-secondary) !important;
+  color: var(--text-normal) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* v0.5.9 */
+body {
+  --momo-accent: #6f7680;
+  --momo-accent-strong: #5d646d;
+  --momo-focus: rgba(111,118,128,.22);
+}
+body.theme-dark {
+  --momo-accent: #9aa0a8;
+  --momo-accent-strong: #a8aeb6;
+  --momo-focus: rgba(154,160,168,.22);
+}
+.momoan-todo-view .momo-td-item > input[type="checkbox"]{
+  appearance:none!important;-webkit-appearance:none!important;position:relative!important;
+  width:18px!important;height:18px!important;min-width:18px!important;flex:0 0 18px!important;
+  margin:0 10px 0 0!important;padding:0!important;
+  border:1.25px solid var(--background-modifier-border-hover)!important;border-radius:50%!important;
+  background:transparent!important;box-shadow:none!important;
+}
+.momoan-todo-view .momo-td-item > input[type="checkbox"]::before{content:none!important}
+.momoan-todo-view .momo-td-item > input[type="checkbox"]:checked{
+  background:var(--momo-accent)!important;border-color:var(--momo-accent)!important
+}
+.momoan-todo-view .momo-td-item > input[type="checkbox"]:checked::after{
+  content:""!important;position:absolute!important;left:5px!important;top:2.5px!important;
+  width:5px!important;height:9px!important;border:solid #fff!important;
+  border-width:0 1.8px 1.8px 0!important;transform:rotate(45deg)!important;box-sizing:border-box!important
+}
+.momoan-todo-view .momo-td-item{align-items:center!important}
+
+.momo-time-pair{
+  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:6px!important;width:100%!important;min-width:0!important
+}
+.momo-time-pair select{
+  width:100%!important;min-width:0!important;height:34px!important;min-height:34px!important;
+  padding:4px 28px 4px 9px!important;border:1px solid var(--background-modifier-border)!important;
+  border-radius:8px!important;background:var(--background-primary)!important;box-shadow:none!important;
+  font-size:.91rem!important
+}
+
+.momo-task-editor-modal input:focus,
+.momo-task-editor-modal select:focus,
+.momo-routine-editor input:focus,
+.momo-routine-editor select:focus,
+.momo-routine-delete-modal button:focus-visible,
+.momo-task-actions-modal button:focus-visible{
+  outline:none!important;border-color:var(--momo-accent)!important;box-shadow:0 0 0 2px var(--momo-focus)!important
+}
+
+.modal:has(.momo-task-actions-modal),
+.modal:has(.momo-task-editor-modal),
+.modal:has(.momo-routine-editor),
+.modal:has(.momo-routine-delete-modal),
+.modal:has(.momo-routine-manager){
+  max-height:min(88vh,860px)!important;overflow:hidden!important
+}
+.modal:has(.momo-task-actions-modal) .modal-content,
+.modal:has(.momo-task-editor-modal) .modal-content,
+.modal:has(.momo-routine-editor) .modal-content,
+.modal:has(.momo-routine-delete-modal) .modal-content,
+.modal:has(.momo-routine-manager) .modal-content{
+  max-height:calc(min(88vh,860px) - 36px)!important;overflow-y:auto!important;overflow-x:hidden!important;box-sizing:border-box!important
+}
+
+
+/* v0.6.0 · stable controls */
+.momo-task-check {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  flex: 0 0 18px !important;
+  margin: 0 10px 0 0 !important;
+  padding: 0 !important;
+  border: 1.25px solid var(--background-modifier-border-hover) !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #fff !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+  font-weight: 700 !important;
+}
+.momo-task-check:hover {
+  border-color: var(--momo-accent) !important;
+  background: var(--momo-accent-soft) !important;
+}
+.momo-task-check.is-checked {
+  background: var(--momo-accent) !important;
+  border-color: var(--momo-accent) !important;
+}
+.momo-task-check:focus,
+.momo-task-check:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 2px var(--momo-focus) !important;
+}
+
+.momo-date-control {
+  position: relative !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+.momo-date-button {
+  width: 100% !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 4px 9px !important;
+  text-align: left !important;
+  border: 1px solid var(--background-modifier-border) !important;
+  border-radius: 8px !important;
+  background: var(--background-primary) !important;
+  box-shadow: none !important;
+  color: var(--text-normal) !important;
+  font-size: .91rem !important;
+}
+.momo-date-button:hover {
+  border-color: var(--momo-accent) !important;
+}
+.momo-date-button:focus,
+.momo-date-button:focus-visible {
+  outline: none !important;
+  border-color: var(--momo-accent) !important;
+  box-shadow: 0 0 0 2px var(--momo-focus) !important;
+}
+.momo-date-native {
+  position: absolute !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+.momo-task-editor-control,
+.momo-routine-editor-control,
+.momo-time-pair,
+.momo-date-control {
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+
+.momoan-todo-view .momo-td-item > input[type="checkbox"] { display:none !important; }
+
+
+/* v0.6.1 · unified pill fields / routine manager */
+.momo-pill-field {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 12px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: var(--background-secondary) !important;
+  color: var(--text-normal) !important;
+  box-shadow: none !important;
+  text-align: center !important;
+  font-size: .91rem !important;
+}
+.momo-pill-field:hover {
+  background: var(--background-modifier-hover) !important;
+}
+.momo-choice-modal h2 {
+  margin: 0 0 12px !important;
+  font-size: 1.12rem !important;
+}
+.momo-choice-list {
+  display: grid;
+  gap: 4px;
+}
+.momo-choice-item {
+  width: 100% !important;
+  min-height: 36px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  text-align: left !important;
+  padding: 7px 10px !important;
+}
+.momo-choice-item:hover,
+.momo-choice-item.is-current {
+  background: var(--background-modifier-hover) !important;
+}
+.momo-routine-info.is-clickable {
+  cursor: pointer;
+}
+.momo-routine-info.is-clickable:hover .momo-routine-title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.momo-routine-actions {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  flex: 0 0 auto !important;
+}
+.momo-routine-row {
+  overflow: visible !important;
+}
+
+
+/* v0.6.2 · microinteraction & polish
+   빠르지만 딱딱하지 않게: 120~170ms 범위의 짧은 움직임만 사용합니다. */
+:root {
+  --momo-motion-fast: 120ms;
+  --momo-motion-normal: 165ms;
+  --momo-ease: cubic-bezier(.2,.7,.2,1);
+}
+
+/* 모달 열림/닫힘 */
+.modal:has(.momo-task-actions-modal),
+.modal:has(.momo-task-editor-modal),
+.modal:has(.momo-routine-editor),
+.modal:has(.momo-routine-delete-modal),
+.modal:has(.momo-routine-manager),
+.modal:has(.momo-choice-modal) {
+  transform-origin: 50% 46% !important;
+  animation: momo-modal-in var(--momo-motion-normal) var(--momo-ease) both;
+}
+
+.modal.momo-modal-closing {
+  pointer-events: none !important;
+  animation: momo-modal-out var(--momo-motion-fast) ease-in both !important;
+}
+
+@keyframes momo-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(7px) scale(.988);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes momo-modal-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(4px) scale(.992);
+  }
+}
+
+/* 입력/셀렉터: 포커스 변화가 갑자기 튀지 않도록 */
+.momo-task-editor-modal input,
+.momo-task-editor-modal select,
+.momo-routine-editor input,
+.momo-routine-editor select,
+.momo-pill-field,
+.momo-date-button,
+.momo-time-pair select {
+  transition:
+    border-color var(--momo-motion-fast) ease,
+    box-shadow var(--momo-motion-fast) ease,
+    background-color var(--momo-motion-fast) ease,
+    color var(--momo-motion-fast) ease !important;
+}
+
+/* 투두 행: 마우스를 올렸을 때만 아주 옅게 반응 */
+.momoan-todo-view .momo-td-item {
+  border-radius: 10px !important;
+  transition:
+    background-color var(--momo-motion-fast) ease,
+    opacity var(--momo-motion-fast) ease !important;
+}
+.momoan-todo-view .momo-td-item:hover {
+  background: var(--background-modifier-hover) !important;
+}
+
+/* 완료 버튼 */
+.momo-task-check {
+  transition:
+    transform var(--momo-motion-fast) var(--momo-ease),
+    background-color var(--momo-motion-fast) ease,
+    border-color var(--momo-motion-fast) ease,
+    box-shadow var(--momo-motion-fast) ease !important;
+}
+.momo-task-check:hover {
+  transform: scale(1.055);
+}
+.momo-task-check:active {
+  transform: scale(.90);
+}
+
+/* 점 세 개는 평소에는 조용하게, 해당 행에서만 또렷하게 */
+.momo-td-item-more {
+  opacity: .48;
+  transition:
+    opacity var(--momo-motion-fast) ease,
+    transform var(--momo-motion-fast) var(--momo-ease) !important;
+}
+.momo-td-item:hover .momo-td-item-more,
+.momo-td-item-more:focus-visible {
+  opacity: 1;
+}
+.momo-td-item-more:active {
+  transform: scale(.88);
+}
+
+/* 카테고리/그룹 pill */
+.momo-pill-field,
+.momo-td-cat-name {
+  transition:
+    background-color var(--momo-motion-fast) ease,
+    transform var(--momo-motion-fast) var(--momo-ease) !important;
+}
+.momo-pill-field:hover {
+  transform: translateY(-1px);
+}
+.momo-pill-field:active {
+  transform: translateY(0) scale(.985);
+}
+
+/* 액션 메뉴 */
+.momo-task-actions-list button,
+.momo-choice-item,
+.momo-delete-choice,
+.momo-routine-actions button {
+  transition:
+    background-color var(--momo-motion-fast) ease,
+    color var(--momo-motion-fast) ease,
+    transform var(--momo-motion-fast) var(--momo-ease) !important;
+}
+.momo-task-actions-list button:active,
+.momo-choice-item:active,
+.momo-delete-choice:active,
+.momo-routine-actions button:active {
+  transform: translateY(1px);
+}
+
+/* 저장/추가 버튼은 hover에서 한 단계만 강조 */
+.momo-task-editor-buttons button,
+.momo-routine-editor-buttons button,
+.momo-routine-manager .mod-cta,
+.momo-delete-footer button {
+  transition:
+    background-color var(--momo-motion-fast) ease,
+    border-color var(--momo-motion-fast) ease,
+    transform var(--momo-motion-fast) var(--momo-ease),
+    opacity var(--momo-motion-fast) ease !important;
+}
+.momo-task-editor-buttons button:hover,
+.momo-routine-editor-buttons button:hover,
+.momo-routine-manager .mod-cta:hover,
+.momo-delete-footer button:hover {
+  transform: translateY(-1px);
+}
+.momo-task-editor-buttons button:active,
+.momo-routine-editor-buttons button:active,
+.momo-routine-manager .mod-cta:active,
+.momo-delete-footer button:active {
+  transform: translateY(0) scale(.985);
+}
+
+/* 캘린더 */
+.momoan-todo-view .momo-td-day {
+  transition:
+    background-color var(--momo-motion-fast) ease,
+    box-shadow var(--momo-motion-fast) ease,
+    transform var(--momo-motion-fast) var(--momo-ease) !important;
+}
+.momoan-todo-view .momo-td-day:hover {
+  transform: translateY(-1px);
+}
+.momoan-todo-view .momo-td-day:active {
+  transform: translateY(0) scale(.97);
+}
+
+/* 루틴 관리 목록: 클릭 가능하다는 느낌만 조용히 제공 */
+.momo-routine-row {
+  border-radius: 10px !important;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+  transition:
+    background-color var(--momo-motion-fast) ease,
+    opacity var(--momo-motion-fast) ease !important;
+}
+.momo-routine-row:hover {
+  background: var(--background-modifier-hover) !important;
+}
+
+/* 팝업 그림자/테두리도 한 톤 정돈 */
+.modal:has(.momo-task-actions-modal),
+.modal:has(.momo-task-editor-modal),
+.modal:has(.momo-routine-editor),
+.modal:has(.momo-routine-delete-modal),
+.modal:has(.momo-routine-manager),
+.modal:has(.momo-choice-modal) {
+  box-shadow:
+    0 16px 44px rgba(0,0,0,.14),
+    0 2px 8px rgba(0,0,0,.06) !important;
+}
+
+/* 움직임 최소화 설정을 존중합니다. */
+@media (prefers-reduced-motion: reduce) {
+  .modal:has(.momo-task-actions-modal),
+  .modal:has(.momo-task-editor-modal),
+  .modal:has(.momo-routine-editor),
+  .modal:has(.momo-routine-delete-modal),
+  .modal:has(.momo-routine-manager),
+  .modal:has(.momo-choice-modal),
+  .momoan-todo-view .momo-td-item,
+  .momo-task-check,
+  .momo-td-item-more,
+  .momo-pill-field,
+  .momo-task-actions-list button,
+  .momo-choice-item,
+  .momo-delete-choice,
+  .momo-routine-actions button,
+  .momoan-todo-view .momo-td-day {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+
+/* v0.6.3 · unified modal geometry */
+.modal:has(.momo-task-actions-modal),
+.modal:has(.momo-task-editor-modal),
+.modal:has(.momo-routine-editor),
+.modal:has(.momo-routine-delete-modal),
+.modal:has(.momo-routine-manager),
+.modal:has(.momo-choice-modal),
+.modal:has(.momo-monthly-review-modal) {
+  width: min(540px, calc(100vw - 32px)) !important;
+  max-width: min(540px, calc(100vw - 32px)) !important;
+  max-height: min(86vh, 820px) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}
+.modal:has(.momo-routine-editor),
+.modal:has(.momo-routine-manager),
+.modal:has(.momo-monthly-review-modal) {
+  width: min(600px, calc(100vw - 32px)) !important;
+  max-width: min(600px, calc(100vw - 32px)) !important;
+}
+.modal:has(.momo-task-actions-modal) .modal-content,
+.modal:has(.momo-task-editor-modal) .modal-content,
+.modal:has(.momo-routine-editor) .modal-content,
+.modal:has(.momo-routine-delete-modal) .modal-content,
+.modal:has(.momo-routine-manager) .modal-content,
+.modal:has(.momo-choice-modal) .modal-content,
+.modal:has(.momo-monthly-review-modal) .modal-content {
+  padding: 24px 26px 22px !important;
+  max-height: calc(min(86vh, 820px) - 38px) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+.momo-choice-modal h2,
+.momo-task-actions-modal h2,
+.momo-task-editor-modal h2,
+.momo-routine-editor h2,
+.momo-routine-manager h2,
+.momo-routine-delete-modal h2,
+.momo-monthly-review-modal h2 {
+  margin: 0 0 14px !important;
+  font-size: 1.12rem !important;
+  line-height: 1.25 !important;
+  font-weight: 650 !important;
+}
+.momo-choice-list {
+  max-height: min(56vh, 420px) !important;
+  overflow-y: auto !important;
+}
+.momo-time-pair {
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:6px!important;
+}
+.momo-time-pair .momo-pill-field {
+  border-radius:8px!important;
+  background:var(--background-primary)!important;
+  border:1px solid var(--background-modifier-border)!important;
+  text-align:left!important;
+}
+.momo-review-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+  margin-bottom:14px;
+}
+.momo-review-sub {
+  color:var(--text-muted);
+  font-size:.82rem;
+}
+.momo-review-open {
+  min-height:34px!important;
+  padding:0 11px!important;
+  border-radius:8px!important;
+  box-shadow:none!important;
+}
+.momo-review-body h1 { display:none; }
+.momo-review-body h2 {
+  margin-top:20px!important;
+  margin-bottom:8px!important;
+  font-size:1rem!important;
+}
+
+/* v0.6.3 · centered date chooser */
+.modal:has(.momo-date-choice-modal) {
+  width:min(420px,calc(100vw - 32px))!important;
+  max-width:min(420px,calc(100vw - 32px))!important;
+  border-radius:16px!important;
+  overflow:hidden!important;
+}
+.modal:has(.momo-date-choice-modal) .modal-content {
+  padding:22px 24px 20px!important;
+  overflow:hidden!important;
+}
+.momo-date-choice-head {
+  display:grid;
+  grid-template-columns:36px 1fr 36px;
+  align-items:center;
+  gap:8px;
+  margin-bottom:12px;
+}
+.momo-date-choice-title {
+  text-align:center;
+  font-weight:650;
+  font-size:1rem;
+}
+.momo-date-nav {
+  width:34px!important;height:34px!important;
+  padding:0!important;border:0!important;border-radius:8px!important;
+  background:transparent!important;box-shadow:none!important;
+  font-size:1.4rem!important;
+}
+.momo-date-nav:hover { background:var(--background-modifier-hover)!important; }
+.momo-date-weekdays,.momo-date-grid {
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:4px;
+}
+.momo-date-weekdays {
+  color:var(--text-muted);
+  font-size:.76rem;
+  text-align:center;
+  margin-bottom:6px;
+}
+.momo-date-cell {
+  aspect-ratio:1/1;
+  min-height:34px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:9px!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.momo-date-cell:hover { background:var(--background-modifier-hover)!important; }
+.momo-date-cell.is-current {
+  background:var(--momo-accent-soft)!important;
+  box-shadow:inset 0 0 0 1px var(--momo-accent)!important;
+}
+.momo-date-cell.is-today:not(.is-current) {
+  box-shadow:inset 0 0 0 1px var(--background-modifier-border-hover)!important;
+}
+.momo-date-choice-foot {
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  padding-top:12px;
+  margin-top:10px;
+  border-top:1px solid var(--background-modifier-border);
+}
+.momo-date-choice-foot button {
+  min-height:32px!important;
+  border-radius:8px!important;
+  box-shadow:none!important;
+}
+
+/* v0.6.5 · routine manager clipping fix
+   v0.5.x의 760px min-width와 v0.6.3의 600px modal 폭이 충돌해
+   오른쪽 액션/새 루틴 버튼이 잘리던 문제를 해소한다. */
+.momo-routine-manager {
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+.momo-routine-manager-head {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+.momo-routine-manager-head > div:first-child {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+.momo-routine-manager-head .mod-cta {
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+}
+.momo-routine-manager-list {
+  width: 100% !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding-right: 0 !important;
+  box-sizing: border-box !important;
+}
+.momo-routine-manager-section,
+.momo-routine-row {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+.momo-routine-info {
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+}
+.momo-routine-actions {
+  max-width: 100% !important;
+}
+
+@media (max-width: 720px) {
+  .momo-routine-manager-head {
+    flex-direction: column !important;
+  }
+  .momo-routine-manager-head .mod-cta {
+    align-self: flex-start !important;
+  }
+}
+
+/* v0.6.6 · calmer routine actions + balanced desktop split */
+
+/* Desktop/tablet: calendar and task list share the available width equally. */
+@media (min-width: 701px) {
+  .momoan-todo-view .momo-td-shell {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  }
+
+  .momoan-todo-view .momo-td-calendar-panel,
+  .momoan-todo-view .momo-td-task-panel {
+    min-width: 0 !important;
+  }
+
+  /* Give the larger calendar pane enough breathing room without making the grid look sparse. */
+  .momoan-todo-view .momo-td-calendar-panel {
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+}
+
+/* Routine manager: repeated actions should read like quiet utilities, not three CTA buttons. */
+.momo-routine-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  flex-wrap: nowrap !important;
+  justify-content: flex-end !important;
+  white-space: nowrap !important;
+}
+
+.momo-routine-actions button {
+  position: relative !important;
+  min-height: 28px !important;
+  height: 28px !important;
+  padding: 0 7px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--text-faint) !important;
+  font-size: .76em !important;
+  font-weight: 500 !important;
+  line-height: 28px !important;
+  transition: color var(--momo-motion-fast, 120ms) ease,
+              background var(--momo-motion-fast, 120ms) ease !important;
+}
+
+.momo-routine-actions button + button::before {
+  content: "·";
+  position: absolute;
+  left: -2px;
+  top: 0;
+  color: var(--background-modifier-border-hover);
+  pointer-events: none;
+}
+
+.momo-routine-actions button:hover,
+.momo-routine-actions button:focus-visible {
+  color: var(--text-normal) !important;
+  background: var(--background-modifier-hover) !important;
+}
+
+.momo-routine-actions .momo-routine-delete {
+  color: var(--text-faint) !important;
+}
+
+.momo-routine-actions .momo-routine-delete:hover,
+.momo-routine-actions .momo-routine-delete:focus-visible {
+  color: var(--text-error) !important;
+  background: color-mix(in srgb, var(--text-error) 8%, transparent) !important;
+}
+
+.momo-routine-row {
+  min-height: 50px !important;
+  gap: 12px !important;
+}
+
+/* Very narrow manager widths may wrap the utility strip, but keep it visually secondary. */
+@media (max-width: 520px) {
+  .momo-routine-actions {
+    width: auto !important;
+    justify-content: flex-start !important;
+  }
+}
+
+/* v0.6.7 · minimal category picker + category CRUD */
+.momo-category-choice-head,
+.momo-category-manager-head {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+}
+.momo-category-choice-head h2,
+.momo-category-manager-head h2 {
+  margin-bottom:6px !important;
+}
+.momo-category-manage-link,
+.momo-category-add {
+  flex:0 0 auto !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  min-height:28px !important;
+  padding:0 6px !important;
+  color:var(--text-muted) !important;
+  font-size:.76rem !important;
+  font-weight:560 !important;
+  opacity:.62;
+}
+.momo-category-manage-link:hover,
+.momo-category-add:hover {
+  opacity:1;
+  color:var(--text-normal) !important;
+  background:var(--background-modifier-hover) !important;
+}
+.momo-category-choice-modal .momo-choice-list {
+  gap:1px !important;
+  padding-top:2px;
+}
+.momo-category-choice-modal .momo-choice-item {
+  min-height:34px !important;
+  padding:5px 8px !important;
+  border-radius:7px !important;
+  font-size:.84rem !important;
+}
+.momo-category-choice-modal .momo-choice-item.is-current {
+  background:var(--background-modifier-hover) !important;
+  font-weight:600 !important;
+}
+.modal:has(.momo-category-manager),
+.modal:has(.momo-text-prompt-modal) {
+  width:min(540px, calc(100vw - 32px)) !important;
+  max-width:min(540px, calc(100vw - 32px)) !important;
+  border-radius:16px !important;
+  overflow:hidden !important;
+}
+.modal:has(.momo-category-manager) .modal-content,
+.modal:has(.momo-text-prompt-modal) .modal-content {
+  padding:24px 26px 22px !important;
+  max-height:min(78vh, 720px) !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  box-sizing:border-box !important;
+}
+.momo-category-manager-sub {
+  color:var(--text-muted);
+  font-size:.76rem;
+  line-height:1.45;
+  max-width:360px;
+}
+.momo-category-manager-list {
+  margin-top:18px;
+  border-top:1px solid var(--background-modifier-border);
+}
+.momo-category-manager-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  min-height:43px;
+  border-bottom:1px solid color-mix(in srgb, var(--background-modifier-border) 68%, transparent);
+}
+.momo-category-manager-name {
+  min-width:0;
+  font-size:.86rem;
+  font-weight:540;
+}
+.momo-category-manager-actions {
+  display:inline-flex;
+  align-items:center;
+  flex:0 0 auto;
+}
+.momo-category-manager-actions button {
+  position:relative !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  padding:0 7px !important;
+  min-height:27px !important;
+  color:var(--text-faint) !important;
+  font-size:.73rem !important;
+  font-weight:500 !important;
+}
+.momo-category-manager-actions button + button::before {
+  content:"·";
+  position:absolute;
+  left:-2px;
+  color:var(--background-modifier-border-hover);
+}
+.momo-category-manager-actions button:hover {
+  color:var(--text-normal) !important;
+  background:var(--background-modifier-hover) !important;
+}
+.momo-category-manager-actions .momo-category-delete:hover {
+  color:var(--text-error) !important;
+  background:color-mix(in srgb, var(--text-error) 8%, transparent) !important;
+}
+.momo-category-protected {
+  padding:0 7px;
+  color:var(--text-faint);
+  font-size:.7rem;
+}
+.momo-text-prompt-modal h2 {
+  margin:0 0 16px !important;
+  font-size:1.08rem !important;
+  font-weight:650 !important;
+}
+.momo-text-prompt-input {
+  width:100%;
+  box-sizing:border-box;
+  min-height:38px;
+}
+.momo-text-prompt-actions {
+  display:flex;
+  justify-content:flex-end;
+  gap:7px;
+  margin-top:16px;
+}
+
+/* v0.6.9 · compact display toggles + count-first calendar cells */
+.momoan-todo-view .momo-td-view-toggles {
+  display:flex;
+  align-items:center;
+  gap:5px;
+  margin-top:10px;
+  flex-wrap:wrap;
+}
+.momoan-todo-view .momo-td-view-toggle,
+.momoan-todo-view .momo-td-completed-toggle {
+  margin:0 !important;
+  min-height:27px !important;
+  padding:3px 8px !important;
+  border-radius:999px !important;
+  border:1px solid var(--background-modifier-border) !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:var(--text-muted) !important;
+  font-size:.7rem !important;
+  font-weight:570 !important;
+  line-height:1.25 !important;
+  opacity:.62 !important;
+  transition:background-color .15s ease,color .15s ease,opacity .15s ease,border-color .15s ease !important;
+}
+.momoan-todo-view .momo-td-view-toggle:hover {
+  opacity:1 !important;
+  background:var(--background-modifier-hover) !important;
+}
+.momoan-todo-view .momo-td-view-toggle.is-on {
+  opacity:.9 !important;
+  color:var(--text-normal) !important;
+  background:var(--momo-neutral-pill) !important;
+  border-color:color-mix(in srgb, var(--momo-accent) 34%, var(--background-modifier-border)) !important;
+}
+
+/* Calendar cell order: remaining count on top, date below. */
+.momoan-todo-view .momo-td-day {
+  min-height:50px !important;
+  padding:3px 1px 4px !important;
+  justify-content:center !important;
+  gap:2px !important;
+}
+.momoan-todo-view .momo-td-day-dots {
+  order:1;
+  height:18px !important;
+  min-height:18px !important;
+  margin:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+.momoan-todo-view .momo-td-day-number {
+  order:2;
+  line-height:1.05 !important;
+}
+.momoan-todo-view .momo-td-day-count,
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-count {
+  min-width:18px !important;
+  height:18px !important;
+  padding:0 5px !important;
+  font-size:.62rem !important;
+  font-weight:650 !important;
+  border-radius:999px !important;
+}
+@media (max-width:720px) {
+  .momoan-todo-view .momo-td-day,
+  .momoan-todo-view .momo-td-month-grid .momo-td-day {
+    min-height:52px !important;
+  }
+}
+
+/* v0.6.10 · clearer calendar states + unified view filters */
+.momoan-todo-view .momo-td-view-toggle,
+.momoan-todo-view .momo-td-completed-toggle,
+.momoan-todo-view .momo-td-category-toggle,
+.momoan-todo-view .momo-td-selective-toggle {
+  background:transparent !important;
+  border-color:var(--background-modifier-border) !important;
+  color:var(--text-muted) !important;
+  opacity:.72 !important;
+}
+.momoan-todo-view .momo-td-view-toggle.is-on,
+.momoan-todo-view .momo-td-completed-toggle.is-on,
+.momoan-todo-view .momo-td-category-toggle.is-on,
+.momoan-todo-view .momo-td-selective-toggle.is-on {
+  background:var(--background-modifier-hover) !important;
+  border-color:var(--background-modifier-border) !important;
+  color:var(--text-normal) !important;
+  opacity:.9 !important;
+}
+
+/* Remaining work is the strongest datum; the date stays secondary. */
+.momoan-todo-view .momo-td-day-number {
+  font-size:.82rem !important;
+  font-weight:540 !important;
+}
+.momoan-todo-view .momo-td-day-count,
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-count {
+  min-width:21px !important;
+  height:21px !important;
+  padding:0 5px !important;
+  font-size:.88rem !important;
+  font-weight:720 !important;
+  line-height:21px !important;
+}
+
+/* A quiet completion mark: dot = had tasks and finished them; blank = no tasks existed. */
+.momoan-todo-view .momo-td-day-complete {
+  width:5px !important;
+  height:5px !important;
+  min-width:5px !important;
+  padding:0 !important;
+  border-radius:999px !important;
+  background:var(--text-faint) !important;
+  color:transparent !important;
+  opacity:.42 !important;
+  display:block !important;
+  overflow:hidden !important;
+}
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-complete {
+  background:currentColor !important;
+  opacity:.38 !important;
+}
+
+
+/* v0.6.12 — calendar: cleaner counts + completed check */
+.momoan-todo-view .momo-td-day-count,
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-count {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.momoan-todo-view .momo-td-day:not(.is-empty):hover {
+  background: transparent !important;
+  transform: none !important;
+}
+
+.momoan-todo-view .momo-td-day-complete {
+  width: 15px !important;
+  height: 15px !important;
+  min-width: 15px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  color: var(--text-faint) !important;
+  opacity: .5 !important;
+  overflow: visible !important;
+  border-radius: 0 !important;
+}
+
+.momoan-todo-view .momo-td-day-complete svg {
+  width: 15px !important;
+  height: 15px !important;
+  stroke-width: 1.8 !important;
+}
+
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-complete {
+  background: transparent !important;
+  color: currentColor !important;
+  opacity: .55 !important;
+}
+
+
+/* v0.6.13 — calendar count tone matched to completed check */
+.momoan-todo-view .momo-td-day-count,
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-count {
+  width: 16px !important;
+  min-width: 16px !important;
+  height: 16px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: var(--text-muted) !important;
+  opacity: .58 !important;
+  font-size: .88rem !important;
+  font-weight: 650 !important;
+  line-height: 16px !important;
+  letter-spacing: -.02em !important;
+}
+
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-count {
+  color: currentColor !important;
+  opacity: .62 !important;
+}
+
+
+/* v0.6.14 — selective routine filter removed */
+.momoan-todo-view .momo-td-selective-toggle {
+  display: none !important;
+}
+
+
+/* v0.6.15 — calendar status markers unified */
+.momoan-todo-view .momo-td-day-count,
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-count {
+  width: 15px !important;
+  min-width: 15px !important;
+  height: 15px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1.35px solid var(--text-faint) !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--text-faint) !important;
+  opacity: .52 !important;
+  font-size: .68rem !important;
+  font-weight: 560 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+.momoan-todo-view .momo-td-day-complete {
+  width: 15px !important;
+  height: 15px !important;
+  min-width: 15px !important;
+  color: var(--text-faint) !important;
+  opacity: .52 !important;
+}
+
+.momoan-todo-view .momo-td-day-complete svg {
+  width: 15px !important;
+  height: 15px !important;
+  stroke-width: 1.35 !important;
+}
+
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-count {
+  border-color: currentColor !important;
+  color: currentColor !important;
+  opacity: .58 !important;
+}
+
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-complete {
+  color: currentColor !important;
+  opacity: .58 !important;
+}
+
+
+/* v0.6.16 — category/group management */
+.momoan-todo-view .momo-td-taxonomy-manage {
+  border-style:dashed !important;
+}
+
+.momo-category-choice-head {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:12px !important;
+  position:sticky !important;
+  top:0 !important;
+  z-index:2 !important;
+  background:var(--modal-background, var(--background-primary)) !important;
+  padding-bottom:8px !important;
+}
+
+.momo-category-choice-head h2 {
+  margin:0 !important;
+  min-width:0 !important;
+}
+
+.momo-category-manage-link {
+  display:inline-flex !important;
+  visibility:visible !important;
+  opacity:.72 !important;
+  position:relative !important;
+  z-index:3 !important;
+}
+
+.momo-category-manager-head-actions {
+  display:inline-flex;
+  gap:4px;
+  align-items:center;
+  flex:0 0 auto;
+}
+
+.modal:has(.momo-group-manager) {
+  width:min(560px, calc(100vw - 32px)) !important;
+  max-width:min(560px, calc(100vw - 32px)) !important;
+}
+
+.momo-group-manager-category-row {
+  display:grid;
+  grid-template-columns:92px minmax(0,1fr);
+  align-items:center;
+  gap:12px;
+  margin-top:18px;
+  padding:12px 0 4px;
+  border-top:1px solid var(--background-modifier-border);
+}
+
+.momo-group-manager-label {
+  font-size:.82rem;
+  color:var(--text-muted);
+}
+
+.momo-group-manager-select {
+  width:100%;
+  min-height:36px;
+}
+
+
+/* v0.6.18 — calendar status count + native add task modal */
+.momoan-todo-view .momo-td-day-count,
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-count {
+  width:15px !important;
+  min-width:15px !important;
+  height:15px !important;
+  padding:0 !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:var(--text-faint) !important;
+  opacity:.48 !important;
+  font-size:.62rem !important;
+  font-weight:520 !important;
+  line-height:1 !important;
+  letter-spacing:0 !important;
+}
+
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-count {
+  color:currentColor !important;
+  opacity:.54 !important;
+}
+
+.modal:has(.momo-task-add-modal) {
+  width:min(640px, calc(100vw - 32px)) !important;
+  max-width:min(640px, calc(100vw - 32px)) !important;
+}
+
+.momo-task-add-details {
+  margin-top:14px;
+  border-top:1px solid var(--background-modifier-border);
+  padding-top:12px;
+}
+
+.momo-task-add-details summary {
+  cursor:pointer;
+  color:var(--text-muted);
+  font-size:.86rem;
+  user-select:none;
+}
+
+.momo-task-add-details-body {
+  margin-top:12px;
+}
+
+
+/* v0.6.19 — taxonomy + reorder controls */
+.momo-category-manager-actions button[aria-label$=" 위로"],
+.momo-category-manager-actions button[aria-label$=" 아래로"] {
+  min-width:22px !important;
+  padding:0 3px !important;
+  font-size:.72rem !important;
+}
+
+.momo-category-manager-actions button:disabled {
+  opacity:.18 !important;
+  cursor:default !important;
+}
+
+
+/* v0.6.20 — long-press drag task reordering (desktop + mobile) */
+.momoan-todo-view .momo-td-item[data-momo-reorderable="1"] {
+  cursor: grab;
+  -webkit-touch-callout: none;
+}
+
+.momoan-todo-view .momo-td-item.is-reordering {
+  cursor: grabbing !important;
+  background: var(--background-modifier-hover) !important;
+  opacity: .82 !important;
+  transform: scale(.995);
+  box-shadow: 0 5px 18px rgba(0,0,0,.08);
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  position: relative;
+  z-index: 5;
+}
+
+.momoan-todo-view .momo-td-item.is-drop-before::before,
+.momoan-todo-view .momo-td-item.is-drop-after::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--interactive-accent);
+  opacity: .7;
+  pointer-events: none;
+}
+
+.momoan-todo-view .momo-td-item.is-drop-before::before {
+  top: -2px;
+}
+
+.momoan-todo-view .momo-td-item.is-drop-after::after {
+  bottom: -2px;
+}
+
+body.momo-task-reorder-active {
+  cursor: grabbing !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+@media (max-width:720px) {
+  .momoan-todo-view .momo-td-item[data-momo-reorderable="1"] {
+    cursor: default;
+  }
+
+  .momoan-todo-view .momo-td-item.is-reordering {
+    transform: scale(.99);
+    box-shadow: 0 6px 20px rgba(0,0,0,.1);
+  }
+}
+
+
+/* v0.6.21 — top-right settings + reliable manual task order */
+.momoan-todo-view .momo-td-main-actions {
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  flex:0 0 auto !important;
+}
+
+.momoan-todo-view .momo-td-main-settings,
+.momoan-todo-view .momo-td-main-add {
+  width:34px !important;
+  height:34px !important;
+  min-width:34px !important;
+  min-height:34px !important;
+  border-radius:50% !important;
+  border:0 !important;
+  background:var(--background-secondary) !important;
+  box-shadow:none !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 !important;
+  opacity:.88 !important;
+}
+
+.momoan-todo-view .momo-td-main-settings {
+  color:var(--text-muted) !important;
+}
+
+.momoan-todo-view .momo-td-main-settings svg {
+  width:16px !important;
+  height:16px !important;
+  stroke-width:1.8 !important;
+}
+
+.momoan-todo-view .momo-td-main-settings:hover,
+.momoan-todo-view .momo-td-main-add:hover {
+  background:var(--background-modifier-hover) !important;
+  opacity:1 !important;
+}
+
+@media (max-width:720px) {
+  .momoan-todo-view .momo-td-main-settings,
+  .momoan-todo-view .momo-td-main-add {
+    width:40px !important;
+    height:40px !important;
+    min-width:40px !important;
+    min-height:40px !important;
+  }
+
+  .momoan-todo-view .momo-td-main-settings svg {
+    width:18px !important;
+    height:18px !important;
+  }
+}
+
+
+/* v0.7.0 — unified todo settings */
+.modal:has(.momo-todo-settings) {
+  width:min(620px, calc(100vw - 28px)) !important;
+  max-width:min(620px, calc(100vw - 28px)) !important;
+  border-radius:18px !important;
+  overflow:hidden !important;
+}
+
+.modal:has(.momo-todo-settings) .modal-content {
+  padding:26px 28px 24px !important;
+  max-height:min(82vh, 760px) !important;
+  overflow:auto !important;
+}
+
+.momo-settings-head {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+}
+
+.momo-settings-head h2 {
+  margin:0 0 5px !important;
+  font-size:1.25rem !important;
+  white-space:nowrap;
+}
+
+.momo-settings-sub,
+.momo-settings-section-sub {
+  color:var(--text-muted);
+  font-size:.78rem;
+  line-height:1.45;
+}
+
+.momo-settings-tabs {
+  display:flex;
+  gap:4px;
+  margin:20px 0 18px;
+  padding:3px;
+  background:var(--background-secondary);
+  border-radius:11px;
+}
+
+.momo-settings-tab {
+  flex:1;
+  border:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  border-radius:8px !important;
+  min-height:34px;
+  font-size:.82rem;
+  color:var(--text-muted);
+}
+
+.momo-settings-tab.is-active {
+  background:var(--background-primary) !important;
+  color:var(--text-normal) !important;
+  font-weight:620;
+  box-shadow:0 1px 3px rgba(0,0,0,.06) !important;
+}
+
+.momo-settings-section-head {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:10px;
+}
+
+.momo-settings-section-head h3 {
+  margin:0 0 3px !important;
+  font-size:.96rem;
+}
+
+.momo-settings-add {
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:var(--text-muted) !important;
+  font-size:.76rem !important;
+  white-space:nowrap;
+}
+
+.momo-settings-category-picker {
+  display:grid;
+  grid-template-columns:90px minmax(0,1fr);
+  align-items:center;
+  gap:12px;
+  padding:12px 0 14px;
+  border-bottom:1px solid var(--background-modifier-border);
+}
+
+.momo-settings-picker-label {
+  color:var(--text-muted);
+  font-size:.8rem;
+}
+
+.momo-settings-category-picker .momo-pill-field {
+  width:100%;
+  justify-content:flex-start;
+}
+
+.momo-settings-list {
+  border-top:1px solid var(--background-modifier-border);
+}
+
+.momo-settings-category-picker + .momo-settings-list {
+  border-top:0;
+}
+
+.momo-settings-row {
+  min-height:45px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  border-bottom:1px solid color-mix(in srgb,var(--background-modifier-border) 70%,transparent);
+}
+
+.momo-settings-row-main {
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex:1;
+}
+
+.momo-settings-item-name {
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:.86rem;
+  font-weight:540;
+}
+
+.momo-settings-state {
+  font-size:.68rem;
+  color:var(--text-faint);
+  border:1px solid var(--background-modifier-border);
+  border-radius:999px;
+  padding:2px 6px;
+  white-space:nowrap;
+}
+
+.momo-settings-row.is-inactive .momo-settings-item-name {
+  opacity:.45;
+}
+
+.momo-settings-row-actions {
+  display:inline-flex;
+  align-items:center;
+  flex:0 0 auto;
+}
+
+.momo-settings-row-actions button {
+  min-height:27px !important;
+  padding:0 6px !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:var(--text-faint) !important;
+  font-size:.72rem !important;
+}
+
+.momo-settings-row-actions button:hover {
+  color:var(--text-normal) !important;
+  background:var(--background-modifier-hover) !important;
+}
+
+.momo-settings-row-actions button:disabled {
+  opacity:.18 !important;
+}
+
+.momo-settings-inline-edit {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  width:100%;
+}
+
+.momo-settings-inline-edit input {
+  min-width:0;
+  flex:1;
+  height:34px;
+}
+
+.momo-settings-inline-edit button {
+  flex:0 0 auto;
+  min-height:30px;
+}
+
+.momo-settings-empty {
+  padding:24px 0;
+  text-align:center;
+  color:var(--text-faint);
+  font-size:.8rem;
+}
+
+.modal:has(.momo-retire-modal) {
+  width:min(520px, calc(100vw - 28px)) !important;
+  max-width:min(520px, calc(100vw - 28px)) !important;
+  border-radius:17px !important;
+}
+
+.momo-retire-modal h2 {
+  margin:0 0 6px !important;
+  font-size:1.15rem !important;
+}
+
+.momo-retire-sub {
+  color:var(--text-muted);
+  font-size:.8rem;
+  margin-bottom:18px;
+}
+
+.momo-retire-options {
+  display:grid;
+  gap:7px;
+}
+
+.momo-retire-option {
+  width:100%;
+  min-height:62px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  justify-content:center !important;
+  gap:3px;
+  padding:10px 12px !important;
+  border:1px solid var(--background-modifier-border) !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  text-align:left !important;
+  border-radius:10px !important;
+}
+
+.momo-retire-option:hover {
+  background:var(--background-modifier-hover) !important;
+}
+
+.momo-retire-option-title {
+  font-size:.84rem;
+  font-weight:620;
+}
+
+.momo-retire-option-desc {
+  font-size:.72rem;
+  color:var(--text-muted);
+  line-height:1.4;
+}
+
+.momo-retire-option.is-danger .momo-retire-option-title {
+  color:var(--text-error);
+}
+
+/* Calendar status markers share the same optical weight */
+.momoan-todo-view .momo-td-day-count,
+.momoan-todo-view .momo-td-day-complete {
+  color:var(--text-faint) !important;
+  opacity:.48 !important;
+}
+
+.momoan-todo-view .momo-td-day-count {
+  font-size:.64rem !important;
+  font-weight:500 !important;
+}
+
+.momoan-todo-view .momo-td-day-complete svg {
+  stroke-width:1.35 !important;
+}
+
+@media (max-width:720px) {
+  .modal:has(.momo-todo-settings) .modal-content {
+    padding:22px 18px 20px !important;
+    max-height:86vh !important;
+  }
+
+  .momo-settings-row {
+    min-height:49px;
+  }
+
+  .momo-settings-row-actions button {
+    min-width:30px !important;
+    min-height:32px !important;
+  }
+
+  .momo-settings-category-picker {
+    grid-template-columns:76px minmax(0,1fr);
+  }
+}
+
+
+/* v0.7.1 — top-right action order and routine shortcut */
+.momoan-todo-view .momo-td-main-routines,
+.momoan-todo-view .momo-td-main-settings,
+.momoan-todo-view .momo-td-main-add {
+  width:34px !important;
+  height:34px !important;
+  min-width:34px !important;
+  min-height:34px !important;
+  border-radius:50% !important;
+  border:0 !important;
+  background:var(--background-secondary) !important;
+  box-shadow:none !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 !important;
+  opacity:.88 !important;
+}
+
+.momoan-todo-view .momo-td-main-routines,
+.momoan-todo-view .momo-td-main-settings {
+  color:var(--text-muted) !important;
+}
+
+.momoan-todo-view .momo-td-main-routines svg,
+.momoan-todo-view .momo-td-main-settings svg {
+  width:16px !important;
+  height:16px !important;
+  stroke-width:1.8 !important;
+}
+
+.momoan-todo-view .momo-td-main-routines:hover,
+.momoan-todo-view .momo-td-main-settings:hover,
+.momoan-todo-view .momo-td-main-add:hover {
+  background:var(--background-modifier-hover) !important;
+  opacity:1 !important;
+}
+
+.momoan-todo-view .momo-td-cal-foot {
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+}
+
+@media (max-width:720px) {
+  .momoan-todo-view .momo-td-main-routines,
+  .momoan-todo-view .momo-td-main-settings,
+  .momoan-todo-view .momo-td-main-add {
+    width:40px !important;
+    height:40px !important;
+    min-width:40px !important;
+    min-height:40px !important;
+  }
+
+  .momoan-todo-view .momo-td-main-routines svg,
+  .momoan-todo-view .momo-td-main-settings svg {
+    width:18px !important;
+    height:18px !important;
+  }
+
+  .momoan-todo-view .momo-td-cal-foot {
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+
+
+/* v0.7.3 — routine preview / rolling generation */
+.momoan-todo-view .momo-td-item.is-preview {
+  opacity:.34 !important;
+}
+
+.momoan-todo-view .momo-td-item.is-preview:hover {
+  opacity:.48 !important;
+}
+
+.momoan-todo-view .momo-td-item.is-preview .momo-td-item-title {
+  text-decoration:none !important;
+}
+
+.momoan-todo-view .momo-td-preview-mark {
+  width:16px;
+  min-width:16px;
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  color:var(--text-faint);
+  font-size:1rem;
+  line-height:1;
+}
+
+.momoan-todo-view .momo-td-day-preview {
+  color:var(--text-faint) !important;
+  opacity:.42 !important;
+  font-size:.88rem !important;
+  line-height:1 !important;
+  transform:translateY(-1px);
+}
+
+
+/* v0.7.4 — routine reconciliation, group fallback, drag ghost */
+.momoan-todo-view .momo-td-item[data-momo-reorderable="1"] {
+  position:relative !important;
+}
+
+.momoan-todo-view .momo-td-item.is-drag-source {
+  opacity:.16 !important;
+  background:var(--background-secondary) !important;
+}
+
+.momo-task-drag-ghost {
+  position:fixed !important;
+  z-index:9999 !important;
+  pointer-events:none !important;
+  margin:0 !important;
+  opacity:.92 !important;
+  background:var(--background-primary) !important;
+  border:1px solid var(--background-modifier-border) !important;
+  border-radius:9px !important;
+  box-shadow:0 10px 28px rgba(0,0,0,.14) !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:7px !important;
+  padding:4px 7px !important;
+  box-sizing:border-box !important;
+  will-change:transform !important;
+}
+
+.momoan-todo-view .momo-td-item.is-drop-before,
+.momoan-todo-view .momo-td-item.is-drop-after {
+  position:relative !important;
+}
+
+.momoan-todo-view .momo-td-item.is-drop-before::before,
+.momoan-todo-view .momo-td-item.is-drop-after::after {
+  content:"" !important;
+  position:absolute !important;
+  left:0 !important;
+  right:0 !important;
+  height:3px !important;
+  border-radius:999px !important;
+  background:var(--interactive-accent) !important;
+  opacity:.95 !important;
+  z-index:20 !important;
+  pointer-events:none !important;
+}
+
+.momoan-todo-view .momo-td-item.is-drop-before::before {
+  top:-3px !important;
+}
+
+.momoan-todo-view .momo-td-item.is-drop-after::after {
+  bottom:-3px !important;
+}
+
+.momo-routine-manager-head {
+  align-items:flex-start !important;
+}
+
+.momo-routine-manager-sub {
+  word-break:keep-all !important;
+  overflow-wrap:normal !important;
+}
+
+.momo-routine-manager-sub-second {
+  margin-top:2px !important;
+}
+
+.momo-routine-manager-add {
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:var(--text-muted) !important;
+  font-size:.78rem !important;
+  font-weight:560 !important;
+  white-space:nowrap !important;
+  padding:5px 8px !important;
+  min-height:30px !important;
+}
+
+.momo-routine-manager-add:hover {
+  background:var(--background-modifier-hover) !important;
+  color:var(--text-normal) !important;
+}
+
+@media (max-width:720px) {
+  .momo-task-drag-ghost {
+    padding:6px 4px !important;
+    gap:9px !important;
+    border-radius:10px !important;
+  }
+
+  .momo-routine-manager-sub {
+    word-break:keep-all !important;
+  }
+}
+
+
+/* v0.7.5 — 분류 ON shows all groups + group quick-add */
+.momoan-todo-view .momo-td-group-head {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:8px !important;
+}
+
+.momoan-todo-view .momo-td-group-add {
+  width:22px !important;
+  height:22px !important;
+  min-width:22px !important;
+  min-height:22px !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:50% !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:var(--text-faint) !important;
+  opacity:.48 !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-size:.85rem !important;
+  line-height:1 !important;
+}
+
+.momoan-todo-view .momo-td-group-add:hover {
+  opacity:.9 !important;
+  background:var(--background-modifier-hover) !important;
+}
+
+@media (max-width:720px) {
+  .momoan-todo-view .momo-td-group-add {
+    width:28px !important;
+    height:28px !important;
+    min-width:28px !important;
+    min-height:28px !important;
+  }
+}
+
+
+/* v0.7.9 — calendar surface + routine group metadata */
+.momoan-todo-view .momo-td-day,
+.momoan-todo-view .momo-td-day.is-selected,
+.momoan-todo-view .momo-td-day.is-today,
+.momoan-todo-view .momo-td-day.is-today:not(.is-selected),
+.momoan-todo-view .momo-td-day:not(.is-empty):hover {
+  background: transparent !important;
+}
+
+/* 선택일/오늘은 바탕색 없이 윤곽만 남긴다. */
+.momoan-todo-view .momo-td-day.is-selected {
+  box-shadow: inset 0 0 0 1.25px var(--momo-accent) !important;
+}
+.momoan-todo-view .momo-td-day.is-today:not(.is-selected) {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--momo-accent) 62%, transparent) !important;
+}
+
+/* 숫자 / 완료 체크 / preview 점을 기존보다 아주 살짝 진하게 */
+.momoan-todo-view .momo-td-day-count,
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-count {
+  color: var(--text-muted) !important;
+  opacity: .58 !important;
+}
+
+.momoan-todo-view .momo-td-day-complete,
+.momoan-todo-view .momo-td-day.is-selected .momo-td-day-complete {
+  color: var(--text-muted) !important;
+  opacity: .58 !important;
+}
+
+.momoan-todo-view .momo-td-day-preview {
+  color: var(--text-muted) !important;
+  opacity: .52 !important;
+}
+
+
+/* v0.7.12 — secondary task metadata contrast */
+.momoan-todo-view .momo-td-time,
+.momoan-todo-view .momo-td-location,
+.momoan-todo-view .momo-td-group-title,
+.momoan-todo-view .momo-td-count {
+  color:var(--text-muted) !important;
+  opacity:.58 !important;
+}
+
+/* category/category-count text should have the same optical weight as the check mark */
+.momoan-todo-view .momo-td-cat-name,
+.momoan-todo-view .momo-td-cat-actions,
+.momoan-todo-view .momo-td-count {
+  opacity:.66 !important;
+}
+
+.momoan-todo-view .momo-td-cat-name {
+  color:var(--text-normal) !important;
+}
+
+.momoan-todo-view .momo-td-time {
+  font-weight:600 !important;
+}
+
+.momoan-todo-view .momo-td-location,
+.momoan-todo-view .momo-td-group-title,
+.momoan-todo-view .momo-td-count {
+  font-weight:560 !important;
+}
+
+
+/* v0.7.14 — task title single/double tap */
+.momoan-todo-view .momo-td-item-title.is-actionable {
+  cursor:pointer !important;
+  touch-action:manipulation;
+}
+
+
+/* v0.7.15 — hierarchy + metadata contrast + multi-date copy */
+
+/* Time/location should read as useful metadata, not disabled text. */
+.momoan-todo-view .momo-td-time,
+.momoan-todo-view .momo-td-location {
+  color:var(--text-muted) !important;
+  opacity:.82 !important;
+  font-weight:600 !important;
+}
+
+.momoan-todo-view .momo-td-location {
+  font-size:.73rem !important;
+}
+
+/* Category = stronger primary division, still neutral/minimal. */
+.momoan-todo-view .momo-td-category {
+  margin-bottom:28px !important;
+}
+
+.momoan-todo-view .momo-td-cat-head {
+  margin-bottom:12px !important;
+}
+
+.momoan-todo-view .momo-td-cat-name {
+  font-size:.84rem !important;
+  font-weight:680 !important;
+  letter-spacing:-.015em !important;
+  padding:5px 11px 5px 9px !important;
+  opacity:.94 !important;
+}
+
+/* Group = clearly subordinate through indentation/spacing, not color. */
+.momoan-todo-view .momo-td-group {
+  margin-top:12px !important;
+}
+
+.momoan-todo-view .momo-td-group-head {
+  margin:13px 0 5px 34px !important;
+  min-height:22px !important;
+  padding-left:8px !important;
+  border-left:1px solid var(--background-modifier-border) !important;
+}
+
+.momoan-todo-view .momo-td-group-title {
+  color:var(--text-muted) !important;
+  opacity:.68 !important;
+  font-size:.74rem !important;
+  font-weight:590 !important;
+  letter-spacing:-.01em !important;
+}
+
+/* Keep category progress/count legible at the same optical weight. */
+.momoan-todo-view .momo-td-count,
+.momoan-todo-view .momo-td-cat-actions {
+  opacity:.68 !important;
+}
+
+/* Multi-date picker */
+.momo-multi-date-choice-modal .momo-date-cell.is-selected {
+  background:var(--momo-accent-soft) !important;
+  box-shadow:inset 0 0 0 1.25px var(--momo-accent) !important;
+  color:var(--text-normal) !important;
+  font-weight:650 !important;
+}
+
+.momo-multi-date-choice-modal .momo-date-cell.is-today:not(.is-selected) {
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--momo-accent) 60%,transparent) !important;
+}
+
+.momo-multi-date-foot {
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+}
+
+.momo-multi-date-foot .momo-multi-date-confirm {
+  margin-left:auto !important;
+  white-space:nowrap !important;
+}
+
+@media (max-width:720px) {
+  .momoan-todo-view .momo-td-cat-name {
+    font-size:.88rem !important;
+  }
+
+  .momoan-todo-view .momo-td-group-head {
+    margin-left:42px !important;
+  }
+
+  .momoan-todo-view .momo-td-time,
+  .momoan-todo-view .momo-td-location {
+    font-size:.82rem !important;
+  }
+
+  .momo-multi-date-foot {
+    flex-wrap:wrap !important;
+  }
+
+  .momo-multi-date-foot .momo-multi-date-confirm {
+    width:100% !important;
+    margin-left:0 !important;
+  }
+}
+
+
+/* v0.7.16 — group hierarchy: quiet text, no divider line */
+.momoan-todo-view .momo-td-group {
+  margin-top:10px !important;
+}
+
+.momoan-todo-view .momo-td-group-head {
+  margin:11px 0 5px 30px !important;
+  min-height:20px !important;
+  padding-left:0 !important;
+  border-left:0 !important;
+}
+
+.momoan-todo-view .momo-td-group-title {
+  color:var(--text-muted) !important;
+  opacity:.58 !important;
+  font-size:.74rem !important;
+  font-weight:570 !important;
+  letter-spacing:-.01em !important;
+}
+
+@media (max-width:720px) {
+  .momoan-todo-view .momo-td-group-head {
+    margin-left:38px !important;
+    padding-left:0 !important;
+    border-left:0 !important;
+  }
+}
+
+/* v0.7.16 — monthly review, aligned with the rest of the plugin */
+.modal:has(.momo-monthly-review-modal) {
+  width:min(720px, calc(100vw - 32px)) !important;
+  max-width:min(720px, calc(100vw - 32px)) !important;
+  border-radius:18px !important;
+  overflow:hidden !important;
+}
+
+.modal:has(.momo-monthly-review-modal) .modal-content {
+  padding:28px 30px 30px !important;
+  max-height:min(84vh, 780px) !important;
+}
+
+.momo-monthly-review-modal .momo-review-head {
+  align-items:flex-start !important;
+  gap:18px !important;
+  margin-bottom:24px !important;
+  padding-bottom:18px !important;
+  border-bottom:1px solid var(--background-modifier-border) !important;
+}
+
+.momo-monthly-review-modal .momo-review-head h2 {
+  margin:0 0 5px !important;
+  font-size:1.22rem !important;
+  font-weight:700 !important;
+  letter-spacing:-.025em !important;
+}
+
+.momo-monthly-review-modal .momo-review-sub {
+  color:var(--text-muted) !important;
+  opacity:.72 !important;
+  font-size:.78rem !important;
+}
+
+.momo-monthly-review-modal .momo-review-open {
+  min-height:32px !important;
+  height:32px !important;
+  padding:0 10px !important;
+  border:0 !important;
+  background:var(--background-secondary) !important;
+  color:var(--text-muted) !important;
+  border-radius:9px !important;
+  box-shadow:none !important;
+  font-size:.76rem !important;
+  font-weight:570 !important;
+  white-space:nowrap !important;
+}
+
+.momo-monthly-review-modal .momo-review-open:hover {
+  background:var(--background-modifier-hover) !important;
+  color:var(--text-normal) !important;
+}
+
+.momo-monthly-review-modal .momo-review-body {
+  display:grid !important;
+  grid-template-columns:repeat(2, minmax(0,1fr)) !important;
+  gap:12px 14px !important;
+}
+
+.momo-monthly-review-modal .momo-review-section {
+  min-width:0 !important;
+}
+
+.momo-monthly-review-modal .momo-review-section.is-stats {
+  padding:16px 17px !important;
+  border-radius:12px !important;
+  background:var(--background-secondary) !important;
+}
+
+.momo-monthly-review-modal .momo-review-section.is-reflection {
+  grid-column:1 / -1 !important;
+  padding:16px 2px 2px !important;
+  border-top:1px solid var(--background-modifier-border) !important;
+}
+
+.momo-monthly-review-modal .momo-review-section h2 {
+  margin:0 0 10px !important;
+  font-size:.82rem !important;
+  line-height:1.3 !important;
+  font-weight:650 !important;
+  color:var(--text-muted) !important;
+  letter-spacing:-.01em !important;
+}
+
+.momo-monthly-review-modal .momo-review-section.is-reflection h2 {
+  font-size:.88rem !important;
+  color:var(--text-normal) !important;
+}
+
+.momo-monthly-review-modal .momo-review-section ul {
+  margin:0 !important;
+  padding-left:0 !important;
+  list-style:none !important;
+}
+
+.momo-monthly-review-modal .momo-review-section li {
+  position:relative !important;
+  margin:6px 0 !important;
+  padding-left:12px !important;
+  color:var(--text-normal) !important;
+  font-size:.84rem !important;
+  line-height:1.5 !important;
+}
+
+.momo-monthly-review-modal .momo-review-section li::before {
+  content:"·" !important;
+  position:absolute !important;
+  left:0 !important;
+  color:var(--text-faint) !important;
+}
+
+.momo-monthly-review-modal .momo-review-section.is-stats strong {
+  font-weight:690 !important;
+}
+
+.momo-monthly-review-modal .momo-review-section li.is-empty {
+  color:var(--text-faint) !important;
+  font-size:.76rem !important;
+  padding-left:0 !important;
+}
+
+.momo-monthly-review-modal .momo-review-section li.is-empty::before {
+  content:"아직 기록 없음" !important;
+  position:static !important;
+}
+
+@media (max-width:720px) {
+  .modal:has(.momo-monthly-review-modal) .modal-content {
+    padding:22px 18px 24px !important;
+  }
+
+  .momo-monthly-review-modal .momo-review-body {
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+  }
+
+  .momo-monthly-review-modal .momo-review-section.is-reflection {
+    grid-column:auto !important;
+  }
+
+  .momo-monthly-review-modal .momo-review-head {
+    margin-bottom:18px !important;
+  }
+}
+
+
+/* v0.7.17 — top area refinement */
+
+/* Header: strong date, quiet utilities, compact progress. */
+.momoan-todo-view .momo-td-task-head {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto !important;
+  grid-template-rows:auto auto !important;
+  column-gap:18px !important;
+  row-gap:10px !important;
+  align-items:start !important;
+  margin-bottom:26px !important;
+}
+
+.momoan-todo-view .momo-td-title-wrap {
+  grid-column:1 !important;
+  grid-row:1 / span 2 !important;
+  min-width:0 !important;
+}
+
+.momoan-todo-view .momo-td-title-wrap h2 {
+  margin:0 0 14px !important;
+  font-size:1.72rem !important;
+  line-height:1.08 !important;
+  font-weight:730 !important;
+  letter-spacing:-.045em !important;
+}
+
+.momoan-todo-view .momo-td-task-kicker {
+  display:none !important;
+}
+
+.momoan-todo-view .momo-td-view-toggles {
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:16px !important;
+  margin:0 !important;
+}
+
+/* Filters are controls, not category pills or CTA buttons. */
+.momoan-todo-view .momo-td-view-toggle,
+.momoan-todo-view .momo-td-completed-toggle,
+.momoan-todo-view .momo-td-category-toggle {
+  min-height:24px !important;
+  height:24px !important;
+  padding:0 !important;
+  margin:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:7px !important;
+  color:var(--text-muted) !important;
+  opacity:.72 !important;
+  font-size:.72rem !important;
+  font-weight:590 !important;
+  line-height:1 !important;
+}
+
+.momoan-todo-view .momo-td-view-toggle:hover {
+  color:var(--text-normal) !important;
+  opacity:1 !important;
+  background:transparent !important;
+}
+
+.momoan-todo-view .momo-td-toggle-label {
+  white-space:nowrap !important;
+}
+
+.momoan-todo-view .momo-td-mini-switch {
+  position:relative !important;
+  width:24px !important;
+  height:13px !important;
+  border-radius:999px !important;
+  background:var(--background-modifier-border-hover) !important;
+  flex:0 0 24px !important;
+  transition:background-color .15s ease !important;
+}
+
+.momoan-todo-view .momo-td-mini-switch::after {
+  content:"" !important;
+  position:absolute !important;
+  top:2px !important;
+  left:2px !important;
+  width:9px !important;
+  height:9px !important;
+  border-radius:50% !important;
+  background:var(--background-primary) !important;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--text-faint) 20%,transparent) !important;
+  transition:transform .15s ease !important;
+}
+
+.momoan-todo-view .momo-td-view-toggle.is-on {
+  color:var(--text-normal) !important;
+  opacity:.92 !important;
+  background:transparent !important;
+}
+
+.momoan-todo-view .momo-td-view-toggle.is-on .momo-td-mini-switch {
+  background:color-mix(in srgb,var(--text-muted) 72%,var(--background-modifier-border)) !important;
+}
+
+.momoan-todo-view .momo-td-view-toggle.is-on .momo-td-mini-switch::after {
+  transform:translateX(11px) !important;
+}
+
+/* One optical system for + / routine / settings. */
+.momoan-todo-view .momo-td-main-actions {
+  grid-column:2 !important;
+  grid-row:1 !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:8px !important;
+}
+
+.momoan-todo-view .momo-td-main-add,
+.momoan-todo-view .momo-td-main-sort,
+.momoan-todo-view .momo-td-main-routines,
+.momoan-todo-view .momo-td-main-settings {
+  width:34px !important;
+  height:34px !important;
+  min-width:34px !important;
+  min-height:34px !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:50% !important;
+  background:var(--background-secondary) !important;
+  color:var(--text-muted) !important;
+  opacity:.82 !important;
+  box-shadow:none !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+.momoan-todo-view .momo-td-main-add svg,
+.momoan-todo-view .momo-td-main-sort svg,
+.momoan-todo-view .momo-td-main-routines svg,
+.momoan-todo-view .momo-td-main-settings svg {
+  width:16px !important;
+  height:16px !important;
+  stroke-width:1.65px !important;
+}
+
+.momoan-todo-view .momo-td-main-add:hover,
+.momoan-todo-view .momo-td-main-sort:hover,
+.momoan-todo-view .momo-td-main-routines:hover,
+.momoan-todo-view .momo-td-main-settings:hover {
+  background:var(--background-modifier-hover) !important;
+  color:var(--text-normal) !important;
+  opacity:1 !important;
+}
+
+/* Undo/redo share the quiet second row with progress instead of crowding the primary actions. */
+.momoan-todo-view .momo-td-head-meta {
+  grid-column:2 !important;
+  grid-row:2 !important;
+  justify-self:end !important;
+  align-self:center !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:8px !important;
+}
+
+.momoan-todo-view .momo-td-history-actions {
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:2px !important;
+}
+
+.momoan-todo-view .momo-td-history-button {
+  width:24px !important;
+  height:24px !important;
+  min-width:24px !important;
+  min-height:24px !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:50% !important;
+  background:transparent !important;
+  color:var(--text-muted) !important;
+  opacity:.68 !important;
+  box-shadow:none !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+.momoan-todo-view .momo-td-history-button svg {
+  width:14px !important;
+  height:14px !important;
+  stroke-width:1.7px !important;
+}
+
+.momoan-todo-view .momo-td-history-button:hover:not(:disabled) {
+  background:var(--background-modifier-hover) !important;
+  color:var(--text-normal) !important;
+  opacity:1 !important;
+}
+
+.momoan-todo-view .momo-td-history-button:disabled {
+  opacity:.22 !important;
+  cursor:default !important;
+}
+
+/* Header progress is information, not another button. */
+.momoan-todo-view .momo-td-head-progress {
+  display:inline-flex !important;
+  align-items:baseline !important;
+  gap:2px !important;
+  color:var(--text-faint) !important;
+  opacity:.66 !important;
+  font-size:.78rem !important;
+  font-weight:620 !important;
+  font-variant-numeric:tabular-nums !important;
+}
+
+.momoan-todo-view .momo-td-head-progress-done {
+  color:var(--text-muted) !important;
+}
+
+/* Category remains the primary division; counts/utilities stay quieter. */
+.momoan-todo-view .momo-td-cat-name {
+  font-size:.85rem !important;
+  font-weight:680 !important;
+  padding:5px 11px 5px 9px !important;
+}
+
+.momoan-todo-view .momo-td-cat-actions {
+  opacity:.62 !important;
+}
+
+@media (max-width:720px) {
+  .momoan-todo-view .momo-td-task-head {
+    column-gap:12px !important;
+    row-gap:8px !important;
+    margin-bottom:22px !important;
+  }
+
+  .momoan-todo-view .momo-td-title-wrap h2 {
+    font-size:1.56rem !important;
+    margin-bottom:12px !important;
+  }
+
+  .momoan-todo-view .momo-td-view-toggles {
+    gap:14px !important;
+  }
+
+  .momoan-todo-view .momo-td-main-add,
+  .momoan-todo-view .momo-td-main-sort,
+  .momoan-todo-view .momo-td-main-routines,
+  .momoan-todo-view .momo-td-main-settings {
+    width:38px !important;
+    height:38px !important;
+    min-width:38px !important;
+    min-height:38px !important;
+  }
+
+  .momoan-todo-view .momo-td-main-add svg,
+  .momoan-todo-view .momo-td-main-sort svg,
+  .momoan-todo-view .momo-td-main-routines svg,
+  .momoan-todo-view .momo-td-main-settings svg {
+    width:17px !important;
+    height:17px !important;
+    stroke-width:1.65px !important;
+  }
+
+  .momoan-todo-view .momo-td-head-meta {
+    gap:6px !important;
+  }
+
+  .momoan-todo-view .momo-td-history-button {
+    width:28px !important;
+    height:28px !important;
+    min-width:28px !important;
+    min-height:28px !important;
+  }
+
+  .momoan-todo-view .momo-td-history-button svg {
+    width:15px !important;
+    height:15px !important;
+  }
+
+  .momoan-todo-view .momo-td-head-progress {
+    font-size:.76rem !important;
+  }
+}
+
+
+/* v0.7.18 — calendar + inline monthly review refinement */
+
+/* Group labels sit at/just left of task content instead of being pushed inward. */
+.momoan-todo-view .momo-td-group-head {
+  margin:10px 0 5px 4px !important;
+  padding:0 !important;
+  border:0 !important;
+  min-height:20px !important;
+}
+.momoan-todo-view .momo-td-group-title {
+  font-size:.78rem !important;
+  font-weight:590 !important;
+  color:var(--text-muted) !important;
+  opacity:.72 !important;
+}
+
+/* Calendar header: month is clickable; Today is a quiet utility. */
+.momoan-todo-view .momo-td-cal-head {
+  display:grid !important;
+  grid-template-columns:32px 1fr auto !important;
+  align-items:center !important;
+  gap:8px !important;
+}
+.momoan-todo-view .momo-td-cal-month-btn {
+  justify-self:center !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  padding:0 8px !important;
+  min-height:30px !important;
+  color:var(--text-normal) !important;
+}
+.momoan-todo-view .momo-td-cal-month-btn h2 { margin:0 !important; }
+.momoan-todo-view .momo-td-cal-month-btn:hover {
+  background:var(--background-modifier-hover) !important;
+  border-radius:8px !important;
+}
+.momoan-todo-view .momo-td-cal-head-actions {
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:3px !important;
+}
+.momoan-todo-view .momo-td-cal-today {
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  padding:0 2px !important;
+  min-height:auto !important;
+  height:auto !important;
+  border-radius:0 !important;
+  color:var(--text-muted) !important;
+  opacity:.64 !important;
+  font-size:.71rem !important;
+  font-weight:620 !important;
+  letter-spacing:-.01em !important;
+}
+.momoan-todo-view .momo-td-cal-today:hover,
+.momoan-todo-view .momo-td-cal-today.is-current {
+  opacity:.96 !important;
+  color:var(--text-normal) !important;
+  background:transparent !important;
+}
+
+/* Month footer: only done/total + rate. */
+.momoan-todo-view .momo-td-month-category-summary,
+.momoan-todo-view .momo-td-cal-foot { display:none !important; }
+.momoan-todo-view .momo-td-month-summary {
+  margin-top:18px !important;
+  padding-top:17px !important;
+  border-top:1px solid var(--background-modifier-border) !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:5px !important;
+}
+.momoan-todo-view .momo-td-month-summary-number {
+  font-size:1.45rem !important;
+  font-weight:730 !important;
+  line-height:1 !important;
+  letter-spacing:-.045em !important;
+  color:var(--text-normal) !important;
+  font-variant-numeric:tabular-nums !important;
+}
+.momoan-todo-view .momo-td-month-summary-caption {
+  font-size:.76rem !important;
+  font-weight:600 !important;
+  color:var(--text-muted) !important;
+  opacity:.72 !important;
+}
+
+/* Monthly review is an inline disclosure, not a popup button. */
+.momoan-todo-view .momo-td-review-disclosure {
+  margin-top:15px !important;
+  border-top:1px solid color-mix(in srgb,var(--background-modifier-border) 72%,transparent) !important;
+}
+.momoan-todo-view .momo-td-review-toggle {
+  list-style:none !important;
+  cursor:pointer !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:10px !important;
+  min-height:40px !important;
+  padding:9px 2px !important;
+  color:var(--text-normal) !important;
+}
+.momoan-todo-view .momo-td-review-toggle::-webkit-details-marker { display:none !important; }
+.momoan-todo-view .momo-td-review-toggle-label {
+  font-size:.82rem !important;
+  font-weight:660 !important;
+  letter-spacing:-.015em !important;
+}
+.momoan-todo-view .momo-td-review-toggle-icon {
+  width:16px !important;
+  height:16px !important;
+  display:inline-flex !important;
+  color:var(--text-muted) !important;
+  opacity:.58 !important;
+  transition:transform .15s ease !important;
+}
+.momoan-todo-view details[open] > .momo-td-review-toggle .momo-td-review-toggle-icon {
+  transform:rotate(180deg) !important;
+}
+.momoan-todo-view .momo-td-review-panel { padding:7px 0 18px !important; }
+.momoan-todo-view .momo-td-review-top {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-end !important;
+  gap:12px !important;
+  margin-bottom:8px !important;
+}
+.momoan-todo-view .momo-td-review-title-wrap h3 {
+  margin:0 0 3px !important;
+  font-size:.96rem !important;
+  font-weight:700 !important;
+  letter-spacing:-.025em !important;
+}
+.momoan-todo-view .momo-td-review-subtitle {
+  font-size:.72rem !important;
+  color:var(--text-muted) !important;
+  opacity:.72 !important;
+  line-height:1.45 !important;
+}
+.momoan-todo-view .momo-td-review-open {
+  flex:0 0 auto !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:var(--text-muted) !important;
+  min-height:auto !important;
+  height:auto !important;
+  padding:0 2px !important;
+  font-size:.71rem !important;
+  font-weight:620 !important;
+  letter-spacing:-.01em !important;
+}
+.momoan-todo-view .momo-td-review-open:hover {
+  background:transparent !important;
+  color:var(--text-normal) !important;
+}
+
+/* The summary uses one consistent labeled-row grammar. */
+.momoan-todo-view .momo-td-review-summary {
+  border-top:1px solid var(--background-modifier-border) !important;
+  border-bottom:1px solid var(--background-modifier-border) !important;
+  margin-bottom:16px !important;
+}
+.momoan-todo-view .momo-td-review-summary-row {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:14px !important;
+  min-height:42px !important;
+  padding:7px 2px !important;
+}
+.momoan-todo-view .momo-td-review-summary-row + .momo-td-review-summary-row {
+  border-top:1px solid color-mix(in srgb,var(--background-modifier-border) 58%,transparent) !important;
+}
+.momoan-todo-view .momo-td-review-summary-label {
+  color:var(--text-muted) !important;
+  font-size:.75rem !important;
+  font-weight:590 !important;
+}
+.momoan-todo-view .momo-td-review-summary-right {
+  min-width:0 !important;
+  display:flex !important;
+  align-items:baseline !important;
+  justify-content:flex-end !important;
+  gap:7px !important;
+  text-align:right !important;
+}
+.momoan-todo-view .momo-td-review-summary-value {
+  color:var(--text-normal) !important;
+  font-size:.84rem !important;
+  font-weight:690 !important;
+  font-variant-numeric:tabular-nums !important;
+}
+.momoan-todo-view .momo-td-review-summary-sub {
+  color:var(--text-muted) !important;
+  opacity:.66 !important;
+  font-size:.69rem !important;
+  white-space:nowrap !important;
+}
+
+.momoan-todo-view .momo-td-review-section { margin-top:15px !important; }
+.momoan-todo-view .momo-td-review-section-title {
+  margin-bottom:8px !important;
+  font-size:.77rem !important;
+  font-weight:670 !important;
+  color:var(--text-normal) !important;
+}
+
+/* Category completion mirrors the todo taxonomy: neutral pill + quiet dot + count. */
+.momoan-todo-view .momo-td-review-category-list {
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:0 !important;
+  border-top:1px solid color-mix(in srgb,var(--background-modifier-border) 58%,transparent) !important;
+}
+.momoan-todo-view .momo-td-review-category-row {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:10px !important;
+  min-height:34px !important;
+  padding:6px 2px !important;
+  border-radius:0 !important;
+  background:transparent !important;
+}
+.momoan-todo-view .momo-td-review-category-row + .momo-td-review-category-row {
+  border-top:1px solid color-mix(in srgb,var(--background-modifier-border) 58%,transparent) !important;
+}
+.momoan-todo-view .momo-td-review-category-label {
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:7px !important;
+  min-width:0 !important;
+}
+.momoan-todo-view .momo-td-review-category-dot {
+  width:5px !important;
+  height:5px !important;
+  border-radius:50% !important;
+  background:var(--text-faint) !important;
+  flex:0 0 5px !important;
+  opacity:.78 !important;
+}
+.momoan-todo-view .momo-td-review-category-name {
+  font-size:.74rem !important;
+  font-weight:600 !important;
+  color:var(--text-muted) !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+.momoan-todo-view .momo-td-review-category-count {
+  font-size:.77rem !important;
+  font-weight:690 !important;
+  color:var(--text-normal) !important;
+  font-variant-numeric:tabular-nums !important;
+}
+
+.momoan-todo-view .momo-td-review-journal-section { margin-top:17px !important; }
+.momoan-todo-view .momo-td-review-journal {
+  padding:10px 2px 2px !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  border-top:1px solid color-mix(in srgb,var(--background-modifier-border) 58%,transparent) !important;
+  min-height:0 !important;
+}
+.momoan-todo-view .momo-td-review-journal p,
+.momoan-todo-view .momo-td-review-journal li {
+  font-size:.77rem !important;
+  line-height:1.7 !important;
+  color:var(--text-normal) !important;
+}
+.momoan-todo-view .momo-td-review-empty {
+  font-size:.72rem !important;
+  line-height:1.5 !important;
+  color:var(--text-muted) !important;
+  opacity:.72 !important;
+}
+
+/* Year/month picker */
+.modal:has(.momo-month-picker-modal) {
+  width:min(410px,calc(100vw - 32px)) !important;
+  max-width:min(410px,calc(100vw - 32px)) !important;
+  border-radius:16px !important;
+}
+.modal:has(.momo-month-picker-modal) .modal-content {
+  padding:22px 24px 20px !important;
+}
+.momo-month-picker-head {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:12px !important;
+  margin-bottom:15px !important;
+}
+.momo-month-picker-head h3 {
+  margin:0 !important;
+  font-size:1rem !important;
+  font-weight:690 !important;
+}
+.momo-month-picker-year-control {
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:2px !important;
+}
+.momo-month-picker-year-label {
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:var(--text-normal) !important;
+  min-width:64px !important;
+  height:30px !important;
+  padding:0 6px !important;
+  font-size:.82rem !important;
+  font-weight:650 !important;
+}
+.momo-month-picker-grid {
+  display:grid !important;
+  grid-template-columns:repeat(4,1fr) !important;
+  gap:6px !important;
+}
+.momo-month-picker-month {
+  min-height:38px !important;
+  border:0 !important;
+  border-radius:9px !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:var(--text-muted) !important;
+  font-size:.8rem !important;
+  font-weight:590 !important;
+}
+.momo-month-picker-month:hover { background:var(--background-modifier-hover) !important; }
+.momo-month-picker-month.is-selected {
+  background:var(--momo-accent-soft) !important;
+  color:var(--text-normal) !important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--momo-accent) 45%,transparent) !important;
+}
+.momo-month-picker-month.is-current::after {
+  content:"·" !important;
+  display:inline-block !important;
+  margin-left:3px !important;
+  color:var(--text-faint) !important;
+}
+.momo-month-picker-actions {
+  display:flex !important;
+  justify-content:flex-end !important;
+  gap:7px !important;
+  margin-top:17px !important;
+}
+
+@media(max-width:720px) {
+  .momoan-todo-view .momo-td-group-head { margin-left:2px !important; }
+  .momoan-todo-view .momo-td-review-category-list { grid-template-columns:1fr !important; }
+  .momoan-todo-view .momo-td-review-summary-right {
+    flex-direction:column !important;
+    align-items:flex-end !important;
+    gap:2px !important;
+  }
+  .momoan-todo-view .momo-td-review-top {
+    flex-direction:column !important;
+    align-items:stretch !important;
+  }
+  .momoan-todo-view .momo-td-review-open { align-self:flex-start !important; }
+}
+
+
+/* v0.7.19 — monthly review cleanup + minimal utility actions */
+.momoan-todo-view .momo-td-review-summary {
+  margin-bottom:14px !important;
+}
+
+.momoan-todo-view .momo-td-review-summary-row {
+  min-height:40px !important;
+}
+
+@media (max-width:720px) {
+  .momoan-todo-view .momo-td-review-top {
+    margin-bottom:7px !important;
+  }
+
+  .momoan-todo-view .momo-td-review-category-list {
+    grid-template-columns:1fr !important;
+  }
+
+  .momoan-todo-view .momo-td-review-category-row {
+    min-height:32px !important;
+    padding:6px 1px !important;
+  }
+}
+
+/* v0.7.19 — inline monthly review cleanup + minimal utility actions */
+
+/* Calendar / review utility buttons should read like quiet text actions, not pills. */
+.momoan-todo-view .momo-td-cal-today,
+.momoan-todo-view .momo-td-review-open {
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:var(--text-muted) !important;
+  opacity:.72 !important;
+  border-radius:6px !important;
+}
+
+.momoan-todo-view .momo-td-cal-today {
+  padding:0 2px !important;
+  min-height:24px !important;
+  height:24px !important;
+  font-size:.72rem !important;
+  font-weight:610 !important;
+}
+
+.momoan-todo-view .momo-td-cal-today:hover,
+.momoan-todo-view .momo-td-cal-today.is-current {
+  background:transparent !important;
+  color:var(--text-normal) !important;
+  opacity:.94 !important;
+}
+
+.momoan-todo-view .momo-td-review-panel {
+  padding:4px 0 18px !important;
+}
+
+.momoan-todo-view .momo-td-review-tools {
+  display:flex !important;
+  justify-content:flex-end !important;
+  margin-bottom:4px !important;
+}
+
+.momoan-todo-view .momo-td-review-open {
+  min-height:24px !important;
+  height:24px !important;
+  padding:0 2px !important;
+  font-size:.71rem !important;
+  font-weight:610 !important;
+}
+
+.momoan-todo-view .momo-td-review-open:hover {
+  background:transparent !important;
+  color:var(--text-normal) !important;
+  opacity:.94 !important;
+}
+
+/* Summary stays minimal after removing the duplicated top header row. */
+.momoan-todo-view .momo-td-review-summary {
+  border-top:1px solid var(--background-modifier-border) !important;
+  border-bottom:1px solid var(--background-modifier-border) !important;
+  margin-bottom:16px !important;
+}
+
+/* Category completion should feel like a clean list, not gray chips. */
+.momoan-todo-view .momo-td-review-category-list {
+  display:grid !important;
+  grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+  column-gap:18px !important;
+  row-gap:0 !important;
+}
+
+.momoan-todo-view .momo-td-review-category-row {
+  min-height:30px !important;
+  padding:4px 0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  border-bottom:1px solid color-mix(in srgb,var(--background-modifier-border) 56%,transparent) !important;
+}
+
+.momoan-todo-view .momo-td-review-category-label {
+  gap:7px !important;
+}
+
+.momoan-todo-view .momo-td-review-category-dot {
+  width:5px !important;
+  height:5px !important;
+  flex:0 0 5px !important;
+  opacity:.72 !important;
+}
+
+.momoan-todo-view .momo-td-review-category-name {
+  font-size:.74rem !important;
+  font-weight:590 !important;
+  color:var(--text-muted) !important;
+  opacity:.92 !important;
+}
+
+.momoan-todo-view .momo-td-review-category-count {
+  font-size:.79rem !important;
+  font-weight:680 !important;
+}
+
+/* Journal area stays quiet; empty bullets are sanitized in JS. */
+.momoan-todo-view .momo-td-review-journal {
+  padding:10px 0 0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  min-height:0 !important;
+}
+
+.momoan-todo-view .momo-td-review-journal > :first-child {
+  margin-top:0 !important;
+}
+
+@media(max-width:720px) {
+  .momoan-todo-view .momo-td-review-category-list {
+    grid-template-columns:1fr !important;
+    column-gap:0 !important;
+  }
+
+  .momoan-todo-view .momo-td-review-tools {
+    justify-content:flex-start !important;
+    margin-bottom:6px !important;
+  }
+}
+
+/* v0.7.20 — monthly review stats focus on actual activity */
+.momoan-todo-view .momo-td-review-summary-right {
+  max-width:58% !important;
+}
+
+.momoan-todo-view .momo-td-review-summary-value,
+.momoan-todo-view .momo-td-review-summary-sub {
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+}
+
+.momoan-todo-view .momo-td-review-summary-row {
+  min-height:40px !important;
+}
+@media(max-width:720px) {
+  .momoan-todo-view .momo-td-review-summary-right {
+    max-width:100% !important;
+  }
+}
+
+/* v0.7.21 — monthly review typography + paired review actions + calendar header balance */
+
+/* Keep the month title optically centered: left/right header columns have equal width. */
+.momoan-todo-view .momo-td-cal-head {
+  grid-template-columns:72px minmax(0,1fr) 72px !important;
+  gap:0 !important;
+}
+
+.momoan-todo-view .momo-td-cal-head > .momo-td-cal-nav {
+  justify-self:start !important;
+}
+
+.momoan-todo-view .momo-td-cal-month-btn {
+  justify-self:center !important;
+}
+
+.momoan-todo-view .momo-td-cal-head-actions {
+  justify-self:end !important;
+  width:72px !important;
+  display:grid !important;
+  grid-template-columns:32px 32px !important;
+  justify-content:end !important;
+  align-items:center !important;
+  gap:4px !important;
+}
+
+.momoan-todo-view .momo-td-cal-today {
+  min-width:32px !important;
+  width:32px !important;
+  height:28px !important;
+  min-height:28px !important;
+  padding:0 !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  color:var(--text-muted) !important;
+  opacity:.48 !important;
+  font-size:.68rem !important;
+  font-weight:560 !important;
+  letter-spacing:-.02em !important;
+  background:transparent !important;
+}
+
+.momoan-todo-view .momo-td-cal-today:hover {
+  color:var(--text-normal) !important;
+  opacity:.78 !important;
+  background:transparent !important;
+}
+
+.momoan-todo-view .momo-td-cal-today.is-current {
+  color:var(--text-muted) !important;
+  opacity:.52 !important;
+  background:transparent !important;
+}
+
+/* Review utilities: two quiet text actions on one line. */
+.momoan-todo-view .momo-td-review-tools {
+  justify-content:flex-end !important;
+  align-items:center !important;
+  gap:14px !important;
+  margin-bottom:5px !important;
+}
+
+.momoan-todo-view .momo-td-review-open {
+  min-height:24px !important;
+  height:24px !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:var(--text-muted) !important;
+  opacity:.62 !important;
+  font-size:.69rem !important;
+  font-weight:560 !important;
+  letter-spacing:-.01em !important;
+}
+
+.momoan-todo-view .momo-td-review-open:hover {
+  color:var(--text-normal) !important;
+  opacity:.9 !important;
+  background:transparent !important;
+}
+
+.momoan-todo-view .momo-td-review-image-save:disabled {
+  opacity:.34 !important;
+  cursor:default !important;
+}
+
+/* Summary values should not overpower the category/group labels. */
+.momoan-todo-view .momo-td-review-summary-row {
+  min-height:38px !important;
+  padding:6px 2px !important;
+}
+
+.momoan-todo-view .momo-td-review-summary-label {
+  font-size:.73rem !important;
+  font-weight:560 !important;
+  opacity:.9 !important;
+}
+
+.momoan-todo-view .momo-td-review-summary-value {
+  font-size:.76rem !important;
+  font-weight:620 !important;
+  letter-spacing:-.012em !important;
+}
+
+.momoan-todo-view .momo-td-review-summary-sub {
+  font-size:.66rem !important;
+  font-weight:540 !important;
+}
+
+@media(max-width:720px) {
+  .momoan-todo-view .momo-td-cal-head {
+    grid-template-columns:68px minmax(0,1fr) 68px !important;
+  }
+
+  .momoan-todo-view .momo-td-cal-head-actions {
+    width:68px !important;
+    grid-template-columns:30px 32px !important;
+    gap:4px !important;
+  }
+
+  .momoan-todo-view .momo-td-cal-today {
+    min-width:30px !important;
+    width:30px !important;
+    font-size:.67rem !important;
+  }
+
+  .momoan-todo-view .momo-td-review-tools {
+    justify-content:flex-end !important;
+    margin-bottom:5px !important;
+  }
+
+  .momoan-todo-view .momo-td-review-summary-right {
+    flex-direction:row !important;
+    align-items:baseline !important;
+    justify-content:flex-end !important;
+    gap:6px !important;
+  }
+}
+
+/* v0.7.22 — hide Today when already on today; keep header geometry stable */
+.momoan-todo-view .momo-td-cal-today.is-current {
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+
+/* v0.8.1 — routine manager actions + delete dialog overflow fix */
+.momo-routine-actions {
+  flex-wrap: nowrap !important;
+}
+
+.momo-routine-delete-modal,
+.momo-routine-delete-modal .momo-delete-choices,
+.momo-routine-delete-modal .momo-delete-choice {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.momo-routine-delete-modal .momo-delete-choice {
+  overflow: hidden !important;
+}
+
+.momo-routine-delete-modal .momo-delete-choice-title,
+.momo-routine-delete-modal .momo-delete-choice-desc {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  white-space: normal !important;
+  word-break: keep-all !important;
+  overflow-wrap: break-word !important;
+  text-overflow: clip !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 600px) {
+  .modal:has(.momo-routine-delete-modal) .modal-content {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+}
+
+/* v0.8.2 — first-run setup */
+.modal:has(.momo-first-run-modal) {
+  width:min(620px, calc(100vw - 32px)) !important;
+  max-width:min(620px, calc(100vw - 32px)) !important;
+  border-radius:18px !important;
+}
+
+.modal:has(.momo-first-run-modal) .modal-content {
+  padding:28px 30px 26px !important;
+  max-height:min(86vh, 760px) !important;
+}
+
+.momo-first-run-modal {
+  width:100% !important;
+  min-width:0 !important;
+  box-sizing:border-box !important;
+}
+
+.momo-first-run-head {
+  margin-bottom:24px !important;
+}
+
+.momo-first-run-head h2 {
+  margin:0 0 6px !important;
+  font-size:1.25rem !important;
+  font-weight:720 !important;
+  letter-spacing:-.03em !important;
+}
+
+.momo-first-run-sub {
+  color:var(--text-muted) !important;
+  font-size:.8rem !important;
+  line-height:1.5 !important;
+}
+
+.momo-first-run-section + .momo-first-run-section {
+  margin-top:22px !important;
+}
+
+.momo-first-run-label {
+  margin-bottom:8px !important;
+  color:var(--text-normal) !important;
+  font-size:.79rem !important;
+  font-weight:670 !important;
+}
+
+.momo-first-run-input {
+  width:100% !important;
+  min-height:38px !important;
+  padding:0 11px !important;
+  border-radius:9px !important;
+  box-sizing:border-box !important;
+  font-size:.82rem !important;
+}
+
+.momo-first-run-help {
+  margin-top:6px !important;
+  color:var(--text-muted) !important;
+  opacity:.7 !important;
+  font-size:.69rem !important;
+  line-height:1.45 !important;
+}
+
+.momo-first-run-presets {
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  gap:7px !important;
+}
+
+.momo-first-run-preset {
+  min-width:0 !important;
+  min-height:78px !important;
+  padding:11px 12px !important;
+  border:1px solid var(--background-modifier-border) !important;
+  border-radius:11px !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  text-align:left !important;
+  color:var(--text-normal) !important;
+  transition:border-color .14s ease, background-color .14s ease !important;
+}
+
+.momo-first-run-preset:hover {
+  background:var(--background-modifier-hover) !important;
+}
+
+.momo-first-run-preset.is-selected {
+  border-color:color-mix(in srgb,var(--text-muted) 68%,var(--background-modifier-border)) !important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--text-muted) 38%,transparent) !important;
+}
+
+.momo-first-run-preset-title {
+  margin-bottom:5px !important;
+  font-size:.79rem !important;
+  font-weight:670 !important;
+}
+
+.momo-first-run-preset-desc {
+  color:var(--text-muted) !important;
+  opacity:.76 !important;
+  font-size:.68rem !important;
+  line-height:1.45 !important;
+  word-break:keep-all !important;
+}
+
+.momo-first-run-preview {
+  margin-top:10px !important;
+  padding:10px 12px !important;
+  border-top:1px solid var(--background-modifier-border) !important;
+  border-bottom:1px solid var(--background-modifier-border) !important;
+}
+
+.momo-first-run-preview-title {
+  margin-bottom:4px !important;
+  color:var(--text-muted) !important;
+  opacity:.72 !important;
+  font-size:.67rem !important;
+  font-weight:620 !important;
+}
+
+.momo-first-run-preview-row {
+  display:flex !important;
+  align-items:baseline !important;
+  justify-content:space-between !important;
+  gap:14px !important;
+  min-height:27px !important;
+  padding:3px 0 !important;
+}
+
+.momo-first-run-preview-category {
+  flex:0 0 auto !important;
+  color:var(--text-normal) !important;
+  font-size:.76rem !important;
+  font-weight:620 !important;
+}
+
+.momo-first-run-preview-groups {
+  min-width:0 !important;
+  color:var(--text-muted) !important;
+  opacity:.7 !important;
+  font-size:.7rem !important;
+  text-align:right !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+
+.momo-first-run-footer {
+  display:flex !important;
+  justify-content:flex-end !important;
+  margin-top:22px !important;
+}
+
+.momo-first-run-start {
+  min-height:36px !important;
+  padding:0 15px !important;
+  border-radius:9px !important;
+  font-size:.78rem !important;
+  font-weight:650 !important;
+}
+
+@media(max-width:600px) {
+  .modal:has(.momo-first-run-modal) .modal-content {
+    padding:22px 18px 22px !important;
+  }
+
+  .momo-first-run-presets {
+    grid-template-columns:1fr !important;
+  }
+
+  .momo-first-run-preset {
+    min-height:0 !important;
+    padding:10px 11px !important;
+  }
+
+  .momo-first-run-preview-row {
+    align-items:flex-start !important;
+  }
+
+  .momo-first-run-preview-groups {
+    white-space:normal !important;
+  }
+}
+
+
+/* v0.8.3 — first-run preview command */
+.momo-first-run-preview-note {
+  margin-top:8px !important;
+  color:var(--text-muted) !important;
+  opacity:.72 !important;
+  font-size:.74rem !important;
+  line-height:1.45 !important;
+}
+
+/* v0.8.6 — first-run layout stabilization + compact public guidance */
+.modal.momo-first-run-shell {
+  width:min(680px, calc(100vw - 32px)) !important;
+  max-width:min(680px, calc(100vw - 32px)) !important;
+  border-radius:18px !important;
+}
+
+.modal.momo-first-run-shell .modal-content {
+  padding:28px 30px 26px !important;
+  max-height:min(88vh, 820px) !important;
+  overflow-x:hidden !important;
+}
+
+.momo-first-run-modal,
+.momo-first-run-modal * {
+  box-sizing:border-box !important;
+}
+
+.momo-first-run-presets {
+  width:100% !important;
+  min-width:0 !important;
+  align-items:stretch !important;
+}
+
+.momo-first-run-preset {
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  justify-content:flex-start !important;
+  width:100% !important;
+  height:auto !important;
+  min-width:0 !important;
+  min-height:92px !important;
+  white-space:normal !important;
+  line-height:1.35 !important;
+  overflow:hidden !important;
+}
+
+.momo-first-run-preset-title,
+.momo-first-run-preset-desc {
+  display:block !important;
+  width:100% !important;
+  min-width:0 !important;
+  white-space:normal !important;
+  overflow-wrap:break-word !important;
+}
+
+.momo-first-run-preset-title {
+  flex:0 0 auto !important;
+}
+
+.momo-first-run-preset-desc {
+  flex:1 1 auto !important;
+}
+
+.momo-first-run-guide {
+  margin-top:18px !important;
+  padding-top:14px !important;
+  border-top:1px solid var(--background-modifier-border) !important;
+}
+
+.momo-first-run-guide-title {
+  margin-bottom:7px !important;
+  color:var(--text-normal) !important;
+  font-size:.73rem !important;
+  font-weight:660 !important;
+}
+
+.momo-first-run-guide-row {
+  display:grid !important;
+  grid-template-columns:64px minmax(0,1fr) !important;
+  gap:10px !important;
+  align-items:start !important;
+  padding:3px 0 !important;
+}
+
+.momo-first-run-guide-label {
+  color:var(--text-muted) !important;
+  opacity:.8 !important;
+  font-size:.68rem !important;
+  font-weight:620 !important;
+  white-space:nowrap !important;
+}
+
+.momo-first-run-guide-text {
+  min-width:0 !important;
+  color:var(--text-muted) !important;
+  opacity:.72 !important;
+  font-size:.68rem !important;
+  line-height:1.55 !important;
+  word-break:keep-all !important;
+  overflow-wrap:break-word !important;
+}
+
+@media(max-width:600px) {
+  .modal.momo-first-run-shell .modal-content {
+    padding:22px 18px 22px !important;
+  }
+
+  .momo-first-run-preset {
+    min-height:0 !important;
+  }
+
+  .momo-first-run-guide-row {
+    grid-template-columns:1fr !important;
+    gap:2px !important;
+  }
+}
+
+/* v0.9.0 — group category picker alignment */
+.momo-settings-category-picker .momo-pill-field {
+  justify-content:center !important;
+  text-align:center !important;
+}
+
+/* v0.9.1 — settings polish */
+.momo-settings-category-picker .momo-pill-field {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+}
+.momo-settings-category-picker .momo-pill-field span {
+  width:100% !important;
+  text-align:center !important;
+}
+
+/* v0.9.2 — setup/onboarding guide + broader accent + 12h time UI */
+.momo-first-run-one-list-note {
+  margin-top:7px !important;
+  color:var(--text-faint) !important;
+  font-size:.7rem !important;
+  line-height:1.5 !important;
+}
+.momo-first-run-preset:disabled {
+  cursor:default !important;
+  opacity:.72 !important;
+}
+.momo-first-run-preset:disabled:hover {
+  background:transparent !important;
+}
+.momo-first-run-start{
+  background:var(--momo-accent) !important;
+  border-color:var(--momo-accent) !important;
+  color:var(--text-on-accent) !important;
+  box-shadow:none !important;
+}
+.momo-first-run-start:hover{
+  background:var(--momo-accent-strong) !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.momo-time-pair.is-12-hour {
+  grid-template-columns:minmax(72px,.8fr) minmax(54px,.7fr) minmax(54px,.7fr) !important;
+}
+.momo-time-pair.is-12-hour > button:first-child {
+  color:var(--text-normal) !important;
+  font-weight:620 !important;
+}
+
+/* Accent color should affect the plugin's major interactive surfaces. */
+.momoan-todo-view .momo-td-view-toggle.is-on .momo-td-mini-switch,
+.momoan-todo-view .momo-task-check.is-checked,
+.momoan-todo-settings .checkbox-container.is-enabled {
+  background:var(--momo-accent) !important;
+  border-color:var(--momo-accent) !important;
+}
+.momoan-todo-view .momo-td-day-count,
+.momoan-todo-view .momo-td-count,
+.momoan-todo-view .momo-td-head-progress-done {
+  color:var(--momo-accent) !important;
+}
+
+
+
+/* v0.9.3 — start guide flow */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* v0.9.5 — onboarding guide: minimal, stable, readable */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* v0.9.6 · settings polish, segment alignment, guide cleanup */
+.momoan-todo-settings .momo-current-storage-path {
+  display:inline-flex !important;
+  align-items:center !important;
+  min-height:32px !important;
+  max-width:min(420px, 48vw) !important;
+  padding:5px 10px !important;
+  border-radius:8px !important;
+  background:var(--background-secondary) !important;
+  color:var(--text-normal) !important;
+  font-family:var(--font-monospace) !important;
+  font-size:.78rem !important;
+  line-height:1.35 !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--background-modifier-border) 55%,transparent) !important;
+}
+
+.momo-settings-tabs {
+  height:42px !important;
+  padding:3px !important;
+  gap:0 !important;
+  align-items:stretch !important;
+  border-radius:11px !important;
+  box-sizing:border-box !important;
+}
+.momo-settings-tab {
+  height:36px !important;
+  min-height:36px !important;
+  margin:0 !important;
+  padding:0 12px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  line-height:1 !important;
+  border-radius:8px !important;
+  box-sizing:border-box !important;
+}
+.momo-settings-tab.is-active {
+  height:36px !important;
+  transform:none !important;
+}
+
+.momo-text-prompt-actions button {
+  min-height:34px !important;
+  height:34px !important;
+  padding:0 12px !important;
+  border-radius:8px !important;
+  box-shadow:none !important;
+  font-size:.9rem !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width:720px) {
+  .momoan-todo-settings .momo-current-storage-path { max-width:52vw !important; }
+  
+  
+}
+
+/* v0.9.8 · rename/edit action consistency */
+.momo-text-prompt-actions {
+  display:flex !important;
+  justify-content:flex-end !important;
+  align-items:center !important;
+  gap:8px !important;
+  margin-top:18px !important;
+}
+.momo-text-prompt-actions button,
+.momo-settings-inline-edit button {
+  height:38px !important;
+  min-height:38px !important;
+  padding:7px 14px !important;
+  border-radius:10px !important;
+  box-shadow:none !important;
+  font-size:.9rem !important;
+  line-height:1 !important;
+  box-sizing:border-box !important;
+}
+.momo-settings-inline-edit {
+  align-items:center !important;
+  gap:8px !important;
+}
+.momo-settings-inline-edit input {
+  height:38px !important;
+  min-height:38px !important;
+  border-radius:8px !important;
+  box-sizing:border-box !important;
+}
+
+/* v0.9.9 · onboarding guide rebuilt from actual in-app patterns */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* v0.9.10 — onboarding: real UI grammar, centered composition, explicit line breaks */
+
+
+
+
+
+
+
+
+
+
+
+/* structure = the same hierarchy as the task list, not abstract cards */
+
+
+
+
+
+
+
+
+/* main controls mirror the real task panel header */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* calendar cells use the same visual grammar as the real calendar */
+
+
+
+
+
+
+
+
+/* routine rule rows: copy on left, tiny calendar state on right */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* v0.9.11 — onboarding guide: first-use clarity */
+
+
+
+
+
+
+
+
+
+/* 1/7 — explicit category / group / task mapping */
+
+
+
+
+
+
+
+
+/* 3/7 — routine rules read as two complete statements */
+
+
+
+
+
+/* 4/7 — Preview: calendar state + plain-language meaning */
+
+
+
+
+
+/* 5/7 — calendar legend: marker -> date -> concise meaning */
+
+
+
+
+/* 6/7 — interaction always maps gesture to result */
+
+
+
+
+
+
+
+/* 7/7 — keep the monthly-review example self-contained */
+
+
+
+
+
+
+
+
+/* v0.9.12 — onboarding: first-use flow + stable skeleton */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* welcome */
+
+
+
+
+
+/* structure */
+
+
+
+
+
+
+
+/* controls */
+
+
+
+
+
+
+
+/* routine + preview */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* calendar */
+
+
+
+
+
+
+
+/* manage + monthly review */
+
+
+
+
+
+
+
+
+/* setup wizard */
+.modal.momo-first-run-shell{width:min(600px,calc(100vw - 28px))!important;max-width:600px!important;}
+.modal.momo-first-run-shell .modal-content{padding:0!important;}
+.momo-first-run-modal.momo-setup-wizard{width:100%!important;min-height:480px!important;padding:26px 30px 24px!important;box-sizing:border-box!important;display:grid!important;grid-template-rows:30px 54px 230px 70px 44px!important;align-content:start!important;}
+.momo-setup-top{display:flex!important;align-items:center!important;justify-content:space-between!important;height:30px!important;}
+.momo-setup-kicker,.momo-setup-step{font-size:.67rem!important;color:var(--text-muted)!important;font-weight:650!important;}
+.momo-setup-title{height:54px!important;margin:0!important;display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;font-size:1.08rem!important;font-weight:760!important;letter-spacing:-.02em!important;}
+.momo-setup-body{height:230px!important;display:flex!important;align-items:center!important;justify-content:center!important;}
+.momo-setup-desc{height:70px!important;display:grid!important;grid-template-rows:1fr 1fr!important;align-items:center!important;text-align:center!important;font-size:.73rem!important;line-height:1.45!important;color:var(--text-muted)!important;word-break:keep-all!important;}
+.momo-setup-card{width:min(430px,100%)!important;margin:0 auto!important;}
+.momo-setup-storage-card{display:grid!important;gap:10px!important;}
+.momo-setup-field-label{font-size:.66rem!important;font-weight:650!important;color:var(--text-muted)!important;}
+.momo-setup-storage-input{width:100%!important;height:42px!important;box-sizing:border-box!important;}
+.momo-setup-preset-grid{width:min(460px,100%)!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important;}
+.momo-setup-preset-card{height:128px!important;padding:16px 14px!important;border-radius:10px!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important;text-align:left!important;background:transparent!important;box-shadow:inset 0 0 0 1px var(--background-modifier-border)!important;}
+.momo-setup-preset-card.is-selected{box-shadow:inset 0 0 0 1.5px var(--momo-accent)!important;background:var(--momo-accent-soft)!important;}
+.momo-setup-preset-title{font-size:.74rem!important;font-weight:700!important;color:var(--text-normal)!important;margin-bottom:10px!important;}
+.momo-setup-preset-categories{font-size:.62rem!important;line-height:1.55!important;color:var(--text-muted)!important;word-break:keep-all!important;}
+.momo-setup-summary{width:min(420px,100%)!important;display:grid!important;}
+.momo-setup-summary-row{height:52px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:18px!important;border-bottom:1px solid color-mix(in srgb,var(--background-modifier-border) 44%,transparent)!important;font-size:.72rem!important;}
+.momo-setup-summary-row span:first-child{color:var(--text-muted)!important;}
+.momo-setup-summary-row span:last-child{font-weight:680!important;color:var(--text-normal)!important;text-align:right!important;}
+.momo-setup-footer{height:44px!important;display:grid!important;grid-template-columns:104px minmax(0,1fr) 140px!important;align-items:end!important;gap:12px!important;}
+.momo-setup-footer button{height:34px!important;min-height:34px!important;border-radius:8px!important;font-size:.7rem!important;}
+.momo-setup-footer button:last-child{grid-column:3!important;}
+
+@media (max-width:620px){
+  .modal.momo-first-run-shell{width:min(96vw,560px)!important;}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  .momo-first-run-modal.momo-setup-wizard{min-height:500px!important;padding:22px 18px 20px!important;grid-template-rows:30px 58px 250px 82px 44px!important;}
+  .momo-setup-preset-grid{grid-template-columns:1fr!important;gap:7px!important;}
+  .momo-setup-preset-card{height:66px!important;padding:11px 13px!important;}
+  .momo-setup-preset-title{margin-bottom:4px!important;}
+  .momo-setup-footer{grid-template-columns:82px minmax(0,1fr) 130px!important;}
+}
+
+/* v0.9.13 — onboarding: first-use mental model, stable spacing, no scroll */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 1 — screen layout */
+
+
+
+
+
+
+
+
+
+
+
+
+/* shared date-task mini UI */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 3 — structure */
+
+
+
+
+
+/* 4 — routine concept first, generation second */
+
+
+
+
+
+
+
+
+
+
+/* 5 — calendar states */
+
+
+
+
+/* 6 — task management */
+
+
+
+
+/* 7 — monthly review alone */
+
+
+
+
+
+/* 8 — setup / existing-vault handoff */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* v0.9.14 — final onboarding polish: one compact skeleton + setup handoff */
+.modal.momo-first-run-shell{
+  width:min(620px,calc(100vw - 28px))!important;
+  max-width:620px!important;
+  height:auto!important;
+  max-height:calc(100dvh - 28px)!important;
+  overflow:hidden!important;
+}
+.modal.momo-first-run-shell .modal-content{
+  padding:0!important;
+  margin:0!important;
+  max-height:none!important;
+  overflow:hidden!important;
+}
+
+/* Guide: every desktop slide occupies the exact same 446px shell. */
+
+.momo-first-run-modal.momo-setup-wizard .momo-setup-top{
+  height:28px!important;
+  min-height:28px!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+  align-items:center!important;
+}
+
+.momo-first-run-modal.momo-setup-wizard .momo-setup-kicker, .momo-first-run-modal.momo-setup-wizard .momo-setup-step{
+  font-size:.68rem!important;
+  line-height:1!important;
+}
+
+.momo-first-run-modal.momo-setup-wizard .momo-setup-title{
+  width:100%!important;
+  height:40px!important;
+  min-height:40px!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  font-size:1.04rem!important;
+  line-height:1.2!important;
+  font-weight:760!important;
+  letter-spacing:-.025em!important;
+}
+
+
+.momo-first-run-modal.momo-setup-wizard .momo-setup-desc{
+  height:62px!important;
+  min-height:62px!important;
+  margin:0 auto!important;
+  padding:6px 0 0!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-rows:1fr 1fr!important;
+  align-items:center!important;
+  text-align:center!important;
+  font-size:.72rem!important;
+  line-height:1.42!important;
+  color:var(--text-muted)!important;
+  word-break:keep-all!important;
+  overflow:hidden!important;
+}
+
+.momo-first-run-modal.momo-setup-wizard .momo-setup-footer{
+  width:100%!important;
+  height:40px!important;
+  min-height:40px!important;
+  margin:0!important;
+  display:grid!important;
+  grid-template-columns:96px minmax(0,1fr) 112px!important;
+  align-items:end!important;
+  gap:10px!important;
+}
+.momo-first-run-modal.momo-setup-wizard .momo-setup-footer button{
+  width:96px!important;
+  height:32px!important;
+  min-height:32px!important;
+  margin:0!important;
+  padding:0 12px!important;
+  border-radius:8px!important;
+  font-size:.68rem!important;
+}
+.momo-first-run-modal.momo-setup-wizard .momo-setup-footer button:last-child{
+  width:112px!important;
+  grid-column:3!important;
+  justify-self:end!important;
+}
+
+/* Setup wizard uses the same width, header, title, copy and footer tokens. */
+.momo-first-run-modal.momo-setup-wizard{
+  width:100%!important;
+  height:446px!important;
+  min-height:446px!important;
+  max-height:calc(100dvh - 28px)!important;
+  padding:18px 22px!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+  display:grid!important;
+  grid-template-rows:28px 40px 240px 62px 40px!important;
+  align-content:start!important;
+}
+.momo-first-run-modal.momo-setup-wizard .momo-setup-top{
+  display:flex!important;
+  justify-content:space-between!important;
+}
+.momo-first-run-modal.momo-setup-wizard .momo-setup-body{
+  width:100%!important;
+  height:240px!important;
+  min-height:240px!important;
+  margin:0!important;
+  padding:8px 0!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+}
+.momo-first-run-modal.momo-setup-wizard .momo-setup-card,
+.momo-first-run-modal.momo-setup-wizard .momo-setup-summary{
+  width:min(430px,100%)!important;
+}
+.momo-first-run-modal.momo-setup-wizard .momo-setup-preset-grid{
+  width:min(468px,100%)!important;
+  gap:10px!important;
+}
+.momo-first-run-modal.momo-setup-wizard .momo-setup-preset-card{
+  height:126px!important;
+  border-radius:10px!important;
+}
+
+/* Mobile: keep the product skeleton, but let the visual/body rows absorb height. */
+@media (max-width:620px){
+  .modal.momo-first-run-shell{
+    width:min(96vw,520px)!important;
+    max-width:520px!important;
+    height:auto!important;
+    max-height:calc(100dvh - 16px)!important;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  .momo-first-run-modal.momo-setup-wizard{
+    height:min(446px,calc(100dvh - 16px))!important;
+    min-height:0!important;
+    max-height:calc(100dvh - 16px)!important;
+    padding:14px 16px!important;
+    grid-template-rows:26px 36px minmax(210px,1fr) 54px 36px!important;
+  }
+  .momo-first-run-modal.momo-setup-wizard .momo-setup-top{
+    height:26px!important;
+    min-height:26px!important;
+  }
+  .momo-first-run-modal.momo-setup-wizard .momo-setup-title{
+    height:36px!important;
+    min-height:36px!important;
+    font-size:1rem!important;
+  }
+  .momo-first-run-modal.momo-setup-wizard .momo-setup-body{
+    height:auto!important;
+    min-height:0!important;
+    padding:6px 0!important;
+  }
+  .momo-first-run-modal.momo-setup-wizard .momo-setup-desc{
+    height:54px!important;
+    min-height:54px!important;
+    padding-top:4px!important;
+    font-size:.68rem!important;
+    line-height:1.38!important;
+  }
+  .momo-first-run-modal.momo-setup-wizard .momo-setup-preset-grid{
+    grid-template-columns:1fr!important;
+    gap:6px!important;
+  }
+  .momo-first-run-modal.momo-setup-wizard .momo-setup-preset-card{
+    height:60px!important;
+    padding:9px 12px!important;
+  }
+  .momo-first-run-modal.momo-setup-wizard .momo-setup-preset-title{
+    margin-bottom:3px!important;
+  }
+  .momo-first-run-modal.momo-setup-wizard .momo-setup-footer{
+    height:36px!important;
+    min-height:36px!important;
+    grid-template-columns:78px minmax(0,1fr) 96px!important;
+  }
+  .momo-first-run-modal.momo-setup-wizard .momo-setup-footer button{
+    width:78px!important;
+    height:30px!important;
+    min-height:30px!important;
+  }
+  .momo-first-run-modal.momo-setup-wizard .momo-setup-footer button:last-child{
+    width:96px!important;
+  }
+}
+
+/* Very short windows: preserve controls and compress illustrations instead of scrolling. */
+@media (max-width:620px) and (max-height:400px){
+  
+  
+  .momo-first-run-modal.momo-setup-wizard{
+    padding-top:10px!important;
+    padding-bottom:10px!important;
+    grid-template-rows:24px 32px minmax(182px,1fr) 46px 32px!important;
+  }
+  .momo-first-run-modal.momo-setup-wizard .momo-setup-desc{
+    height:46px!important;
+    min-height:46px!important;
+    font-size:.63rem!important;
+  }
+  .momo-first-run-modal.momo-setup-wizard .momo-setup-preset-card{
+    height:52px!important;
+    padding:7px 10px!important;
+  }
+}
+
+/* v0.9.15 — onboarding final visual pass
+   Reference: compact replay layout, localization-safe controls, diagram-first teaching. */
+
+
+
+/* Kicker and page title share one calm top band, as in the spacing reference. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Overview: stronger visual labels and centered, fixed columns. */
+
+
+
+
+
+
+
+/* Date list: never crop localized Done / Classification labels. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Structure: the task itself reads as a real task row; labels remain explanatory. */
+
+
+
+
+/* Routine: diagram first — nearby dates → task, distant calendar → Preview. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Calendar legend: equal columns and unambiguous slash legend. */
+
+
+
+
+/* Task management: only the live task row is white; gesture rows are diagrammatic. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Monthly review: small icons make the three metrics easier to scan. */
+
+
+
+
+
+
+
+
+
+
+/* Mobile/localization: allow content to shrink without clipping or introducing scrollbars. */
+
+
+
+
+
+/* v0.9.15 — icon alignment + short desktop viewport safety */
+
+
+
+
+
+
+
+
+/* v0.9.16 — critical onboarding grid repair
+   v0.9.15 placed header/title in the same grid row without pinning them to the
+   same column. CSS Grid therefore created an implicit second column, pushing
+   the title to the far right and shrinking every following panel. Keep the
+   intended overlay, but force the guide to one explicit content column. */
+
+
+
+
+
+
+
+
+/* Reserve equal visual space on both sides of the centered title so the
+   kicker/skip controls never shift it. */
+
+
+/* All illustration panels are centered against the full modal column. */
+
+
+
+
+/* v0.9.17 — final guide spacing + production UI parity */
+
+/* Remove Obsidian's outer modal padding so the guide's own spacing is the
+   single source of truth. This keeps every slide on the same visual frame. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Keep each illustration's actual content centered inside the shared card. */
+
+
+/* Task-management diagram: fixed icon columns prevent the gesture icons from
+   wandering left/right with different localized label lengths. */
+
+
+
+
+
+/* Production monthly review adopts the same icon grammar as onboarding. */
+.momoan-todo-view .momo-td-review-tools{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:14px!important;
+}
+.momoan-todo-view .momo-td-review-open{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  white-space:nowrap!important;
+}
+.momoan-todo-view .momo-td-review-tool-icon,
+.momoan-todo-view .momo-td-review-summary-icon{
+  width:15px!important;
+  height:15px!important;
+  min-width:15px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  color:var(--text-faint)!important;
+}
+.momoan-todo-view .momo-td-review-tool-icon svg,
+.momoan-todo-view .momo-td-review-summary-icon svg{
+  width:13px!important;
+  height:13px!important;
+  stroke-width:1.7!important;
+}
+.momoan-todo-view .momo-td-review-summary-label{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  min-width:0!important;
+}
+
+/* Every rendered group keeps a direct add-task action, with or without the
+   classification-display toggle. */
+.momoan-todo-view .momo-td-group-head{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:8px!important;
+  width:auto!important;
+}
+.momoan-todo-view .momo-td-group-title{
+  min-width:0!important;
+}
+.momoan-todo-view .momo-td-group-add{
+  margin-left:auto!important;
+  flex:0 0 22px!important;
+  width:22px!important;
+  height:22px!important;
+  min-width:22px!important;
+  min-height:22px!important;
+  opacity:.45!important;
+}
+.momoan-todo-view .momo-td-group-add svg{
+  width:13px!important;
+  height:13px!important;
+  stroke-width:1.8!important;
+}
+.momoan-todo-view .momo-td-group-head:hover .momo-td-group-add,
+.momoan-todo-view .momo-td-group-add:focus-visible{
+  opacity:.9!important;
+}
+
+@media (max-width:620px){
+  
+  
+  
+  
+  
+  
+  
+  
+  .momoan-todo-view .momo-td-group-add{
+    flex-basis:28px!important;
+    width:28px!important;
+    height:28px!important;
+    min-width:28px!important;
+    min-height:28px!important;
+    opacity:.58!important;
+  }
+}
+
+/* v0.9.18 — onboarding alignment pass
+   One centered content rail for header/title/visual/body/progress/footer.
+   The shell itself owns no accidental content-box overflow. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Overview becomes one white app surface split by a real pane divider. */
+
+
+
+
+
+
+
+
+
+
+
+
+/* Manage slide: compact paired actions around one shared center axis. */
+
+
+
+
+
+
+
+
+
+/* Monthly review actions belong at the top, matching the production panel. */
+
+
+
+/* Production review tools stay at the top of the review content with a stable gap. */
+.momoan-todo-view .momo-td-review-tools{
+  margin:0 0 10px!important;
+  padding:0!important;
+}
+
+/* v0.9.32 — canonical onboarding UI system.
+   One coordinate system, one set of mock primitives, and optical centering
+   across all seven slides. Older guide selectors are intentionally inert. */
+.modal.momo-onboarding-guide-shell{
+  width:min(620px,calc(100vw - 28px))!important;
+  max-width:620px!important;
+  height:auto!important;
+  max-height:calc(100dvh - 28px)!important;
+  padding:0!important;
+  overflow:hidden!important;
+}
+.modal.momo-onboarding-guide-shell .modal-close-button{
+  top:18px!important;
+  right:20px!important;
+}
+.modal.momo-onboarding-guide-shell .modal-content{
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+}
+.momo-onboarding-guide-modal.momo-guide-v935{
+  --momo-guide-rail:500px;
+  box-sizing:border-box!important;
+  position:relative!important;
+  width:100%!important;
+  height:376px!important;
+  min-height:376px!important;
+  max-height:calc(100dvh - 28px)!important;
+  padding:20px 28px 20px!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:40px 190px 54px 12px 40px!important;
+  row-gap:0!important;
+  align-content:start!important;
+  justify-items:center!important;
+  overflow:hidden!important;
+}
+.momo-guide-v935 > .momo-guide-title,
+.momo-guide-v935 > .momo-guide-visual,
+.momo-guide-v935 > .momo-guide-body,
+.momo-guide-v935 > .momo-guide-dots,
+.momo-guide-v935 > .momo-guide-footer{
+  box-sizing:border-box!important;
+  width:min(var(--momo-guide-rail),100%)!important;
+  max-width:var(--momo-guide-rail)!important;
+  min-width:0!important;
+  margin:0 auto!important;
+  justify-self:center!important;
+}
+.momo-guide-v935 .momo-guide-skip-floating{
+  position:absolute!important;
+  top:15px!important;
+  left:22px!important;
+  z-index:2!important;
+  margin:0!important;
+  padding:4px 6px!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:var(--text-faint)!important;
+  font-size:.66rem!important;
+}
+.momo-guide-v935 > .momo-guide-title{
+  height:40px!important;
+  margin:0!important;
+  padding:0 0 2px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  font-size:1.05rem!important;
+  line-height:1.15!important;
+  white-space:normal!important;
+  word-break:keep-all!important;
+}
+.momo-guide-v935 > .momo-guide-visual.momo-guide-illustration{
+  box-sizing:border-box!important;
+  width:min(var(--momo-guide-rail),100%)!important;
+  max-width:var(--momo-guide-rail)!important;
+  height:190px!important;
+  min-height:190px!important;
+  max-height:190px!important;
+  margin:0!important;
+  padding:14px 18px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  border:0!important;
+  border-radius:16px!important;
+  background:var(--background-secondary)!important;
+}
+.momo-guide-v935 > .momo-guide-body{
+  height:54px!important;
+  padding:6px 12px 0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:4px!important;
+  text-align:center!important;
+  color:var(--text-muted)!important;
+  font-size:.72rem!important;
+  line-height:1.45!important;
+  word-break:keep-all!important;
+}
+.momo-guide-v935 > .momo-guide-body > div{
+  width:100%!important;
+  max-width:470px!important;
+  margin:0!important;
+}
+.momo-guide-v935 > .momo-guide-dots{
+  height:12px!important;
+  min-height:12px!important;
+  padding:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+}
+.momo-guide-v935 .momo-guide-dot{
+  width:5px!important;
+  height:5px!important;
+  min-width:5px!important;
+  border-radius:999px!important;
+}
+.momo-guide-v935 > .momo-guide-footer{
+  height:40px!important;
+  min-height:40px!important;
+  padding:0 3px!important;
+  display:grid!important;
+  grid-template-columns:40px 1fr 40px!important;
+  align-items:center!important;
+}
+.momo-guide-v935 .momo-guide-nav{
+  width:36px!important;
+  height:36px!important;
+  min-width:36px!important;
+  min-height:36px!important;
+  margin:0!important;
+  padding:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border:0!important;
+  border-radius:50%!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:var(--text-normal)!important;
+}
+.momo-guide-v935 .momo-guide-nav:hover,
+.momo-guide-v935 .momo-guide-nav:focus,
+.momo-guide-v935 .momo-guide-nav:active{
+  background:var(--background-modifier-hover)!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+.momo-guide-v935 .momo-guide-nav-back{justify-self:start!important;}
+.momo-guide-v935 .momo-guide-nav-next{justify-self:end!important;}
+.momo-guide-v935 .momo-guide-step{
+  justify-self:center!important;
+  text-align:center!important;
+  line-height:1!important;
+  color:var(--text-faint)!important;
+  font-size:.68rem!important;
+}
+
+/* Shared mock primitives: intentionally mirror production Todo controls. */
+.momo-guide-v935 .momo-guide-app-task{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:30px!important;
+  display:grid!important;
+  grid-template-columns:15px minmax(0,1fr) 18px!important;
+  align-items:center!important;
+  column-gap:8px!important;
+  margin:0!important;
+  padding:3px 7px!important;
+  background:var(--background-primary)!important;
+  border-radius:8px!important;
+}
+.momo-guide-v935 .momo-guide-app-check{
+  box-sizing:border-box!important;
+  width:15px!important;
+  height:15px!important;
+  min-width:15px!important;
+  display:block!important;
+  border:1px solid var(--background-modifier-border-hover)!important;
+  border-radius:50%!important;
+  background:transparent!important;
+}
+.momo-guide-v935 .momo-guide-app-task-title{
+  min-width:0!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+.momo-guide-v935 .momo-guide-app-more{
+  width:18px!important;
+  height:18px!important;
+  justify-self:end!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  color:var(--text-muted)!important;
+}
+.momo-guide-v935 .momo-guide-app-category-dot{
+  width:6px!important;
+  height:6px!important;
+  min-width:6px!important;
+  border-radius:50%!important;
+  background:var(--momo-accent,var(--text-muted))!important;
+  opacity:.72!important;
+}
+.momo-guide-v935 .momo-guide-toggle{
+  position:relative!important;
+  box-sizing:border-box!important;
+  display:inline-block!important;
+  width:22px!important;
+  min-width:22px!important;
+  height:12px!important;
+  border-radius:999px!important;
+  background:var(--background-modifier-border-hover)!important;
+  overflow:hidden!important;
+}
+.momo-guide-v935 .momo-guide-toggle::after{
+  content:""!important;
+  position:absolute!important;
+  top:2px!important;
+  left:2px!important;
+  width:8px!important;
+  height:8px!important;
+  border-radius:50%!important;
+  background:var(--background-primary)!important;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--text-faint) 20%,transparent)!important;
+}
+.momo-guide-v935 .momo-guide-toggle.is-on{
+  background:var(--momo-accent,var(--text-muted))!important;
+}
+.momo-guide-v935 .momo-guide-toggle.is-on::after{
+  transform:translateX(10px)!important;
+}
+
+/* 1 — overview: one screen, one divider, matched top baselines. */
+.momo-guide-v935 .momo-guide-overview-frame{
+  box-sizing:border-box!important;
+  width:454px!important;
+  max-width:100%!important;
+  height:158px!important;
+  min-height:158px!important;
+  display:grid!important;
+  grid-template-columns:46% 1px 54%!important;
+  align-items:stretch!important;
+  overflow:hidden!important;
+  background:var(--background-primary)!important;
+  border:1px solid var(--background-modifier-border)!important;
+  border-radius:12px!important;
+}
+.momo-guide-v935 .momo-guide-overview-divider{
+  width:1px!important;
+  height:100%!important;
+  background:var(--background-modifier-border)!important;
+}
+.momo-guide-v935 .momo-guide-overview-side{
+  box-sizing:border-box!important;
+  min-width:0!important;
+  height:100%!important;
+  padding:8px 10px!important;
+  display:grid!important;
+  grid-template-rows:22px minmax(0,1fr)!important;
+  row-gap:4px!important;
+  align-items:start!important;
+}
+.momo-guide-v935 .momo-guide-pane-label{
+  height:22px!important;
+  margin:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  color:var(--text-muted)!important;
+  font-size:.55rem!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+.momo-guide-v935 .momo-guide-pane-label-icon{
+  width:14px!important;
+  height:14px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.momo-guide-v935 .momo-guide-overview-calendar{
+  box-sizing:border-box!important;
+  align-self:center!important;
+  width:100%!important;
+  height:112px!important;
+  display:grid!important;
+  grid-template-rows:18px 14px 80px!important;
+  align-content:center!important;
+}
+.momo-guide-v935 .momo-guide-overview-month{
+  margin:0!important;
+  text-align:center!important;
+  font-size:.66rem!important;
+  font-weight:700!important;
+  line-height:18px!important;
+}
+.momo-guide-v935 .momo-guide-overview-week,
+.momo-guide-v935 .momo-guide-overview-days{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:repeat(7,minmax(0,1fr))!important;
+  gap:0!important;
+  align-items:center!important;
+}
+.momo-guide-v935 .momo-guide-overview-days{
+  grid-template-rows:repeat(5,16px)!important;
+  align-content:center!important;
+}
+.momo-guide-v935 .momo-guide-overview-week span{
+  height:14px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  color:var(--text-faint)!important;
+  font-size:.45rem!important;
+  line-height:1!important;
+}
+.momo-guide-v935 .momo-guide-overview-days span{
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:16px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:.46rem!important;
+  line-height:1!important;
+}
+.momo-guide-v935 .momo-guide-overview-days span.is-selected{
+  width:21px!important;
+  height:21px!important;
+  justify-self:center!important;
+  border-radius:6px!important;
+  box-shadow:inset 0 0 0 1px var(--momo-accent,var(--text-muted))!important;
+}
+
+/* Date-pane system: header, toggle row and list never share width calculations. */
+.momo-guide-v935 .momo-guide-date-pane{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  height:100%!important;
+  padding:0!important;
+  display:grid!important;
+  grid-template-rows:24px 18px minmax(0,1fr)!important;
+  row-gap:2px!important;
+  align-content:center!important;
+  overflow:hidden!important;
+  background:transparent!important;
+}
+.momo-guide-v935 .momo-guide-date-pane-head{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  height:24px!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  column-gap:7px!important;
+  align-items:center!important;
+  margin:0!important;
+}
+.momo-guide-v935 .momo-guide-date-info{
+  min-width:0!important;
+  overflow:hidden!important;
+  display:flex!important;
+  align-items:center!important;
+}
+.momo-guide-v935 .momo-guide-date-title{
+  min-width:0!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  font-size:.61rem!important;
+  font-weight:700!important;
+  line-height:1!important;
+}
+.momo-guide-v935 .momo-guide-date-actions{
+  display:grid!important;
+  grid-template-columns:repeat(3,20px)!important;
+  gap:2px!important;
+  align-items:center!important;
+  justify-content:end!important;
+}
+.momo-guide-v935 .momo-guide-date-action{
+  box-sizing:border-box!important;
+  width:20px!important;
+  min-width:20px!important;
+  margin:0!important;
+  padding:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:2px!important;
+  color:var(--text-muted)!important;
+  font-size:.36rem!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  text-align:center!important;
+}
+.momo-guide-v935 .momo-guide-date-action-icon{
+  width:14px!important;
+  height:14px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.momo-guide-v935 .momo-guide-date-toggles{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  height:18px!important;
+  display:grid!important;
+  grid-template-columns:max-content max-content!important;
+  align-items:center!important;
+  justify-content:start!important;
+  column-gap:8px!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:visible!important;
+}
+.momo-guide-v935 .momo-guide-date-toggle{
+  box-sizing:border-box!important;
+  height:18px!important;
+  display:grid!important;
+  grid-template-columns:max-content 19px!important;
+  align-items:center!important;
+  column-gap:3px!important;
+  color:var(--text-muted)!important;
+  font-size:.41rem!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+.momo-guide-v935 .momo-guide-date-toggle .momo-guide-toggle{
+  width:19px!important;
+  min-width:19px!important;
+  height:10px!important;
+}
+.momo-guide-v935 .momo-guide-date-toggle .momo-guide-toggle::after{
+  top:2px!important;
+  left:2px!important;
+  width:6px!important;
+  height:6px!important;
+}
+.momo-guide-v935 .momo-guide-date-toggle .momo-guide-toggle.is-on::after{
+  transform:translateX(9px)!important;
+}
+.momo-guide-v935 .momo-guide-date-list{
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  display:grid!important;
+  align-content:start!important;
+  gap:1px!important;
+  overflow:hidden!important;
+}
+.momo-guide-v935 .momo-guide-date-category{
+  min-height:15px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  color:var(--text-normal)!important;
+  font-size:.46rem!important;
+  font-weight:700!important;
+  line-height:1!important;
+}
+.momo-guide-v935 .momo-guide-date-group{
+  min-height:14px!important;
+  display:flex!important;
+  align-items:center!important;
+  color:var(--text-muted)!important;
+  font-size:.42rem!important;
+  line-height:1!important;
+}
+.momo-guide-v935 .momo-guide-date-pane .momo-guide-app-task{
+  min-height:23px!important;
+  padding:2px 2px!important;
+  grid-template-columns:12px minmax(0,1fr) 15px!important;
+  column-gap:6px!important;
+  background:transparent!important;
+  border-radius:0!important;
+  font-size:.51rem!important;
+}
+.momo-guide-v935 .momo-guide-date-pane .momo-guide-app-check{
+  width:12px!important;
+  height:12px!important;
+  min-width:12px!important;
+}
+.momo-guide-v935 .momo-guide-date-pane .momo-guide-app-more{
+  width:15px!important;
+  height:15px!important;
+}
+
+/* 2 — date task list: production-like proportions in a compact demo pane. */
+.momo-guide-v935 .momo-guide-task-list-wrap{
+  width:100%!important;
+  height:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-pane.is-full{
+  box-sizing:border-box!important;
+  width:430px!important;
+  max-width:100%!important;
+  height:160px!important;
+  padding:10px 14px!important;
+  display:grid!important;
+  grid-template-rows:34px 22px minmax(0,1fr)!important;
+  row-gap:3px!important;
+  align-content:start!important;
+  background:var(--background-primary)!important;
+  border-radius:12px!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-pane-head{
+  height:34px!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-title{
+  font-size:.68rem!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-actions{
+  grid-template-columns:repeat(3,48px)!important;
+  gap:3px!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-action{
+  width:48px!important;
+  min-width:48px!important;
+  font-size:.38rem!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-action-icon{
+  width:16px!important;
+  height:16px!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-toggles{
+  height:22px!important;
+  column-gap:12px!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-toggle{
+  height:22px!important;
+  grid-template-columns:max-content 24px!important;
+  column-gap:5px!important;
+  font-size:.47rem!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-toggle .momo-guide-toggle{
+  width:24px!important;
+  min-width:24px!important;
+  height:13px!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-toggle .momo-guide-toggle::after{
+  width:9px!important;
+  height:9px!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-toggle .momo-guide-toggle.is-on::after{
+  transform:translateX(11px)!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-category{
+  min-height:17px!important;
+  font-size:.50rem!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-group{
+  min-height:16px!important;
+  font-size:.46rem!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-app-task{
+  min-height:25px!important;
+  grid-template-columns:14px minmax(0,1fr) 16px!important;
+  column-gap:7px!important;
+  padding:2px 4px!important;
+  font-size:.58rem!important;
+}
+.momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-app-check{
+  width:14px!important;
+  height:14px!important;
+  min-width:14px!important;
+}
+
+/* 3 — hierarchy: every label and example shares one baseline grid. */
+.momo-guide-v935 .momo-guide-structure-list{
+  box-sizing:border-box!important;
+  width:390px!important;
+  max-width:100%!important;
+  height:138px!important;
+  margin:0 auto!important;
+  display:grid!important;
+  grid-template-rows:repeat(3,42px)!important;
+  row-gap:4px!important;
+  align-content:center!important;
+}
+.momo-guide-v935 .momo-guide-structure-row{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  height:42px!important;
+  display:grid!important;
+  grid-template-columns:118px minmax(0,1fr)!important;
+  column-gap:18px!important;
+  align-items:center!important;
+  margin:0!important;
+  padding:0 10px!important;
+  border:0!important;
+}
+.momo-guide-v935 .momo-guide-structure-label{
+  min-width:0!important;
+  display:grid!important;
+  grid-template-columns:16px max-content!important;
+  column-gap:8px!important;
+  align-items:center!important;
+  color:var(--text-faint)!important;
+  font-size:.58rem!important;
+  white-space:nowrap!important;
+}
+.momo-guide-v935 .momo-guide-structure-label-icon{
+  width:16px!important;
+  height:16px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.momo-guide-v935 .momo-guide-app-category,
+.momo-guide-v935 .momo-guide-app-group{
+  min-width:0!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  font-size:.69rem!important;
+  line-height:1!important;
+}
+.momo-guide-v935 .momo-guide-app-category{font-weight:700!important;}
+.momo-guide-v935 .momo-guide-app-group{color:var(--text-muted)!important;}
+.momo-guide-v935 .momo-guide-structure-row .momo-guide-app-task{
+  min-height:32px!important;
+  height:32px!important;
+  font-size:.64rem!important;
+}
+
+/* 4 — routine: symmetric near/far outcomes around one center rule. */
+.momo-guide-v935 .momo-guide-routine-concept{
+  width:430px!important;
+  max-width:100%!important;
+  height:142px!important;
+  margin:0 auto!important;
+  display:grid!important;
+  grid-template-rows:48px 78px!important;
+  row-gap:10px!important;
+  align-items:center!important;
+  justify-items:center!important;
+  transform:translateY(3px)!important;
+}
+.momo-guide-v935 .momo-guide-routine-card{
+  box-sizing:border-box!important;
+  width:250px!important;
+  height:48px!important;
+  padding:7px 12px!important;
+  display:grid!important;
+  grid-template-columns:32px minmax(0,1fr)!important;
+  align-items:center!important;
+  column-gap:10px!important;
+  background:var(--background-primary)!important;
+  border-radius:12px!important;
+}
+.momo-guide-v935 .momo-guide-routine-icon{
+  width:32px!important;
+  height:32px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:50%!important;
+  background:var(--background-secondary)!important;
+  color:var(--text-muted)!important;
+}
+.momo-guide-v935 .momo-guide-routine-example{
+  font-size:.62rem!important;
+  font-weight:700!important;
+  line-height:1.2!important;
+  white-space:nowrap!important;
+}
+.momo-guide-v935 .momo-guide-routine-meta{
+  margin-top:3px!important;
+  color:var(--text-muted)!important;
+  font-size:.43rem!important;
+  line-height:1.2!important;
+  white-space:nowrap!important;
+}
+.momo-guide-v935 .momo-guide-routine-visual-flow{
+  width:100%!important;
+  height:78px!important;
+  display:grid!important;
+  grid-template-columns:1fr 1px 1fr!important;
+  align-items:center!important;
+}
+.momo-guide-v935 .momo-guide-routine-visual-flow::before{
+  content:""!important;
+  grid-column:2!important;
+  grid-row:1!important;
+  width:1px!important;
+  height:66px!important;
+  justify-self:center!important;
+  background:var(--background-modifier-border)!important;
+}
+.momo-guide-v935 .momo-guide-routine-flow-side{
+  min-height:0!important;
+  padding:0 8px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border:0!important;
+}
+.momo-guide-v935 .momo-guide-routine-flow-side.is-near{grid-column:1!important;grid-row:1!important;}
+.momo-guide-v935 .momo-guide-routine-flow-side.is-far{grid-column:3!important;grid-row:1!important;}
+.momo-guide-v935 .momo-guide-routine-simple-flow{
+  width:182px!important;
+  display:grid!important;
+  grid-template-columns:75px 18px 75px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  column-gap:7px!important;
+}
+.momo-guide-v935 .momo-guide-routine-example-chip{
+  box-sizing:border-box!important;
+  width:75px!important;
+  height:56px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:4px!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  color:var(--text-muted)!important;
+  font-size:.48rem!important;
+}
+.momo-guide-v935 .momo-guide-routine-example-icon,
+.momo-guide-v935 .momo-guide-routine-flow-arrow,
+.momo-guide-v935 .momo-guide-routine-result-icon{
+  width:18px!important;
+  height:18px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.momo-guide-v935 .momo-guide-routine-flow-arrow{color:var(--text-faint)!important;}
+.momo-guide-v935 .momo-guide-routine-outcome{
+  box-sizing:border-box!important;
+  width:75px!important;
+  height:56px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  border-radius:10px!important;
+  background:var(--background-primary)!important;
+  font-size:.47rem!important;
+}
+.momo-guide-v935 .momo-guide-routine-preview-dot{
+  height:18px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:.9rem!important;
+  line-height:1!important;
+}
+
+/* 5 — calendar legend: compact content, optically centered in the visual field. */
+.momo-guide-v935 .momo-guide-app-calendar-demo{
+  box-sizing:border-box!important;
+  width:400px!important;
+  max-width:100%!important;
+  height:108px!important;
+  margin:0 auto!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  align-items:center!important;
+  justify-items:center!important;
+  gap:10px!important;
+}
+.momo-guide-v935 .momo-guide-calendar-demo-item{
+  box-sizing:border-box!important;
+  width:84px!important;
+  min-width:0!important;
+  height:82px!important;
+  margin:0!important;
+  padding:0!important;
+  display:grid!important;
+  grid-template-rows:54px 24px!important;
+  align-items:center!important;
+  justify-items:center!important;
+  row-gap:4px!important;
+  border:0!important;
+  background:transparent!important;
+}
+.momo-guide-v935 .momo-guide-calendar-demo-cell{
+  width:54px!important;
+  height:54px!important;
+  display:grid!important;
+  grid-template-rows:20px 30px!important;
+  align-items:center!important;
+  justify-items:center!important;
+  padding:0!important;
+}
+.momo-guide-v935 .momo-guide-calendar-demo-mark{
+  height:20px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  color:var(--text-muted)!important;
+  font-size:.62rem!important;
+  line-height:1!important;
+}
+.momo-guide-v935 .momo-guide-calendar-demo-day{
+  height:30px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:.86rem!important;
+  line-height:1!important;
+}
+.momo-guide-v935 .momo-guide-calendar-demo-label{
+  width:100%!important;
+  height:24px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  color:var(--text-muted)!important;
+  font-size:.49rem!important;
+  line-height:1.2!important;
+  white-space:normal!important;
+  word-break:keep-all!important;
+}
+
+/* 6 — task management: true fixed center axis and fixed icon/text anchors. */
+.momo-guide-v935 .momo-guide-interaction-demo{
+  width:430px!important;
+  max-width:100%!important;
+  height:146px!important;
+  margin:0 auto!important;
+  display:grid!important;
+  grid-template-rows:38px 98px!important;
+  row-gap:10px!important;
+  align-items:center!important;
+  justify-items:center!important;
+}
+.momo-guide-v935 .momo-guide-live-task-card{
+  width:390px!important;
+  max-width:100%!important;
+}
+.momo-guide-v935 .momo-guide-live-task-card .momo-guide-app-task{
+  height:38px!important;
+  min-height:38px!important;
+  font-size:.65rem!important;
+}
+.momo-guide-v935 .momo-guide-interaction-list{
+  width:320px!important;
+  max-width:100%!important;
+  margin:0 auto!important;
+  display:grid!important;
+  grid-template-rows:repeat(3,30px)!important;
+  row-gap:4px!important;
+  justify-items:center!important;
+}
+.momo-guide-v935 .momo-guide-interaction-row-simple{
+  box-sizing:border-box!important;
+  width:320px!important;
+  max-width:100%!important;
+  height:30px!important;
+  margin:0!important;
+  padding:0!important;
+  display:grid!important;
+  grid-template-columns:142px 20px 142px!important;
+  column-gap:8px!important;
+  align-items:center!important;
+  border:0!important;
+  font-size:.54rem!important;
+}
+.momo-guide-v935 .momo-guide-interaction-side{
+  min-width:0!important;
+  width:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  white-space:nowrap!important;
+}
+.momo-guide-v935 .momo-guide-interaction-side.is-gesture{
+  display:grid!important;
+  grid-template-columns:28px minmax(0,var(--momo-guide-gesture-text-width,88px))!important;
+  column-gap:7px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:left!important;
+}
+.momo-guide-v935 .momo-guide-interaction-side.is-action{
+  display:grid!important;
+  grid-template-columns:28px minmax(0,var(--momo-guide-action-text-width,88px))!important;
+  column-gap:7px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:left!important;
+}
+.momo-guide-v935 .momo-guide-interaction-mark{
+  width:28px!important;
+  height:28px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:50%!important;
+  position:relative!important;
+  background:var(--background-primary)!important;
+}
+.momo-guide-v935 .momo-guide-interaction-icon{
+  width:16px!important;
+  height:16px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.momo-guide-v935 .momo-guide-interaction-badge{
+  position:absolute!important;
+  right:-4px!important;
+  bottom:-2px!important;
+  font-size:.38rem!important;
+  line-height:1!important;
+  background:var(--background-primary)!important;
+  border-radius:6px!important;
+  padding:1px 2px!important;
+}
+.momo-guide-v935 .momo-guide-interaction-arrow{
+  width:18px!important;
+  height:18px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  color:var(--text-faint)!important;
+}
+.momo-guide-v935 .momo-guide-interaction-gesture,
+.momo-guide-v935 .momo-guide-interaction-action{
+  margin:0!important;
+  width:max-content!important;
+  max-width:88px!important;
+  justify-self:start!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+.momo-guide-v935 .momo-guide-interaction-action{font-weight:700!important;}
+
+/* 7 — monthly review: compact two-column table, centered as one object. */
+.momo-guide-v935 .momo-guide-review-wrap{
+  width:100%!important;
+  height:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.momo-guide-v935 .momo-guide-review-panel{
+  box-sizing:border-box!important;
+  width:344px!important;
+  max-width:100%!important;
+  margin:0 auto!important;
+  padding:8px 12px 9px!important;
+  display:grid!important;
+  grid-template-rows:27px repeat(3,31px)!important;
+  align-content:start!important;
+  background:var(--background-primary)!important;
+  border-radius:12px!important;
+}
+.momo-guide-v935 .momo-guide-review-actions{
+  width:100%!important;
+  height:27px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:12px!important;
+  margin:0!important;
+  padding:0 0 5px!important;
+  border-bottom:1px solid var(--background-modifier-border)!important;
+}
+.momo-guide-v935 .momo-guide-review-action{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  color:var(--text-muted)!important;
+  font-size:.53rem!important;
+  white-space:nowrap!important;
+}
+.momo-guide-v935 .momo-guide-review-action-icon{
+  width:14px!important;
+  height:14px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.momo-guide-v935 .momo-guide-review-row{
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:31px!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) max-content!important;
+  align-items:center!important;
+  column-gap:16px!important;
+  margin:0!important;
+  padding:0!important;
+  border-bottom:1px solid color-mix(in srgb,var(--background-modifier-border) 52%,transparent)!important;
+}
+.momo-guide-v935 .momo-guide-review-row:last-child{border-bottom:0!important;}
+.momo-guide-v935 .momo-guide-review-label{
+  min-width:0!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  justify-self:start!important;
+  font-size:.56rem!important;
+  font-weight:650!important;
+}
+.momo-guide-v935 .momo-guide-review-icon{
+  width:14px!important;
+  height:14px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  color:var(--text-muted)!important;
+}
+.momo-guide-v935 .momo-guide-review-value{
+  justify-self:end!important;
+  text-align:right!important;
+  font-size:.56rem!important;
+  font-weight:700!important;
+  white-space:nowrap!important;
+}
+.momo-guide-v935 .momo-guide-setup-intro{
+  width:390px!important;
+  max-width:100%!important;
+  margin:0 auto!important;
+}
+
+@media(max-width:620px){
+  .modal.momo-onboarding-guide-shell{
+    width:calc(100vw - 16px)!important;
+    max-width:calc(100vw - 16px)!important;
+  }
+  .momo-onboarding-guide-modal.momo-guide-v935{
+    --momo-guide-rail:100%;
+    height:min(372px,calc(100dvh - 16px))!important;
+    min-height:0!important;
+    max-height:calc(100dvh - 16px)!important;
+    padding:20px 14px 16px!important;
+    grid-template-rows:40px minmax(174px,190px) 54px 12px 40px!important;
+  }
+  .momo-guide-v935 > .momo-guide-visual.momo-guide-illustration{
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:10px 8px!important;
+  }
+  .momo-guide-v935 .momo-guide-overview-frame{
+    width:100%!important;
+    height:154px!important;
+    min-height:154px!important;
+  }
+  .momo-guide-v935 .momo-guide-overview-side{padding:7px 6px!important;}
+  .momo-guide-v935 .momo-guide-date-actions{grid-template-columns:repeat(3,18px)!important;gap:1px!important;}
+  .momo-guide-v935 .momo-guide-date-action{width:18px!important;min-width:18px!important;}
+  .momo-guide-v935 .momo-guide-date-toggles{column-gap:5px!important;}
+  .momo-guide-v935 .momo-guide-date-toggle{grid-template-columns:max-content 17px!important;column-gap:2px!important;font-size:.34rem!important;}
+  .momo-guide-v935 .momo-guide-date-toggle .momo-guide-toggle{width:17px!important;min-width:17px!important;height:9px!important;}
+  .momo-guide-v935 .momo-guide-date-toggle .momo-guide-toggle::after{width:5px!important;height:5px!important;}
+  .momo-guide-v935 .momo-guide-date-toggle .momo-guide-toggle.is-on::after{transform:translateX(8px)!important;}
+  .momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-pane.is-full{
+    width:100%!important;
+    height:154px!important;
+    padding:9px 10px!important;
+  }
+  .momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-actions{grid-template-columns:repeat(3,32px)!important;gap:2px!important;}
+  .momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-action{width:32px!important;min-width:32px!important;}
+  .momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-action span:not(.momo-guide-date-action-icon){display:none!important;}
+  .momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-toggle{grid-template-columns:max-content 20px!important;column-gap:3px!important;}
+  .momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-toggle .momo-guide-toggle{width:20px!important;min-width:20px!important;height:11px!important;}
+  .momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-toggle .momo-guide-toggle::after{width:7px!important;height:7px!important;}
+  .momo-guide-v935 .momo-guide-task-list-wrap .momo-guide-date-toggle .momo-guide-toggle.is-on::after{transform:translateX(9px)!important;}
+  .momo-guide-v935 .momo-guide-structure-list{width:100%!important;}
+  .momo-guide-v935 .momo-guide-structure-row{grid-template-columns:90px minmax(0,1fr)!important;column-gap:8px!important;padding:0 2px!important;}
+  .momo-guide-v935 .momo-guide-routine-concept{width:100%!important;}
+  .momo-guide-v935 .momo-guide-routine-flow-side{padding:0 2px!important;}
+  .momo-guide-v935 .momo-guide-routine-simple-flow{width:142px!important;grid-template-columns:60px 14px 60px!important;column-gap:4px!important;}
+  .momo-guide-v935 .momo-guide-routine-example-chip{width:60px!important;}
+  .momo-guide-v935 .momo-guide-routine-outcome{width:60px!important;}
+  .momo-guide-v935 .momo-guide-app-calendar-demo{width:100%!important;gap:3px!important;}
+  .momo-guide-v935 .momo-guide-calendar-demo-item{width:68px!important;max-width:100%!important;}
+  .momo-guide-v935 .momo-guide-interaction-list,
+  .momo-guide-v935 .momo-guide-interaction-row-simple{width:276px!important;}
+  .momo-guide-v935 .momo-guide-interaction-row-simple{grid-template-columns:121px 18px 121px!important;column-gap:8px!important;}
+  .momo-guide-v935 .momo-guide-interaction-side{gap:4px!important;}
+  .momo-guide-v935 .momo-guide-interaction-side.is-gesture{grid-template-columns:25px minmax(0,var(--momo-guide-gesture-text-width,88px))!important;column-gap:4px!important;}
+  .momo-guide-v935 .momo-guide-interaction-side.is-action{grid-template-columns:25px minmax(0,var(--momo-guide-action-text-width,88px))!important;column-gap:4px!important;}
+  .momo-guide-v935 .momo-guide-interaction-mark{width:25px!important;height:25px!important;}
+  .momo-guide-v935 .momo-guide-interaction-gesture,
+  .momo-guide-v935 .momo-guide-interaction-action{width:max-content!important;max-width:88px!important;}
+  .momo-guide-v935 .momo-guide-review-panel{width:100%!important;}
+}
+
+
+/* v0.9.35 — restrained weekend / holiday color semantics */
+.momoan-todo-view{
+  --momo-calendar-holiday:color-mix(in srgb,var(--text-muted) 58%,#cf6670 42%);
+  --momo-calendar-saturday:color-mix(in srgb,var(--text-muted) 62%,#637eb1 38%);
+}
+.momoan-todo-view .momo-td-weekdays span.is-sunday,
+.momoan-todo-view .momo-td-day.is-sunday .momo-td-day-number,
+.momoan-todo-view .momo-td-day.is-holiday .momo-td-day-number{
+  color:var(--momo-calendar-holiday)!important;
+  font-weight:540!important;
+}
+.momoan-todo-view .momo-td-weekdays span.is-saturday,
+.momoan-todo-view .momo-td-day.is-saturday:not(.is-holiday) .momo-td-day-number{
+  color:var(--momo-calendar-saturday)!important;
+  font-weight:540!important;
+}
+/* China-style adjusted working weekends are ordinary workdays, not weekend-coloured. */
+.momoan-todo-view .momo-td-day.is-workday-override .momo-td-day-number{
+  color:var(--text-normal)!important;
+  font-weight:540!important;
+}
+
+/* v0.9.50 — compact grouped settings */
+.momoan-todo-settings .momo-settings-disclosure {
+  margin:0 0 12px !important;
+  border:1px solid var(--background-modifier-border) !important;
+  border-radius:12px !important;
+  background:var(--background-secondary) !important;
+  overflow:hidden !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-summary {
+  list-style:none !important;
+  cursor:pointer !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  padding:14px 16px !important;
+  user-select:none !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-summary::-webkit-details-marker { display:none !important; }
+.momoan-todo-settings .momo-settings-disclosure-summary::after {
+  content:'›';
+  margin-left:auto !important;
+  color:var(--text-muted) !important;
+  font-size:1.2rem !important;
+  line-height:1 !important;
+  transform:rotate(90deg);
+  transition:transform .16s ease;
+}
+.momoan-todo-settings .momo-settings-disclosure[open] > .momo-settings-disclosure-summary::after {
+  transform:rotate(-90deg);
+}
+.momoan-todo-settings .momo-settings-disclosure-copy { min-width:0 !important; }
+.momoan-todo-settings .momo-settings-disclosure-title {
+  color:var(--text-normal) !important;
+  font-size:1rem !important;
+  font-weight:650 !important;
+  line-height:1.35 !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-desc {
+  margin-top:3px !important;
+  color:var(--text-muted) !important;
+  font-size:.84rem !important;
+  line-height:1.4 !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-body {
+  padding:0 12px 8px !important;
+  border-top:1px solid color-mix(in srgb,var(--background-modifier-border) 70%,transparent) !important;
+  background:var(--background-primary) !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-body > .setting-item {
+  margin:0 !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-body > .setting-item:last-child {
+  border-bottom:0 !important;
+}
+@media (max-width:700px) {
+  .momoan-todo-settings .momo-settings-disclosure-summary { padding:12px !important; }
+  .momoan-todo-settings .momo-settings-disclosure-body { padding:0 8px 6px !important; }
+}
+
+
+/* v0.9.51 — settings density and alignment polish */
+.momoan-todo-settings .momo-settings-disclosure {
+  margin-bottom:10px !important;
+  border-radius:11px !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-summary {
+  padding:11px 14px !important;
+  gap:8px !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-title {
+  font-size:.98rem !important;
+  line-height:1.25 !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-desc {
+  margin-top:2px !important;
+  font-size:.78rem !important;
+  line-height:1.3 !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-summary::after {
+  font-size:1.05rem !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-body {
+  padding:0 14px 4px !important;
+  background:var(--background-primary) !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-body > .setting-item {
+  min-height:0 !important;
+  padding:11px 2px !important;
+  background:transparent !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  border-bottom:1px solid color-mix(in srgb,var(--background-modifier-border) 62%,transparent) !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-body > .setting-item:last-child {
+  border-bottom:0 !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-body .setting-item-info {
+  min-width:0 !important;
+  flex:1 1 50% !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-body .setting-item-name {
+  font-size:.93rem !important;
+  line-height:1.28 !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-body .setting-item-description {
+  margin-top:2px !important;
+  font-size:.78rem !important;
+  line-height:1.32 !important;
+  color:var(--text-muted) !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-body .setting-item-control {
+  flex:0 1 auto !important;
+  min-width:0 !important;
+  gap:7px !important;
+  flex-wrap:wrap !important;
+  justify-content:flex-end !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-body input[type='text'] {
+  min-width:0 !important;
+  width:min(360px, 38vw) !important;
+}
+.momoan-todo-settings .momo-settings-disclosure-body select,
+.momoan-todo-settings .momo-settings-disclosure-body button {
+  min-height:34px !important;
+}
+.momoan-todo-settings .momo-current-storage-path {
+  max-width:min(390px, 40vw) !important;
+}
+@media (max-width:760px) {
+  .momoan-todo-settings .momo-settings-disclosure-summary { padding:10px 12px !important; }
+  .momoan-todo-settings .momo-settings-disclosure-body { padding:0 10px 4px !important; }
+  .momoan-todo-settings .momo-settings-disclosure-body > .setting-item {
+    padding:10px 0 !important;
+    align-items:flex-start !important;
+    flex-direction:column !important;
+    gap:8px !important;
+  }
+  .momoan-todo-settings .momo-settings-disclosure-body .setting-item-control {
+    width:100% !important;
+    justify-content:flex-start !important;
+  }
+  .momoan-todo-settings .momo-settings-disclosure-body input[type='text'] {
+    width:min(100%, 520px) !important;
+    flex:1 1 220px !important;
+  }
+  .momoan-todo-settings .momo-current-storage-path { max-width:100% !important; }
+}
+
+/* v0.9.52 — desktop modal text-input focus hardening */
+.momo-task-editor-modal input[type="text"],
+.momo-text-prompt-modal input[type="text"],
+.momo-category-manager input[type="text"] {
+  pointer-events: auto !important;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  cursor: text !important;
+}
