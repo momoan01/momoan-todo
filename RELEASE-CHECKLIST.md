@@ -12,11 +12,12 @@
 
 ## Repository and release
 
-- [ ] Create a public GitHub repository, preferably named `momoan-todo`.
-- [ ] Commit `README.md`, `LICENSE`, `manifest.json`, `main.js`, and `styles.css` at the repository root.
+- [x] Create the public GitHub repository `momoan01/momoan-todo`.
+- [x] Commit `README.md`, `LICENSE`, `manifest.json`, `main.js`, and `styles.css` at the repository root.
 - [x] Replace the temporary `0.9.56` build files with the actual verified `0.9.58` ZIP contents.
-- [ ] Create a GitHub release with tag `0.9.58`, exactly matching `manifest.json`.
-- [ ] Attach `main.js`, `manifest.json`, and `styles.css` individually to the release. The ZIP is optional and does not replace these assets.
+- [x] Create a draft GitHub release with tag `0.9.58`, exactly matching `manifest.json`.
+- [x] Attach `main.js`, `manifest.json`, and `styles.css` individually to the draft release. The ZIP is optional and does not replace these assets.
+- [ ] Publish the `0.9.58` GitHub release after the remaining compatibility checks are confirmed.
 - [ ] Sign in at `community.obsidian.md`, connect GitHub, and add the repository under **Plugins -> New plugin**.
 - [ ] Review and resolve automated scanner feedback. Any follow-up release must use a higher semantic version.
 
