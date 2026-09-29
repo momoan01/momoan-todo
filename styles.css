@@ -6989,6 +6989,13 @@ body.momo-task-reorder-active {
   .momoan-todo-settings .momo-current-storage-path { max-width:100% !important; }
 }
 
+.momo-td-search { margin: 0 0 16px; }
+.momo-td-search input[type="search"] { width: 100%; }
+.momo-td-search-status { color: var(--text-muted); margin-bottom: 12px; font-size: var(--font-ui-small); }
+.momo-td-search-date { margin-bottom: 18px; }
+.momo-td-search-date-button { margin-bottom: 8px; font-weight: 600; }
+.momo-td-body[hidden], .momo-td-search-results[hidden] { display: none !important; }
+
 /* v0.9.52 — desktop modal text-input focus hardening */
 .momo-task-editor-modal input[type="text"],
 .momo-text-prompt-modal input[type="text"],

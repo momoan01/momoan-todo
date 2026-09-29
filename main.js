@@ -1305,6 +1305,12 @@ const GROUP_PRESETS = {};
 // canonical group taxonomy is saved to plugin data so every device sees it.
 let ACTIVE_MOMO_PLUGIN = null;
 let GROUP_DISCOVERY_PERSIST_TIMER = null;
+let GROUP_RENAME_DEPTH = 0;
+
+Object.assign(UI_TEXT.ko, { searchTasks:'할 일명·장소 검색', searchLoading:'검색 중…', searchCount:'검색 결과 {n}개 · 완료 포함', searchFailed:'검색하지 못했습니다. 다시 시도해 주세요.' });
+Object.assign(UI_TEXT.en, { searchTasks:'Search tasks or locations', searchLoading:'Searching…', searchCount:'{n} results · including completed', searchFailed:'Search failed. Please try again.' });
+Object.assign(UI_TEXT.ja, { searchTasks:'タスク名・場所を検索', searchLoading:'検索中…', searchCount:'{n}件 · 完了を含む', searchFailed:'検索できませんでした。もう一度お試しください。' });
+Object.assign(UI_TEXT.zh, { searchTasks:'搜索任务名称或地点', searchLoading:'搜索中…', searchCount:'{n}条结果 · 包含已完成', searchFailed:'搜索失败，请重试。' });
 
 function recordActiveUndoMutation(path, beforeText, afterText) {
   const plugin = ACTIVE_MOMO_PLUGIN;
@@ -3782,6 +3788,7 @@ module.exports = class MomoanTodoPlugin extends Plugin {
   }
 
   refreshViews() {
+    if (GROUP_RENAME_DEPTH) return;
     for (const leaf of this.app.workspace.getLeavesOfType(VIEW_TYPE)) {
       if (leaf.view?.render) leaf.view.render();
     }
@@ -4707,17 +4714,29 @@ module.exports = class MomoanTodoPlugin extends Plugin {
   }
 
   async renameGroup(category, from, to) {
+    to = normalizeCategoryName(to);
     const groups = GROUP_PRESETS[category] || [];
     const index = groups.indexOf(from);
     if (index < 0 || !to || from === to || groups.includes(to)) return;
-    await this.migrateGroupReferences(category, from, to);
-    groups[index] = to;
-    this.renameGroupIdentity(category, from, to);
-    migrateGroupLocalStorage(category, from, to);
-    await this.saveGroupSettings();
-    await this.syncRoutineOverview(await this.loadRoutines());
-    this.monthCache.clear();
-    this.refreshViews();
+    this.ensureGroupIdentity(category, from);
+    // File updates can trigger renders and parser discoveries while migration
+    // is in progress. Keep those reads from registering either name as new.
+    GROUP_RENAME_DEPTH += 1;
+    try {
+      await this.migrateGroupReferences(category, from, to);
+      // Runtime normalization may have replaced the array across the await.
+      GROUP_PRESETS[category] = [...new Set((GROUP_PRESETS[category] || groups)
+        .map(group => group === from ? to : group))];
+      this.renameGroupIdentity(category, from, to);
+      if (this.inactiveGroups?.[category]?.delete(from)) this.inactiveGroups[category].add(to);
+      migrateGroupLocalStorage(category, from, to);
+      await this.saveGroupSettings();
+      await this.syncRoutineOverview(await this.loadRoutines());
+    } finally {
+      GROUP_RENAME_DEPTH -= 1;
+      this.monthCache.clear();
+      this.refreshViews();
+    }
     new Notice(uiText('renamedTo',{from,to}));
   }
 
@@ -6313,6 +6332,28 @@ ${catLines}
     return map.get(date) || [];
   }
 
+  async searchTasks(query) {
+    const needle = String(query || '').trim().normalize('NFC').toLocaleLowerCase();
+    if (!needle) return [];
+    const files = this.app.vault.getFiles().filter(file =>
+      file.path.startsWith(`${DATA_FOLDER}/`) && /^\d{4}-\d{2}\.md$/.test(file.path.slice(DATA_FOLDER.length + 1))
+    );
+    const matches = [];
+    for (const file of files) {
+      // Search reads saved tasks directly; it must not run month maintenance.
+      const map = parseMonthFile(await this.app.vault.read(file), file.path);
+      for (const items of map.values()) {
+        for (const item of items) {
+          if (!item.isTask) continue;
+          if ([item.title, item.location].some(value =>
+            String(value || '').normalize('NFC').toLocaleLowerCase().includes(needle)
+          )) matches.push(item);
+        }
+      }
+    }
+    return matches.sort((a,b) => a.date.localeCompare(b.date) || a.lineIndex - b.lineIndex);
+  }
+
   hideGroup(category, group) {
     if (!group || group === '기타' || group === '루틴') return;
     try {
@@ -6518,6 +6559,13 @@ async function openMultiDateChoiceModal(app, initialMonthDate=todaySeoul()) {
     let m = base.getMonth();
     const selected = new Set();
 
+    const submit = values => {
+      if (settled || !values.length) return;
+      settled = true;
+      modal.close();
+      resolve(values);
+    };
+
     const format = (yy,mm,dd) => `${yy}-${String(mm+1).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
 
     modal.onOpen = () => {
@@ -6564,8 +6612,13 @@ async function openMultiDateChoiceModal(app, initialMonthDate=todaySeoul()) {
           b.onclick = () => {
             if (selected.has(value)) selected.delete(value);
             else selected.add(value);
-            render();
+            // Keep the clicked element alive so the browser can emit dblclick.
+            b.classList.toggle('is-selected', selected.has(value));
             refreshConfirm();
+          };
+          b.ondblclick = (ev) => {
+            ev.preventDefault();
+            submit([value]);
           };
         }
       };
@@ -6598,11 +6651,7 @@ async function openMultiDateChoiceModal(app, initialMonthDate=todaySeoul()) {
       };
 
       confirm.onclick = () => {
-        if (!selected.size) return;
-        settled = true;
-        const values = [...selected].sort();
-        modal.close();
-        resolve(values);
+        submit([...selected].sort());
       };
 
       refreshConfirm();
@@ -7312,7 +7361,49 @@ ${filename}`);
     headProgress.createSpan({ text:String(completed + remaining) });
     this.updateHistoryControls();
 
+    const search = parent.createDiv({cls:'momo-td-search'});
+    const input = search.createEl('input', {
+      type:'search', attr:{placeholder:uiText('searchTasks'), 'aria-label':uiText('searchTasks')}
+    });
+    input.value = this.searchQuery || '';
+    const results = parent.createDiv({cls:'momo-td-search-results', attr:{'aria-live':'polite'}});
     const body = parent.createDiv({cls:'momo-td-body'});
+    let searchRevision = 0;
+    const updateSearch = async () => {
+      const revision = ++searchRevision;
+      this.searchQuery = input.value;
+      const query = input.value.trim();
+      body.hidden = Boolean(query);
+      results.hidden = !query;
+      results.empty();
+      if (!query) return;
+      results.createDiv({text:uiText('searchLoading'), cls:'momo-td-search-status'});
+      try {
+        const matches = await this.plugin.searchTasks(query);
+        if (revision !== searchRevision || !results.isConnected) return;
+        results.empty();
+        results.createDiv({text:uiText('searchCount',{n:matches.length}), cls:'momo-td-search-status'});
+        for (const [resultDate, items] of groupBy(matches, item => item.date)) {
+          const section = results.createDiv({cls:'momo-td-search-date'});
+          const dateButton = section.createEl('button', {text:`${resultDate} · ${formatKoreanDate(resultDate)}`, cls:'momo-td-search-date-button'});
+          dateButton.onclick = () => {
+            this.searchQuery = '';
+            this.plugin.setSelectedDate(resultDate);
+          };
+          for (const item of items) this.renderItem(section, item, { reorder:false });
+        }
+      } catch (error) {
+        if (revision !== searchRevision || !results.isConnected) return;
+        results.empty();
+        results.createDiv({text:uiText('searchFailed'), cls:'momo-td-search-status'});
+        console.error('Momoan Todo search:', error);
+      }
+    };
+    input.oninput = updateSearch;
+    input.onkeydown = ev => {
+      if (ev.key === 'Escape') { input.value = ''; updateSearch(); }
+    };
+    await updateSearch();
     if (!displayBaseItems.length && !this.plugin.showAllCategories) {
       const empty=body.createDiv({cls:'momo-td-empty'});
       const icon=empty.createDiv({cls:'momo-td-empty-icon'});
@@ -7395,14 +7486,14 @@ ${filename}`);
     }
   }
 
-  renderItem(parent,item) {
+  renderItem(parent,item, { reorder=true }={}) {
     const row=parent.createDiv({cls:'momo-td-item'});
     row.__momoTaskItem = item;
     if (item.done) row.addClass('is-done');
     if (item.suppressed) row.addClass('is-suppressed');
     if (item.preview) row.addClass('is-preview');
     if (item.skipped) row.addClass('is-skipped');
-    if (!item.suppressed && !item.preview && !item.skipped) this.enableTaskLongPressReorder(row, item);
+    if (reorder && !item.suppressed && !item.preview && !item.skipped) this.enableTaskLongPressReorder(row, item);
     if (!item.suppressed && !item.preview && !item.skipped) {
       const cb=row.createEl('button', {
         cls:'momo-task-check',
@@ -7483,10 +7574,6 @@ ${filename}`);
       title.onclick = (ev) => {
         ev.preventDefault();
         ev.stopPropagation();
-        // Pointer capture for long-press reorder can retarget the browser's
-        // synthetic click to the row. When pointerup already handled this tap,
-        // ignore the follow-up click so single/double-tap is counted exactly once.
-        if (row.__momoPointerTapHandledUntil && Date.now() < row.__momoPointerTapHandledUntil) return;
         this.handleTaskTitleTap(row, item);
       };
       if (item.location) row.createSpan({text:item.location,cls:'momo-td-location'});
@@ -7543,7 +7630,6 @@ ${filename}`);
     let targetRow = null;
     let placeAfter = false;
     let cancelled = false;
-    let startedOnTitle = false;
     let ghost = null;
     let ghostBaseTop = 0;
 
@@ -7577,7 +7663,9 @@ ${filename}`);
       pointerId = null;
       active = false;
       cancelled = false;
-      startedOnTitle = false;
+      row.removeEventListener('pointerleave', leaveBeforeHold);
+      window.removeEventListener('pointerup', finish);
+      window.removeEventListener('pointercancel', cancelPointer);
       if (capturedPointerId !== null) {
         try {
           if (row.hasPointerCapture?.(capturedPointerId)) row.releasePointerCapture(capturedPointerId);
@@ -7626,6 +7714,7 @@ ${filename}`);
     const activate = (ev) => {
       if (cancelled || pointerId === null) return;
       active = true;
+      try { row.setPointerCapture(pointerId); } catch (_) {}
       row.__momoSuppressClickUntil = Date.now() + 700;
       row.addClass('is-reordering');
       row.addClass('is-drag-source');
@@ -7652,16 +7741,18 @@ ${filename}`);
     row.addEventListener('pointerdown', (ev) => {
       if (ev.button !== undefined && ev.button !== 0) return;
       if (ev.target?.closest?.('button, input, select, textarea, a, .momo-td-item-more')) return;
-      if (!parent) return;
+      if (!parent || pointerId !== null) return;
 
       pointerId = ev.pointerId;
-      startedOnTitle = Boolean(ev.target?.closest?.('.momo-td-item-title'));
-      try { row.setPointerCapture(pointerId); } catch (_) {}
       startX = ev.clientX;
       startY = ev.clientY;
       lastY = ev.clientY;
       cancelled = false;
       active = false;
+
+      row.addEventListener('pointerleave', leaveBeforeHold);
+      window.addEventListener('pointerup', finish, { passive:false });
+      window.addEventListener('pointercancel', cancelPointer);
 
       holdTimer = window.setTimeout(() => activate(ev), HOLD_MS);
     });
@@ -7709,16 +7800,7 @@ ${filename}`);
       }
 
       if (!active) {
-        const shouldHandleTitleTap = startedOnTitle && !cancelled;
         cleanup();
-        if (shouldHandleTitleTap) {
-          // setPointerCapture() starts at pointerdown so reorder cleanup stays
-          // reliable, but that capture may prevent the title span's native click
-          // from firing. Count the tap here instead, then suppress any duplicate
-          // synthetic click the browser still emits.
-          row.__momoPointerTapHandledUntil = Date.now() + 450;
-          this.handleTaskTitleTap(row, item);
-        }
         return;
       }
 
@@ -7751,8 +7833,12 @@ ${filename}`);
       requestAnimationFrame(() => { this.contentEl.scrollTop = scrollTop; });
     };
 
-    row.addEventListener('pointerup', finish, { passive:false });
-    row.addEventListener('pointercancel', () => cleanup());
+    const leaveBeforeHold = ev => {
+      if (!active && ev.pointerId === pointerId) cleanup();
+    };
+    const cancelPointer = ev => {
+      if (ev.pointerId === pointerId) cleanup();
+    };
     row.addEventListener('lostpointercapture', () => {
       if (pointerId !== null) cleanup();
     });
@@ -7933,7 +8019,7 @@ ${filename}`);
             }
           });
 
-          this.plugin.setSelectedDate(targetDates[0]);
+          await this.render();
           new Notice(uiText('copiedDates',{name:cleanLegacyTaskTitle(item.title),n:targetDates.length}));
         });
         addAction(uiText('deleteDaily'), async () => {
@@ -7976,7 +8062,7 @@ ${filename}`);
             }
           });
 
-          this.plugin.setSelectedDate(targetDates[0]);
+          await this.render();
           new Notice(uiText('copiedDates',{name:cleanLegacyTaskTitle(item.title),n:targetDates.length}));
         });
         addAction(uiText('deleteTaskAction'), async () => {
@@ -8325,6 +8411,7 @@ function ensureCategoryRuntime(category) {
 }
 
 function rememberGroupLocal(category, group, options={}) {
+  if (GROUP_RENAME_DEPTH && options.persistDiscovery === true) return false;
   const clean = normalizeCategoryName(group);
   if (!clean || clean === '기타' || clean === '루틴' || clean === '그룹 없음') return false;
   const touchRecent = options.touchRecent !== false;
