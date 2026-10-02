@@ -1,4 +1,4 @@
-const { Plugin, ItemView, Notice, setIcon, PluginSettingTab, Setting } = require('obsidian');
+const { Plugin, ItemView, Notice, setIcon, PluginSettingTab, Setting, Platform } = require('obsidian');
 
 const VIEW_TYPE = 'momoan-todo-view';
 const DEPRECATED_WIDGET_NOTE_FILENAME = '오늘 할 일 위젯.md';
@@ -52,7 +52,7 @@ const UI_TEXT = {
     displayBasis:'화면 기준', displayBasisDesc:'Minimal 테마와 Pretendard 폰트를 기준으로 다듬었습니다.\n다른 테마·폰트에서도 사용할 수 있지만 간격과 인상이 달라질 수 있습니다.',
     todoList:'투두리스트', today:'오늘', completed:'완료', classification:'분류', addTask:'할 일 추가', routineManager:'루틴 관리', classificationSettings:'분류 설정',
     noRemaining:'남은 할 일 없음', remaining:'남은 할 일 {n}개', emptyToday:'오늘은 비어 있습니다', emptyTodaySub:'필요한 일이 생기면 가볍게 추가해 주세요.',
-    monthReview:'월간 회고', reviewWrite:'회고록 작성', imageSave:'이미지 저장', lastMonthChange:'지난달 변화', focusCategory:'집중 카테고리', focusGroup:'집중 그룹', categoryRecord:'카테고리별 기록', reviewJournal:'월간 회고록', noReview:'아직 회고록을 작성하지 않았습니다.',
+    monthReview:'월간 회고', reviewWrite:'회고록 작성', imageSave:'이미지 저장', reviewImageWithJournal:'회고록 포함', reviewImageWithoutJournal:'회고록 미포함', lastMonthChange:'지난달 변화', focusCategory:'집중 카테고리', focusGroup:'집중 그룹', categoryRecord:'카테고리별 기록', reviewJournal:'월간 회고록', noReview:'아직 회고록을 작성하지 않았습니다.',
     prevMonth:'이전 달', nextMonth:'다음 달', chooseMonth:'연도와 월 선택', remainingAria:'남은 할 일 {n}개', allDoneAria:'이 날의 할 일을 모두 완료했습니다.', previewAria:'예정된 루틴이 있습니다.',
     am:'오전', pm:'오후', percentDone:'{n}% 완료', moveStorageDone:'저장 폴더를 이동했습니다.', moveStorageSame:'현재 저장 폴더와 같습니다.', moveStorageCollision:'이동할 위치에 같은 이름의 데이터가 이미 있습니다.', invalidFolder:'저장 폴더 이름을 입력해 주세요.'
   },
@@ -72,7 +72,7 @@ const UI_TEXT = {
     displayBasis:'Design baseline', displayBasisDesc:'Designed around the Minimal theme and Pretendard font.\nOther themes and fonts work, but spacing and visual balance may differ.',
     todoList:'Todo List', today:'Today', completed:'Done', classification:'Groups', addTask:'Add task', routineManager:'Routines', classificationSettings:'Classification',
     noRemaining:'No tasks remaining', remaining:'{n} remaining', emptyToday:'Nothing here today', emptyTodaySub:'Add a task whenever you need one.',
-    monthReview:'Monthly review', reviewWrite:'Write review', imageSave:'Save image', lastMonthChange:'Comparison', focusCategory:'Top category', focusGroup:'Top group', categoryRecord:'By category', reviewJournal:'Monthly notes', noReview:'No monthly review has been written yet.',
+    monthReview:'Monthly review', reviewWrite:'Write review', imageSave:'Save image', reviewImageWithJournal:'Include journal', reviewImageWithoutJournal:'Exclude journal', lastMonthChange:'Comparison', focusCategory:'Top category', focusGroup:'Top group', categoryRecord:'By category', reviewJournal:'Monthly notes', noReview:'No monthly review has been written yet.',
     prevMonth:'Previous month', nextMonth:'Next month', chooseMonth:'Choose year and month', remainingAria:'{n} tasks remaining', allDoneAria:'All tasks for this day are complete.', previewAria:'A routine is scheduled.',
     am:'AM', pm:'PM', percentDone:'{n}% complete', moveStorageDone:'Storage folder moved.', moveStorageSame:'This is already the current storage folder.', moveStorageCollision:'Data with the same name already exists at the destination.', invalidFolder:'Enter a storage folder name.'
   },
@@ -92,7 +92,7 @@ const UI_TEXT = {
     displayBasis:'画面基準', displayBasisDesc:'Minimal テーマと Pretendard フォントを基準に調整しています。\n他のテーマ・フォントでも利用できますが、間隔や印象が変わる場合があります。',
     todoList:'Todo リスト', today:'今日', completed:'完了', classification:'分類', addTask:'タスク追加', routineManager:'ルーティン', classificationSettings:'分類設定',
     noRemaining:'残りタスクなし', remaining:'残り {n}件', emptyToday:'今日は空です', emptyTodaySub:'必要なタスクがあれば追加してください。',
-    monthReview:'月間レビュー', reviewWrite:'レビューを書く', imageSave:'画像保存', lastMonthChange:'先月比', focusCategory:'集中カテゴリ', focusGroup:'集中グループ', categoryRecord:'カテゴリ別記録', reviewJournal:'月間レビュー記録', noReview:'まだ月間レビューを書いていません。',
+    monthReview:'月間レビュー', reviewWrite:'レビューを書く', imageSave:'画像保存', reviewImageWithJournal:'回顧録を含む', reviewImageWithoutJournal:'回顧録を含まない', lastMonthChange:'先月比', focusCategory:'集中カテゴリ', focusGroup:'集中グループ', categoryRecord:'カテゴリ別記録', reviewJournal:'月間レビュー記録', noReview:'まだ月間レビューを書いていません。',
     prevMonth:'前月', nextMonth:'次月', chooseMonth:'年と月を選択', remainingAria:'残りタスク {n}件', allDoneAria:'この日のタスクはすべて完了しました。', previewAria:'予定されたルーティンがあります。',
     am:'午前', pm:'午後', percentDone:'{n}% 完了', moveStorageDone:'保存フォルダを移動しました。', moveStorageSame:'現在の保存フォルダと同じです。', moveStorageCollision:'移動先に同名のデータがあります。', invalidFolder:'保存フォルダ名を入力してください。'
   },
@@ -112,7 +112,7 @@ const UI_TEXT = {
     displayBasis:'界面基准', displayBasisDesc:'以 Minimal 主题和 Pretendard 字体为基准进行设计。\n其他主题与字体也可使用，但间距与视觉效果可能不同。',
     todoList:'待办清单', today:'今天', completed:'完成', classification:'分类', addTask:'添加任务', routineManager:'例行任务', classificationSettings:'分类设置',
     noRemaining:'没有剩余任务', remaining:'剩余 {n} 项', emptyToday:'今天没有任务', emptyTodaySub:'需要时可以随时添加任务。',
-    monthReview:'月度回顾', reviewWrite:'写回顾', imageSave:'保存图片', lastMonthChange:'较上月', focusCategory:'重点分类', focusGroup:'重点分组', categoryRecord:'分类记录', reviewJournal:'月度回顾记录', noReview:'尚未填写月度回顾。',
+    monthReview:'月度回顾', reviewWrite:'写回顾', imageSave:'保存图片', reviewImageWithJournal:'包含回顾记录', reviewImageWithoutJournal:'不包含回顾记录', lastMonthChange:'较上月', focusCategory:'重点分类', focusGroup:'重点分组', categoryRecord:'分类记录', reviewJournal:'月度回顾记录', noReview:'尚未填写月度回顾。',
     prevMonth:'上个月', nextMonth:'下个月', chooseMonth:'选择年份和月份', remainingAria:'剩余 {n} 项任务', allDoneAria:'当天任务已全部完成。', previewAria:'有计划中的例行任务。',
     am:'上午', pm:'下午', percentDone:'完成 {n}%', moveStorageDone:'保存文件夹已移动。', moveStorageSame:'与当前保存文件夹相同。', moveStorageCollision:'目标位置已有同名数据。', invalidFolder:'请输入保存文件夹名称。'
   }
@@ -173,7 +173,7 @@ Object.assign(UI_TEXT.zh,{
 Object.assign(UI_TEXT.ko,{
   guideHeader:'시작 가이드',
   guideWelcomeTitle:'할 일 구조', guideWelcomeBody:'할 일은 카테고리 > 그룹 > 할 일 순서로 정리됩니다.\n큰 분류 안에 세부 그룹을 만들고, 그 아래에 할 일을 넣습니다.',
-  guideControlsTitle:'메인 화면', guideControlsBody:'오른쪽 위에서 할 일 추가·루틴 관리·분류 설정을 엽니다.\n날짜 아래의 완료·분류 토글로 화면 표시를 바로 바꿀 수 있습니다.',
+  guideControlsTitle:'메인 화면', guideControlsBody:'오른쪽 위의 검색과 관리 메뉴에서 검색·루틴 관리·분류 설정을 엽니다.\n정렬·실행 취소·다시 실행은 진행률 옆의 작은 아이콘으로 사용할 수 있습니다.',
   guideAddTask:'할 일 추가', guideRoutine:'루틴 관리', guideClassify:'분류 설정', guideDoneToggle:'완료한 할 일 표시', guideClassifyToggle:'빈 분류까지 표시',
   guideRoutineTitle:'루틴 생성 범위', guideRoutineBody:'자주 반복되는 루틴은 앞으로 7일만 실제 할 일로 만듭니다.\n월간·연간 루틴은 먼저 Preview로 보이고, 가까워지면 실제 할 일이 됩니다.',
   guidePreviewTitle:'Preview', guidePreviewBody:'점(·)은 아직 체크할 수 없는 미래 루틴 일정입니다.\n해당 날짜가 7일 안으로 들어오면 실제 할 일로 바뀝니다.',
@@ -186,7 +186,7 @@ Object.assign(UI_TEXT.ko,{
 });
 Object.assign(UI_TEXT.en,{
   guideHeader:'Start guide', guideWelcomeTitle:'Task structure', guideWelcomeBody:'Tasks are organized as Category > Group > Task.\nCreate groups inside a broad category, then place tasks under them.',
-  guideControlsTitle:'Main screen', guideControlsBody:'Use the top-right controls to add tasks, manage routines, and open Classification settings.\nUse the Done and Classification toggles below the date to change what is shown.',
+  guideControlsTitle:'Main screen', guideControlsBody:'Use Search and the top-right Manage menu for task search, routines, and Classification settings.\nSort, Undo, and Redo are available as small controls beside the progress count.',
   guideAddTask:'Add', guideRoutine:'Routines', guideClassify:'Categories', guideDoneToggle:'Show completed tasks', guideClassifyToggle:'Show empty classifications',
   guideCalendarTitle:'Calendar markers', guideCalendarBody:'The small marker above each date shows that day’s state.\nCheck: all done; Number: tasks left; Dot: Preview; Blank: none', guideAllDone:'All done', guideRemaining:'3 tasks left', guidePreviewDot:'Preview', guideBlank:'No tasks',
   guidePreviewTitle:'Preview', guidePreviewBody:'A dot (·) marks a future routine you cannot check yet.\nIt becomes an actual task when that date enters the next 7 days.',
@@ -198,7 +198,7 @@ Object.assign(UI_TEXT.en,{
 });
 Object.assign(UI_TEXT.ja,{
   guideHeader:'スタートガイド', guideWelcomeTitle:'タスクの構造', guideWelcomeBody:'タスクは カテゴリ > グループ > タスク の順で整理します。\n大きなカテゴリの中にグループを作り、その下にタスクを置きます。',
-  guideControlsTitle:'メイン画面', guideControlsBody:'右上からタスク追加・ルーティン管理・分類設定を開きます。\n日付の下にある完了・分類トグルで表示をすぐ切り替えられます。',
+  guideControlsTitle:'メイン画面', guideControlsBody:'右上の検索と管理メニューから、検索・ルーティン管理・分類設定を開きます。\n整列・取り消し・やり直しは進捗表示の横にある小さなアイコンから使えます。',
   guideAddTask:'追加', guideRoutine:'ルーティン', guideClassify:'分類', guideDoneToggle:'完了タスクを表示', guideClassifyToggle:'空の分類も表示',
   guideCalendarTitle:'カレンダー表示', guideCalendarBody:'日付の上の小さな表示を見るだけで、その日の状態が分かります。\nチェック: 完了; 数字: 残り; 点: Preview; 空欄: なし', guideAllDone:'すべて完了', guideRemaining:'残り3件', guidePreviewDot:'Preview', guideBlank:'タスクなし',
   guidePreviewTitle:'Preview', guidePreviewBody:'点（·）はまだチェックできない未来のルーティン予定です。\nその日が7日以内に入ると実タスクになります。',
@@ -210,7 +210,7 @@ Object.assign(UI_TEXT.ja,{
 });
 Object.assign(UI_TEXT.zh,{
   guideHeader:'开始指南', guideWelcomeTitle:'任务结构', guideWelcomeBody:'任务按 分类 > 分组 > 任务 的顺序整理。\n先在大分类中建立分组，再把任务放到分组下面。',
-  guideControlsTitle:'主界面', guideControlsBody:'从右上角打开添加任务、例行任务管理和分类设置。\n用日期下方的完成与分类开关直接调整显示内容。',
+  guideControlsTitle:'主界面', guideControlsBody:'从右上角的搜索和管理菜单打开搜索、例行任务管理与分类设置。\n排序、撤销和重做位于进度旁的小图标中。',
   guideAddTask:'添加', guideRoutine:'例行', guideClassify:'分类', guideDoneToggle:'显示已完成任务', guideClassifyToggle:'显示空分类',
   guideCalendarTitle:'日历标记', guideCalendarBody:'只看日期上方的小标记，就能知道当天状态。\n勾选: 全部完成; 数字: 剩余任务; 点: Preview; 空白: 无', guideAllDone:'全部完成', guideRemaining:'剩余3项', guidePreviewDot:'Preview', guideBlank:'无任务',
   guidePreviewTitle:'Preview', guidePreviewBody:'点（·）表示暂时不能勾选的未来例行任务。\n当该日期进入未来7天时，会变成实际任务。',
@@ -1307,10 +1307,10 @@ let ACTIVE_MOMO_PLUGIN = null;
 let GROUP_DISCOVERY_PERSIST_TIMER = null;
 let GROUP_RENAME_DEPTH = 0;
 
-Object.assign(UI_TEXT.ko, { searchTasks:'할 일명·장소 검색', searchLoading:'검색 중…', searchCount:'검색 결과 {n}개 · 완료 포함', searchFailed:'검색하지 못했습니다. 다시 시도해 주세요.' });
-Object.assign(UI_TEXT.en, { searchTasks:'Search tasks or locations', searchLoading:'Searching…', searchCount:'{n} results · including completed', searchFailed:'Search failed. Please try again.' });
-Object.assign(UI_TEXT.ja, { searchTasks:'タスク名・場所を検索', searchLoading:'検索中…', searchCount:'{n}件 · 完了を含む', searchFailed:'検索できませんでした。もう一度お試しください。' });
-Object.assign(UI_TEXT.zh, { searchTasks:'搜索任务名称或地点', searchLoading:'搜索中…', searchCount:'{n}条结果 · 包含已完成', searchFailed:'搜索失败，请重试。' });
+Object.assign(UI_TEXT.ko, { searchTasks:'할 일명·장소 검색', searchLoading:'검색 중…', searchCount:'검색 결과 {n}개 · 완료 포함', searchFailed:'검색하지 못했습니다. 다시 시도해 주세요.', searchClear:'검색 지우기', moreMenu:'관리 메뉴', routineTab:'루틴 관리', categorySettings:'카테고리 관리', groupSettings:'그룹 관리' });
+Object.assign(UI_TEXT.en, { searchTasks:'Search tasks or locations', searchLoading:'Searching…', searchCount:'{n} results · including completed', searchFailed:'Search failed. Please try again.', searchClear:'Clear search', moreMenu:'Manage', routineTab:'Routine management', categorySettings:'Category management', groupSettings:'Group management' });
+Object.assign(UI_TEXT.ja, { searchTasks:'タスク名・場所を検索', searchLoading:'検索中…', searchCount:'{n}件 · 完了を含む', searchFailed:'検索できませんでした。もう一度お試しください。', searchClear:'検索をクリア', moreMenu:'管理メニュー', routineTab:'ルーティン管理', categorySettings:'カテゴリ管理', groupSettings:'グループ管理' });
+Object.assign(UI_TEXT.zh, { searchTasks:'搜索任务名称或地点', searchLoading:'搜索中…', searchCount:'{n}条结果 · 包含已完成', searchFailed:'搜索失败，请重试。', searchClear:'清除搜索', moreMenu:'管理菜单', routineTab:'例行管理', categorySettings:'分类管理', groupSettings:'分组管理' });
 
 function recordActiveUndoMutation(path, beforeText, afterText) {
   const plugin = ACTIVE_MOMO_PLUGIN;
@@ -2043,8 +2043,16 @@ module.exports = class MomoanTodoPlugin extends Plugin {
     this.uiStyle = document.createElement('style');
     this.uiStyle.id = 'momoan-todo-ui-polish';
     this.uiStyle.textContent = `
-      .momoan-todo-view .momo-td-shell{gap:24px;max-width:864px;grid-template-columns:minmax(270px,320px) minmax(420px,520px);}
-      .momoan-todo-view .momo-td-calendar-panel{padding-top:2px;}
+      .momoan-todo-view .momo-td-shell{gap:24px;max-width:864px;width:100%;margin:0 auto;grid-template-columns:minmax(270px,320px) minmax(420px,520px);}
+      .momoan-todo-view .momo-td-calendar-panel{padding-top:2px;border-right:0!important;border-inline-end:0!important;}
+      .momoan-todo-view .momo-td-review-journal-section{margin-top:24px;}
+      .momoan-todo-view .momo-td-review-journal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
+      .momoan-todo-view .momo-td-review-journal-head .momo-td-review-section-title{margin:0;}
+      .momoan-todo-view .momo-td-review-write{flex:0 0 auto;border:0!important;background:transparent!important;box-shadow:none!important;padding:4px 6px!important;height:auto!important;color:var(--text-muted)!important;opacity:.72;font-size:.75rem;}
+      .momoan-todo-view .momo-td-review-write:hover{background:var(--background-modifier-hover)!important;color:var(--text-normal)!important;opacity:1;}
+      .momoan-todo-view .momo-td-review-footer-tools{display:flex;justify-content:flex-end;margin-top:24px;padding-top:12px;border-top:1px solid var(--background-modifier-border);}
+      .momoan-todo-view .momo-td-review-footer-tools .momo-td-review-image-save{border:0!important;background:transparent!important;box-shadow:none!important;padding:4px 6px!important;height:auto!important;color:var(--text-muted)!important;opacity:.5;font-size:.74rem;}
+      .momoan-todo-view .momo-td-review-footer-tools .momo-td-review-image-save:hover{background:var(--background-modifier-hover)!important;color:var(--text-normal)!important;opacity:.9;}
       .momoan-todo-view .momo-td-cal-head h2{font-size:1.05rem;font-weight:650;letter-spacing:-.02em;}
       .momoan-todo-view .momo-td-weekdays{opacity:.52;font-size:.76rem;font-weight:600;}
       .momoan-todo-view .momo-td-day{border-radius:10px;transition:background-color .15s ease,transform .15s ease;}
@@ -3810,7 +3818,23 @@ module.exports = class MomoanTodoPlugin extends Plugin {
   async openAddTaskModal(date = this.selectedDate, category = null, group = null) {
     const { Modal } = require('obsidian');
     const plugin = this;
-    const modal = enableModalMotion(new Modal(this.app));
+
+    // Keep the add-task editor single-instance. A delayed close from the generic
+    // modal motion wrapper can overlap a fast save -> add-again cycle and let the
+    // old Obsidian modal restore focus after the new title input has opened.
+    // The add editor closes immediately and repeated + presses focus the existing
+    // title field instead of stacking another focus trap.
+    const existing = this._activeAddTaskModal;
+    if (existing?.modalEl?.isConnected) {
+      const existingTitle = existing.contentEl?.querySelector?.('.momo-task-editor-row input[type="text"]');
+      if (existingTitle && !existingTitle.disabled) {
+        try { existingTitle.focus({ preventScroll:true }); } catch (_) { existingTitle.focus(); }
+      }
+      return;
+    }
+
+    const modal = new Modal(this.app);
+    this._activeAddTaskModal = modal;
 
     modal.onOpen = () => {
       const { contentEl } = modal;
@@ -3915,6 +3939,10 @@ module.exports = class MomoanTodoPlugin extends Plugin {
 
       enableTaskTitleEnterFlow(title, save);
       enableTaskEditorSubmitShortcut(contentEl, save);
+    };
+
+    modal.onClose = () => {
+      if (plugin._activeAddTaskModal === modal) plugin._activeAddTaskModal = null;
     };
 
     modal.open();
@@ -4102,18 +4130,20 @@ module.exports = class MomoanTodoPlugin extends Plugin {
     });
   }
 
-  async openCategoryManager(initialTab='categories') {
-    return this.openTodoSettings(initialTab);
+  async openCategoryManager() {
+    return this.openTodoSettings('categories');
   }
 
-  async openTodoSettings(initialTab='categories') {
+  async openTodoSettings(initialTab='categories', initialCategory=null) {
     const { Modal } = require('obsidian');
     const plugin = this;
 
     return await new Promise((resolve) => {
       const modal = enableModalMotion(new Modal(this.app));
-      let tab = initialTab === 'groups' ? 'groups' : 'categories';
-      let groupCategory = CATEGORIES.find(x => !plugin.inactiveCategories?.has(x)) || '기타';
+      const tab = initialTab === 'groups' ? 'groups' : 'categories';
+      let groupCategory = initialCategory && CATEGORIES.includes(initialCategory)
+        ? initialCategory
+        : (CATEGORIES.find(x => !plugin.inactiveCategories?.has(x)) || '기타');
       let editing = null;
 
       const commitInlineEdit = async (type, category, from, input) => {
@@ -4179,8 +4209,7 @@ module.exports = class MomoanTodoPlugin extends Plugin {
 
       const renderCategoryTab = (body) => {
         const top = body.createDiv({ cls:'momo-settings-section-head' });
-        const text = top.createDiv();
-        text.createEl('h3', { text:uiText('categoryTab') });
+        top.style.justifyContent = 'flex-end';
 
         const add = top.createEl('button', { text:uiText('addRoutine'), cls:'momo-settings-add' });
         add.onclick = () => {
@@ -4278,8 +4307,7 @@ module.exports = class MomoanTodoPlugin extends Plugin {
 
       const renderGroupTab = (body) => {
         const top = body.createDiv({ cls:'momo-settings-section-head' });
-        const text = top.createDiv();
-        text.createEl('h3', { text:uiText('groupTab') });
+        top.style.justifyContent = 'flex-end';
 
         const add = top.createEl('button', { text:uiText('addRoutine'), cls:'momo-settings-add' });
         add.onclick = () => {
@@ -4395,16 +4423,9 @@ module.exports = class MomoanTodoPlugin extends Plugin {
 
         const head = contentEl.createDiv({ cls:'momo-settings-head' });
         const titleWrap = head.createDiv();
-        titleWrap.createEl('h2', { text:uiText('classificationSettings') });
-
-        const tabs = contentEl.createDiv({ cls:'momo-settings-tabs' });
-        const catTab = tabs.createEl('button', { text:uiText('categoryTab'), cls:'momo-settings-tab' });
-        if (tab === 'categories') catTab.addClass('is-active');
-        catTab.onclick = () => { tab = 'categories'; editing = null; render(); };
-
-        const groupTab = tabs.createEl('button', { text:uiText('groupTab'), cls:'momo-settings-tab' });
-        if (tab === 'groups') groupTab.addClass('is-active');
-        groupTab.onclick = () => { tab = 'groups'; editing = null; render(); };
+        titleWrap.createEl('h2', {
+          text:uiText(tab === 'groups' ? 'groupSettings' : 'categorySettings')
+        });
 
         const body = contentEl.createDiv({ cls:'momo-settings-body' });
         if (tab === 'categories') renderCategoryTab(body);
@@ -4465,7 +4486,7 @@ module.exports = class MomoanTodoPlugin extends Plugin {
   }
 
   async openGroupManager(initialCategory=null) {
-    return this.openTodoSettings('groups');
+    return this.openTodoSettings('groups', initialCategory);
   }
 
 
@@ -6446,6 +6467,238 @@ async function openTextPrompt(app, title, placeholder='', current='') {
   });
 }
 
+function ensureCompactPopoverStyles() {
+  if (document.getElementById('momoan-todo-compact-popover-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'momoan-todo-compact-popover-styles';
+  style.textContent = `
+    .momo-compact-popover-layer {
+      position: fixed; inset: 0; z-index: 10000;
+      background: transparent;
+    }
+    .momo-compact-popover {
+      position: fixed;
+      min-width: 156px;
+      max-width: calc(100vw - 24px);
+      padding: 6px;
+      border: 1px solid var(--background-modifier-border);
+      border-radius: 12px;
+      background: var(--background-primary);
+      box-shadow: 0 8px 24px rgba(0,0,0,.16);
+      color: var(--text-normal);
+    }
+    .momo-compact-menu-popover { width: 176px; }
+    .momo-compact-menu-list { display: flex; flex-direction: column; gap: 2px; }
+    .momo-compact-menu-item {
+      width: 100%; min-height: 34px; padding: 6px 10px;
+      border: 0; border-radius: 7px;
+      background: transparent;
+      color: var(--text-normal);
+      font-size: var(--font-ui-small); font-weight: 500;
+      text-align: left;
+    }
+    .momo-compact-menu-item:hover,
+    .momo-compact-menu-item:focus-visible {
+      background: var(--background-modifier-hover);
+    }
+    .momo-compact-menu-item.is-current {
+      background: var(--background-modifier-hover);
+    }
+    .momo-small-search-modal,
+    .momo-small-choice-modal {
+      padding-top: 2px;
+    }
+    .momo-small-modal-title {
+      margin: 0 0 12px;
+      font-size: var(--font-ui-medium);
+      font-weight: 650;
+    }
+    .momo-small-choice-list {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .momo-small-choice-item {
+      width: 100%; min-height: 38px; padding: 7px 12px;
+      border: 1px solid var(--background-modifier-border);
+      border-radius: 8px;
+      background: var(--background-secondary);
+      color: var(--text-normal);
+      font-size: var(--font-ui-small); font-weight: 500;
+      text-align: center;
+    }
+    .momo-small-choice-item:hover,
+    .momo-small-choice-item:focus-visible { background: var(--background-modifier-hover); }
+    .momo-task-search-row {
+      display: flex; align-items: center; gap: 8px;
+      min-height: 40px; padding: 0 8px 0 10px;
+      border: 1px solid var(--background-modifier-border);
+      border-radius: 8px;
+      background: var(--background-primary);
+    }
+    .momo-task-search-icon { display:flex; color:var(--text-muted); flex:0 0 auto; }
+    .momo-task-search-input {
+      flex: 1; min-width: 0; border: 0 !important; outline: 0 !important;
+      box-shadow: none !important; background: transparent !important;
+      padding: 0 !important;
+    }
+    .momo-task-search-clear {
+      width: 30px; height: 30px; padding: 0; border: 0;
+      border-radius: 999px; background: transparent;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .momo-task-search-clear:hover { background: var(--background-modifier-hover); }
+    .momo-task-search-results {
+      min-height: 0; max-height: min(48vh, 420px); overflow-y: auto; overscroll-behavior: contain;
+      padding: 10px 2px 2px;
+    }
+    .momo-task-search-status {
+      color: var(--text-muted); padding: 4px 6px 10px;
+      font-size: var(--font-ui-small);
+    }
+    .momo-task-search-date { margin-bottom: 14px; }
+    .momo-task-search-date:last-child { margin-bottom: 0; }
+    .momo-task-search-date-button {
+      width: 100%; margin: 0 0 8px; padding: 7px 3px 8px;
+      display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+      border: 0; border-bottom: 1px solid var(--background-modifier-border);
+      border-radius: 0; background: transparent !important; box-shadow: none !important;
+      color: var(--text-normal); text-align: left;
+    }
+    .momo-task-search-date-button:hover { background: transparent !important; }
+    .momo-task-search-date-main { font-weight: 600; }
+    .momo-task-search-date-year { color: var(--text-faint); font-size: var(--font-ui-smaller); font-weight: 500; }
+    .momo-td-main-actions .is-active { background: var(--background-modifier-hover); }
+    @media (max-width: 720px) {
+      .momo-compact-menu-popover { width: min(196px, calc(100vw - 24px)); }
+      .momo-compact-menu-item { min-height: 38px; font-size: var(--font-ui-small); }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function createAnchoredPopover(anchorEl, className='', onClose=null) {
+  ensureCompactPopoverStyles();
+  const layer = document.createElement('div');
+  layer.className = 'momo-compact-popover-layer';
+  const panel = document.createElement('div');
+  panel.className = `momo-compact-popover ${className}`.trim();
+  layer.appendChild(panel);
+  document.body.appendChild(layer);
+  let closed = false;
+
+  const place = () => {
+    if (closed || !panel.isConnected) return;
+    const pad = 12;
+    const gap = 8;
+    const anchorRect = anchorEl?.getBoundingClientRect?.();
+    const panelRect = panel.getBoundingClientRect();
+    const vw = window.innerWidth || document.documentElement.clientWidth || 1024;
+    const vh = window.innerHeight || document.documentElement.clientHeight || 768;
+    if (!anchorRect) {
+      panel.style.left = `${Math.max(pad, (vw - panelRect.width) / 2)}px`;
+      panel.style.top = `${Math.max(pad, (vh - panelRect.height) / 2)}px`;
+      return;
+    }
+    let left = anchorRect.right - panelRect.width;
+    left = Math.min(Math.max(pad, left), Math.max(pad, vw - panelRect.width - pad));
+    let top = anchorRect.bottom + gap;
+    if (top + panelRect.height > vh - pad) top = anchorRect.top - panelRect.height - gap;
+    top = Math.min(Math.max(pad, top), Math.max(pad, vh - panelRect.height - pad));
+    panel.style.left = `${left}px`;
+    panel.style.top = `${top}px`;
+  };
+
+  const keydown = ev => {
+    if (ev.key === 'Escape') close();
+  };
+  const close = () => {
+    if (closed) return;
+    closed = true;
+    window.removeEventListener('resize', place);
+    document.removeEventListener('keydown', keydown);
+    layer.remove();
+    if (typeof onClose === 'function') onClose();
+  };
+
+  layer.addEventListener('pointerdown', ev => {
+    if (ev.target === layer) close();
+  });
+  panel.addEventListener('pointerdown', ev => ev.stopPropagation());
+  window.addEventListener('resize', place);
+  document.addEventListener('keydown', keydown);
+  requestAnimationFrame(place);
+  return { layer, panel, close, place };
+}
+
+async function openCompactActionMenu(anchorEl, items, current=null) {
+  return await new Promise(resolve => {
+    let settled = false;
+    let popover = null;
+    const finish = value => {
+      if (settled) return;
+      settled = true;
+      popover?.close();
+      resolve(value);
+    };
+    popover = createAnchoredPopover(anchorEl, 'momo-compact-menu-popover', () => {
+      if (!settled) { settled = true; resolve(null); }
+    });
+    const list = document.createElement('div');
+    list.className = 'momo-compact-menu-list';
+    popover.panel.appendChild(list);
+    for (const item of items) {
+      const value = typeof item === 'object' ? item.value : item;
+      const label = typeof item === 'object' ? item.label : item;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'momo-compact-menu-item';
+      button.textContent = label;
+      if (value === current) button.classList.add('is-current');
+      button.onclick = () => finish(value);
+      list.appendChild(button);
+    }
+    requestAnimationFrame(popover.place);
+  });
+}
+
+function sizeSmallModal(modal, widthPx, maxHeight='70vh') {
+  ensureCompactPopoverStyles();
+  const shell = modal?.modalEl;
+  if (!shell?.style) return;
+  shell.style.width = `min(${widthPx}px, calc(100vw - 32px))`;
+  shell.style.maxWidth = `calc(100vw - 32px)`;
+  shell.style.maxHeight = maxHeight;
+}
+
+async function openSmallChoiceModal(app, title, choices, current=null) {
+  const { Modal } = require('obsidian');
+  return await new Promise(resolve => {
+    const modal = enableModalMotion(new Modal(app));
+    let settled = false;
+    let selectedValue = null;
+    modal.onOpen = () => {
+      sizeSmallModal(modal, 300, '60vh');
+      const { contentEl } = modal;
+      contentEl.empty();
+      contentEl.addClass('momo-small-choice-modal');
+      contentEl.createEl('h3', { text:title, cls:'momo-small-modal-title' });
+      const list = contentEl.createDiv({ cls:'momo-small-choice-list' });
+      for (const choice of choices) {
+        const value = typeof choice === 'object' ? choice.value : choice;
+        const label = typeof choice === 'object' ? choice.label : choice;
+        const button = list.createEl('button', { text:label, cls:'momo-choice-item momo-small-choice-item' });
+        if (value === current) button.addClass('is-current');
+        button.onclick = () => {
+          settled = true;
+          selectedValue = value;
+          modal.close();
+        };
+      }
+    };
+    modal.onClose = () => resolve(settled ? selectedValue : null);
+    modal.open();
+  });
+}
+
 async function openChoiceModal(app, title, choices, current=null) {
   const { Modal } = require('obsidian');
   return await new Promise((resolve) => {
@@ -6811,6 +7064,10 @@ class MomoTodoMateView extends ItemView {
   getDisplayText() { return uiText('todoList'); }
   getIcon() { return 'list-checks'; }
   async onOpen() { await this.render(); }
+  async onClose() {
+    this.activeTaskPopoverClose?.();
+    this.activeTaskPopoverClose = null;
+  }
 
   updateHistoryControls() {
     if (this.undoButton?.isConnected) this.undoButton.disabled = !this.plugin.canUndo();
@@ -6818,6 +7075,8 @@ class MomoTodoMateView extends ItemView {
   }
 
   async render() {
+    this.activeTaskPopoverClose?.();
+    this.activeTaskPopoverClose = null;
     const el = this.contentEl;
     el.empty();
     el.addClass('momoan-todo-view');
@@ -7003,18 +7262,6 @@ class MomoTodoMateView extends ItemView {
     const fileText = await this.plugin.app.vault.read(file);
     const journalText = sanitizeMonthlyReviewJournal(extractMonthlyReviewJournal(fileText));
 
-    const tools = parent.createDiv({ cls:'momo-td-review-tools' });
-    const openBtn = tools.createEl('button', { cls:'momo-td-review-open' });
-    const openIcon = openBtn.createSpan({ cls:'momo-td-review-tool-icon' });
-    setIcon(openIcon, 'pencil');
-    openBtn.createSpan({ text:uiText('reviewWrite') });
-    openBtn.onclick = async () => this.plugin.app.workspace.getLeaf(true).openFile(file);
-    const imageBtn = tools.createEl('button', { cls:'momo-td-review-open momo-td-review-image-save' });
-    const imageIcon = imageBtn.createSpan({ cls:'momo-td-review-tool-icon' });
-    setIcon(imageIcon, 'image');
-    imageBtn.createSpan({ text:uiText('imageSave') });
-    imageBtn.onclick = async () => this.saveMonthlyReviewImage(month);
-
     const summary = parent.createDiv({ cls:'momo-td-review-summary' });
     const addSummaryRow = (label, value, sub='', icon='circle') => {
       const row = summary.createDiv({ cls:'momo-td-review-summary-row' });
@@ -7060,13 +7307,27 @@ class MomoTodoMateView extends ItemView {
     }
 
     const journalSection = parent.createDiv({ cls:'momo-td-review-section momo-td-review-journal-section' });
-    journalSection.createDiv({ text:uiText('reviewJournal'), cls:'momo-td-review-section-title' });
+    const journalHead = journalSection.createDiv({ cls:'momo-td-review-journal-head' });
+    journalHead.createDiv({ text:uiText('reviewJournal'), cls:'momo-td-review-section-title' });
+    const openBtn = journalHead.createEl('button', { cls:'momo-td-review-open momo-td-review-write' });
+    const openIcon = openBtn.createSpan({ cls:'momo-td-review-tool-icon' });
+    setIcon(openIcon, 'pencil');
+    openBtn.createSpan({ text:uiText('reviewWrite') });
+    openBtn.onclick = async () => this.plugin.app.workspace.getLeaf(true).openFile(file);
+
     const journal = journalSection.createDiv({ cls:'momo-td-review-journal markdown-rendered' });
     if (!journalText || journalText.trim() === '-') {
       journal.createDiv({ text:uiText('noReview'), cls:'momo-td-review-empty' });
     } else {
       await MarkdownRenderer.render(this.app, journalText, journal, file.path, this);
     }
+
+    const footerTools = parent.createDiv({ cls:'momo-td-review-footer-tools' });
+    const imageBtn = footerTools.createEl('button', { cls:'momo-td-review-open momo-td-review-image-save' });
+    const imageIcon = imageBtn.createSpan({ cls:'momo-td-review-tool-icon' });
+    setIcon(imageIcon, 'image');
+    imageBtn.createSpan({ text:uiText('imageSave') });
+    imageBtn.onclick = async () => this.saveMonthlyReviewImage(month);
   }
 
   async saveMonthlyReviewImage(month) {
@@ -7080,9 +7341,46 @@ class MomoTodoMateView extends ItemView {
     if (saveButton) saveButton.disabled = true;
 
     try {
+      const withJournalLabel = uiText('reviewImageWithJournal');
+      const withoutJournalLabel = uiText('reviewImageWithoutJournal');
+      const selectedMode = await openSmallChoiceModal(
+        this.app,
+        uiText('imageSave'),
+        [
+          { value:withJournalLabel, label:withJournalLabel },
+          { value:withoutJournalLabel, label:withoutJournalLabel }
+        ]
+      );
+      if (!selectedMode) return;
+
+      const includeJournal = selectedMode === withJournalLabel;
       await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-      const blob = await this.captureElementAsPng(panel, '.momo-td-review-image-save');
-      const filename = `${month} 월간 회고.png`;
+
+      const removeSelector = includeJournal
+        ? '.momo-td-review-image-save, .momo-td-review-write'
+        : '.momo-td-review-image-save, .momo-td-review-journal-section';
+      const blob = await this.captureElementAsPng(panel, removeSelector, {
+        fixedPortrait:!includeJournal
+      });
+      const filename = `${month} 월간 회고 - ${selectedMode}.png`;
+
+      // Obsidian mobile WebView에서는 <a download>가 무시되는 경우가 있어
+      // 파일 공유를 지원하면 OS 공유/저장 시트를 먼저 엽니다.
+      if ((Platform.isIosApp || Platform.isAndroidApp || this.app.isMobile) && typeof navigator.share === 'function' && typeof File === 'function') {
+        const file = new File([blob], filename, { type:'image/png' });
+        const canShareFile = typeof navigator.canShare !== 'function' || navigator.canShare({ files:[file] });
+        if (canShareFile) {
+          try {
+            await navigator.share({ files:[file], title:filename });
+            return;
+          } catch (shareError) {
+            // 사용자가 공유 시트를 닫은 경우에는 추가 다운로드를 강제로 시작하지 않습니다.
+            if (shareError && shareError.name === 'AbortError') return;
+            console.warn('월간 회고 이미지 모바일 공유 실패, 다운로드 방식으로 재시도:', shareError);
+          }
+        }
+      }
+
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
@@ -7091,9 +7389,8 @@ class MomoTodoMateView extends ItemView {
       document.body.appendChild(link);
       link.click();
       link.remove();
-      window.setTimeout(() => URL.revokeObjectURL(url), 1500);
-      new Notice(`월간 회고 이미지 다운로드를 시작했습니다.
-${filename}`);
+      window.setTimeout(() => URL.revokeObjectURL(url), 4000);
+      new Notice(`월간 회고 이미지 다운로드를 시작했습니다.\n${filename}`);
     } catch (error) {
       console.error('월간 회고 이미지 저장:', error);
       new Notice(uiText('monthReviewImageFailed'));
@@ -7108,11 +7405,17 @@ ${filename}`);
     const padTop = parseFloat(computed.paddingTop || '0') || 0;
     let maxBottom = padTop;
 
-    // 루트 패널 자체의 높이(min-height/viewport stretch)는 캡처 높이에 포함하지 않는다.
-    // 실제 레이아웃을 구성하는 직계 자식의 끝 지점만 기준으로 잡아 모바일의 긴 빈 여백을 제거한다.
-    for (const node of [...element.children]) {
+    const excluded = removeSelector
+      ? [...element.querySelectorAll(removeSelector)].filter(node => node instanceof HTMLElement)
+      : [];
+    const isExcluded = node => excluded.some(ex => ex === node || ex.contains(node));
+    const containsExcluded = node => excluded.some(ex => node !== ex && node.contains(ex));
+
+    // 제외할 영역(예: 월간 회고록)이 부모의 높이에 반영되어 있어도 캡처 높이를 늘리지 않도록
+    // 실제로 남는 하위 요소들의 마지막 지점만 측정합니다.
+    for (const node of [...element.querySelectorAll('*')]) {
       if (!(node instanceof HTMLElement)) continue;
-      if (removeSelector && node.matches(removeSelector)) continue;
+      if (isExcluded(node) || containsExcluded(node)) continue;
       const style = getComputedStyle(node);
       if (style.display === 'none' || style.visibility === 'hidden') continue;
       const nodeRect = node.getBoundingClientRect();
@@ -7120,13 +7423,16 @@ ${filename}`);
       maxBottom = Math.max(maxBottom, nodeRect.bottom - rect.top);
     }
 
-    const captureBottomPadding = 18;
+    // SVG/텍스트 경계가 마지막 픽셀에서 잘리지 않을 정도의 최소 여유만 내부에 둡니다.
+    // 실제 상하 여백은 캔버스의 outer padding에서 대칭으로 처리합니다.
+    const captureBottomPadding = 4;
     const width = Math.max(1, Math.ceil(rect.width));
     const height = Math.max(1, Math.ceil(maxBottom + captureBottomPadding));
     return { width, height, captureBottomPadding };
   }
 
-  async captureElementAsPng(element, removeSelector='') {
+  async captureElementAsPng(element, removeSelector='', options={}) {
+    const { fixedPortrait=true } = options || {};
     const { width, height, captureBottomPadding } = this.getTightElementCaptureSize(element, removeSelector);
     const clone = element.cloneNode(true);
     const originals = [element, ...element.querySelectorAll('*')];
@@ -7164,6 +7470,10 @@ ${filename}`);
     clone.style.overflow = 'hidden';
     clone.style.background = background;
     clone.style.boxSizing = 'border-box';
+    clone.style.border = '0';
+    clone.style.borderRight = '0';
+    clone.style.borderInlineEnd = '0';
+    clone.style.boxShadow = 'none';
 
     const serialized = new XMLSerializer().serializeToString(clone);
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;background:${background};overflow:hidden;">${serialized}</div></foreignObject></svg>`;
@@ -7176,18 +7486,43 @@ ${filename}`);
       img.src = svgDataUrl;
     });
 
-    const scale = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
-    const captureTopPadding = 20;
-    const outputHeight = height + captureTopPadding;
+    const minOuterPaddingX = 24;
+    const minOuterPaddingY = 24;
+    let outputWidth;
+    let outputHeight;
+    let offsetX;
+    let offsetY;
+
+    if (fixedPortrait) {
+      // 회고록 미포함: 카테고리별 기록까지를 고정 9:16 세로 이미지로 저장합니다.
+      const unit = Math.max(
+        1,
+        Math.ceil((width + minOuterPaddingX * 2) / 9),
+        Math.ceil((height + minOuterPaddingY * 2) / 16)
+      );
+      outputWidth = unit * 9;
+      outputHeight = unit * 16;
+      offsetX = (outputWidth - width) / 2;
+      offsetY = (outputHeight - height) / 2;
+    } else {
+      // 회고록 포함: 비율을 강제로 늘리지 않고 실제 회고록 길이만큼 아래로 자연스럽게 확장합니다.
+      outputWidth = width + minOuterPaddingX * 2;
+      outputHeight = height + minOuterPaddingY * 2;
+      offsetX = minOuterPaddingX;
+      offsetY = minOuterPaddingY;
+    }
+
+    // 정수 배율로 저장해 텍스트와 선을 선명하게 유지합니다.
+    const scale = (window.devicePixelRatio || 1) > 1 ? 2 : 1;
     const canvas = document.createElement('canvas');
-    canvas.width = Math.ceil(width * scale);
-    canvas.height = Math.ceil(outputHeight * scale);
+    canvas.width = outputWidth * scale;
+    canvas.height = outputHeight * scale;
     const ctx = canvas.getContext('2d');
     if (!ctx) throw new Error('Canvas 컨텍스트를 만들지 못했습니다.');
     ctx.scale(scale, scale);
     ctx.fillStyle = background;
-    ctx.fillRect(0, 0, width, outputHeight);
-    ctx.drawImage(image, 0, captureTopPadding, width, height);
+    ctx.fillRect(0, 0, outputWidth, outputHeight);
+    ctx.drawImage(image, offsetX, offsetY, width, height);
     return await new Promise((resolve, reject) => {
       canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('PNG 생성에 실패했습니다.')), 'image/png', 1);
     });
@@ -7266,38 +7601,8 @@ ${filename}`);
       cls:'momo-td-task-kicker'
     });
     const viewToggles = titleWrap.createDiv({cls:'momo-td-view-toggles'});
-    const completedToggle = viewToggles.createEl('button', {
-      cls:'momo-td-view-toggle momo-td-completed-toggle',
-      attr:{
-        'aria-label':uiText('toggleCompletedAria'),
-        'aria-pressed': this.plugin.hideCompleted ? 'false' : 'true'
-      }
-    });
-    completedToggle.createSpan({ text:uiText('completed'), cls:'momo-td-toggle-label' });
-    completedToggle.createSpan({ cls:'momo-td-mini-switch', attr:{'aria-hidden':'true'} });
-    if (!this.plugin.hideCompleted) completedToggle.addClass('is-on');
-    completedToggle.onclick = () => this.plugin.setHideCompleted(!this.plugin.hideCompleted);
-
-    const categoryToggle = viewToggles.createEl('button', {
-      cls:'momo-td-view-toggle momo-td-category-toggle',
-      attr:{
-        'aria-label':uiText('toggleClassificationAria'),
-        'aria-pressed': this.plugin.showAllCategories ? 'true' : 'false'
-      }
-    });
-    categoryToggle.createSpan({ text:uiText('classification'), cls:'momo-td-toggle-label' });
-    categoryToggle.createSpan({ cls:'momo-td-mini-switch', attr:{'aria-hidden':'true'} });
-    if (this.plugin.showAllCategories) categoryToggle.addClass('is-on');
-    categoryToggle.onclick = () => this.plugin.setShowAllCategories(!this.plugin.showAllCategories);
-
-    const headActions = head.createDiv({ cls:'momo-td-main-actions' });
-
-    const add = headActions.createEl('button',{cls:'momo-td-main-add', attr:{'aria-label':uiText('addTask')}});
-    setIcon(add, 'plus');
-    add.onclick = () => this.plugin.runQuickAdd(date);
-
-    const autoSort = headActions.createEl('button', {
-      cls:'momo-td-main-sort',
+    const autoSort = viewToggles.createEl('button', {
+      cls:'momo-td-history-button momo-td-sort',
       attr:{'aria-label':uiText('autoSort'), 'title':uiText('autoSortHintConfigured')}
     });
     setIcon(autoSort, 'arrow-down-wide-narrow');
@@ -7323,20 +7628,62 @@ ${filename}`);
         autoSort.disabled = false;
       }
     };
-
-    const routines = headActions.createEl('button', {
-      cls:'momo-td-main-routines',
-      attr:{'aria-label':uiText('routineManager')}
+    const completedToggle = viewToggles.createEl('button', {
+      cls:'momo-td-view-toggle momo-td-completed-toggle',
+      attr:{
+        'aria-label':uiText('toggleCompletedAria'),
+        'aria-pressed': this.plugin.hideCompleted ? 'false' : 'true'
+      }
     });
-    setIcon(routines, 'repeat-2');
-    routines.onclick = () => this.plugin.openRoutineManager();
+    completedToggle.createSpan({ text:uiText('completed'), cls:'momo-td-toggle-label' });
+    completedToggle.createSpan({ cls:'momo-td-mini-switch', attr:{'aria-hidden':'true'} });
+    if (!this.plugin.hideCompleted) completedToggle.addClass('is-on');
+    completedToggle.onclick = () => this.plugin.setHideCompleted(!this.plugin.hideCompleted);
 
-    const settings = headActions.createEl('button', {
-      cls:'momo-td-main-settings',
-      attr:{'aria-label':uiText('classificationSettings')}
+    const categoryToggle = viewToggles.createEl('button', {
+      cls:'momo-td-view-toggle momo-td-category-toggle',
+      attr:{
+        'aria-label':uiText('toggleClassificationAria'),
+        'aria-pressed': this.plugin.showAllCategories ? 'true' : 'false'
+      }
     });
-    setIcon(settings, 'menu');
-    settings.onclick = () => this.plugin.openTodoSettings('categories');
+    categoryToggle.createSpan({ text:uiText('classification'), cls:'momo-td-toggle-label' });
+    categoryToggle.createSpan({ cls:'momo-td-mini-switch', attr:{'aria-hidden':'true'} });
+    if (this.plugin.showAllCategories) categoryToggle.addClass('is-on');
+    categoryToggle.onclick = () => this.plugin.setShowAllCategories(!this.plugin.showAllCategories);
+
+    const headActions = head.createDiv({ cls:'momo-td-main-actions' });
+    headActions.style.display = 'flex';
+    headActions.style.alignItems = 'center';
+    headActions.style.justifyContent = 'flex-end';
+    headActions.style.justifySelf = 'end';
+    headActions.style.marginLeft = 'auto';
+    headActions.style.marginRight = '0';
+    headActions.style.gap = '4px';
+
+    const searchButton = headActions.createEl('button', {
+      cls:'clickable-icon momo-td-main-search',
+      attr:{'aria-label':uiText('searchTasks'), 'title':uiText('searchTasks')}
+    });
+    setIcon(searchButton, 'search');
+    searchButton.style.margin = '0';
+
+    const menuButton = headActions.createEl('button', {
+      cls:'clickable-icon momo-td-main-menu',
+      attr:{'aria-label':uiText('moreMenu'), 'title':uiText('moreMenu')}
+    });
+    setIcon(menuButton, 'menu');
+    menuButton.style.margin = '0';
+    menuButton.onclick = async () => {
+      const picked = await openSmallChoiceModal(this.app, uiText('moreMenu'), [
+        { value:'categories', label:uiText('categorySettings') },
+        { value:'groups', label:uiText('groupSettings') },
+        { value:'routines', label:uiText('routineManager') }
+      ]);
+      if (picked === 'categories') this.plugin.openCategoryManager();
+      if (picked === 'groups') this.plugin.openGroupManager();
+      if (picked === 'routines') this.plugin.openRoutineManager();
+    };
 
     const headMeta = head.createDiv({ cls:'momo-td-head-meta' });
     const historyActions = headMeta.createDiv({ cls:'momo-td-history-actions' });
@@ -7361,49 +7708,78 @@ ${filename}`);
     headProgress.createSpan({ text:String(completed + remaining) });
     this.updateHistoryControls();
 
-    const search = parent.createDiv({cls:'momo-td-search'});
-    const input = search.createEl('input', {
-      type:'search', attr:{placeholder:uiText('searchTasks'), 'aria-label':uiText('searchTasks')}
-    });
-    input.value = this.searchQuery || '';
-    const results = parent.createDiv({cls:'momo-td-search-results', attr:{'aria-live':'polite'}});
     const body = parent.createDiv({cls:'momo-td-body'});
-    let searchRevision = 0;
-    const updateSearch = async () => {
-      const revision = ++searchRevision;
-      this.searchQuery = input.value;
-      const query = input.value.trim();
-      body.hidden = Boolean(query);
-      results.hidden = !query;
-      results.empty();
-      if (!query) return;
-      results.createDiv({text:uiText('searchLoading'), cls:'momo-td-search-status'});
-      try {
-        const matches = await this.plugin.searchTasks(query);
-        if (revision !== searchRevision || !results.isConnected) return;
-        results.empty();
-        results.createDiv({text:uiText('searchCount',{n:matches.length}), cls:'momo-td-search-status'});
-        for (const [resultDate, items] of groupBy(matches, item => item.date)) {
-          const section = results.createDiv({cls:'momo-td-search-date'});
-          const dateButton = section.createEl('button', {text:`${resultDate} · ${formatKoreanDate(resultDate)}`, cls:'momo-td-search-date-button'});
-          dateButton.onclick = () => {
-            this.searchQuery = '';
-            this.plugin.setSelectedDate(resultDate);
-          };
-          for (const item of items) this.renderItem(section, item, { reorder:false });
-        }
-      } catch (error) {
-        if (revision !== searchRevision || !results.isConnected) return;
-        results.empty();
-        results.createDiv({text:uiText('searchFailed'), cls:'momo-td-search-status'});
-        console.error('Momoan Todo search:', error);
-      }
+
+    searchButton.onclick = () => {
+      this.activeTaskPopoverClose?.();
+      this.activeTaskPopoverClose = null;
+      const { Modal } = require('obsidian');
+      const modal = enableModalMotion(new Modal(this.app));
+      searchButton.addClass('is-active');
+      modal.onOpen = () => {
+        sizeSmallModal(modal, 420, '68vh');
+        const { contentEl } = modal;
+        contentEl.empty();
+        contentEl.addClass('momo-small-search-modal');
+        contentEl.createEl('h3', { text:uiText('searchTasks'), cls:'momo-small-modal-title' });
+
+        const searchRow = contentEl.createDiv({ cls:'momo-task-search-row' });
+        const icon = searchRow.createSpan({ cls:'momo-task-search-icon' });
+        setIcon(icon, 'search');
+        const input = stabilizeTextInput(searchRow.createEl('input', { cls:'momo-task-search-input' }));
+        input.type = 'text';
+        input.placeholder = uiText('searchTasks');
+        input.setAttribute('aria-label', uiText('searchTasks'));
+        input.value = this.searchQuery || '';
+
+        const results = contentEl.createDiv({ cls:'momo-task-search-results', attr:{'aria-live':'polite'} });
+        let searchRevision = 0;
+        const updateSearch = async () => {
+          const revision = ++searchRevision;
+          this.searchQuery = input.value;
+          const query = input.value.trim();
+          results.empty();
+          if (!query) return;
+          results.createDiv({ text:uiText('searchLoading'), cls:'momo-task-search-status' });
+          try {
+            const matches = await this.plugin.searchTasks(query);
+            if (revision !== searchRevision || !results.isConnected) return;
+            results.empty();
+            results.createDiv({ text:uiText('searchCount',{n:matches.length}), cls:'momo-task-search-status' });
+            for (const [resultDate, items] of groupBy(matches, item => item.date)) {
+              const section = results.createDiv({ cls:'momo-task-search-date' });
+              const dateButton = section.createEl('button', { cls:'momo-task-search-date-button' });
+              dateButton.createSpan({ text:formatKoreanDate(resultDate), cls:'momo-task-search-date-main' });
+              dateButton.createSpan({ text:resultDate.slice(0, 4), cls:'momo-task-search-date-year' });
+              dateButton.onclick = () => {
+                this.searchQuery = '';
+                modal.close();
+                this.plugin.setSelectedDate(resultDate);
+              };
+              for (const item of items) this.renderItem(section, item, { reorder:false });
+            }
+          } catch (error) {
+            if (revision !== searchRevision || !results.isConnected) return;
+            results.empty();
+            results.createDiv({ text:uiText('searchFailed'), cls:'momo-task-search-status' });
+            console.error('Momoan Todo search:', error);
+          }
+        };
+        input.oninput = updateSearch;
+        input.addEventListener('keydown', ev => {
+          if (ev.key === 'Escape' && input.value) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            input.value = '';
+            updateSearch();
+          }
+        });
+        updateSearch();
+        setTimeout(() => { input.focus(); input.select(); }, 30);
+      };
+      modal.onClose = () => searchButton.removeClass('is-active');
+      modal.open();
     };
-    input.oninput = updateSearch;
-    input.onkeydown = ev => {
-      if (ev.key === 'Escape') { input.value = ''; updateSearch(); }
-    };
-    await updateSearch();
     if (!displayBaseItems.length && !this.plugin.showAllCategories) {
       const empty=body.createDiv({cls:'momo-td-empty'});
       const icon=empty.createDiv({cls:'momo-td-empty-icon'});
