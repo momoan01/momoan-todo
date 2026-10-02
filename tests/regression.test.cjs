@@ -37,6 +37,7 @@ class Element {
   hasPointerCapture(id) { return this.capture === id; }
   releasePointerCapture() { this.capture = null; }
   getBoundingClientRect() { return { top: 10, left: 10, height: 30, width: 300 }; }
+  click() { this.onclick?.(); }
   cloneNode() { return new Element(); }
   remove() { this.isConnected = false; }
   find(cls) { return this.all().find(el => el.classes.has(cls)); }
@@ -57,13 +58,13 @@ function harness() {
   }
   const storage = new Map();
   const context = vm.createContext({
-    module: { exports: {} }, console, window, document: { body: new Element(), documentElement: {} },
-    navigator: {}, setTimeout: window.setTimeout, clearTimeout: window.clearTimeout,
+    module: { exports: {} }, console, window, document: { body: new Element(), head: new Element(), documentElement: {}, createElement: tag => new Element(tag), getElementById: () => null },
+    URL: { createObjectURL: () => "blob:test", revokeObjectURL() {} }, navigator: {}, setTimeout: window.setTimeout, clearTimeout: window.clearTimeout,
     requestAnimationFrame: fn => fn(),
     localStorage: { getItem: k => storage.get(k) ?? null, setItem: (k,v) => storage.set(k,v), removeItem: k => storage.delete(k) },
     require: name => {
       assert.equal(name, 'obsidian');
-      return { Plugin: class {}, ItemView: class {}, Notice: class {}, PluginSettingTab: class {}, Setting: class {}, Modal, setIcon() {} };
+      return { Plugin: class {}, ItemView: class {}, Notice: class {}, PluginSettingTab: class {}, Setting: class {}, Platform: { isIosApp:false, isAndroidApp:false }, Modal, setIcon() {} };
     }
   });
   const source = fs.readFileSync(path.join(__dirname, '..', 'main.js'), 'utf8');
@@ -103,24 +104,32 @@ test('partial title/location search includes completed tasks and sorts dates acr
   assert.equal(h.mutations(), 0);
 });
 
-test('search UI groups by date and clear restores the daily list', async () => {
+test('compact search groups completed results by date; clear keeps the daily list', async () => {
   const h = harness();
-  const file = `${h.api.DATA_FOLDER}/2026-09.md`;
-  h.put(file, '## 2026-09-29\n- [x] Find first #개인\n- [ ] Find second #개인\n## 2026-09-30\n- [ ] Find third #개인\n');
+  h.put(`${h.api.DATA_FOLDER}/2026-09.md`, '## 2026-09-29\n- [x] Find first #개인\n- [ ] Find second #개인\n## 2026-09-30\n- [ ] Find third #개인\n');
   h.plugin.getItemsForDate = async () => [];
   h.plugin.recoverLegacyRuntimeFromItems = async () => false;
   h.plugin.canUndo = h.plugin.canRedo = () => false;
   h.view.searchQuery = 'Find';
   const parent = new Element();
   await h.view.renderTaskPanel(parent, h.plugin.selectedDate);
-  const results = parent.find('momo-td-search-results');
-  assert.equal(results.children.filter(x => x.classes.has('momo-td-search-date')).length, 2);
+  parent.find('momo-td-main-search').onclick();
+  await new Promise(resolve => setImmediate(resolve));
+  const modal = h.modals.at(-1);
+  const results = modal.contentEl.find('momo-task-search-results');
+  assert.equal(results.children.filter(x => x.classes.has('momo-task-search-date')).length, 2);
   assert.equal(results.all().filter(x => x.classes.has('momo-td-item')).length, 3);
-  assert.equal(parent.find('momo-td-body').hidden, true);
-  const input = parent.find('momo-td-search').children[0];
+  const input = modal.contentEl.find('momo-task-search-input');
   input.value = ''; await input.oninput();
-  assert.equal(parent.find('momo-td-body').hidden, false);
-  assert.equal(results.hidden, true);
+  assert.equal(results.children.length, 0);
+  assert.equal(h.view.searchQuery, '');
+  assert.notEqual(parent.find('momo-td-body').hidden, true);
+  input.value = 'Find'; await input.oninput();
+  let selected;
+  h.plugin.setSelectedDate = date => { selected = date; };
+  results.find('momo-task-search-date-button').onclick();
+  assert.equal(selected, '2026-09-29');
+  assert.equal(h.view.searchQuery, '');
 });
 
 test('newly rendered task keeps native single/double click; capture starts only after hold', async () => {
@@ -236,4 +245,43 @@ test('failed group migration releases discovery guard and duplicate names do not
 
 test('manifest declares 0.9.62', () => {
   assert.equal(JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'manifest.json'), 'utf8')).version, '0.9.62');
+});
+
+
+test('main management menu opens categories, groups and routines separately', async () => {
+  for (const [label, method] of [['카테고리 관리','openCategoryManager'], ['그룹 관리','openGroupManager'], ['루틴 관리','openRoutineManager']]) {
+    const h = harness(); let called = 0;
+    h.plugin.getItemsForDate = async () => [];
+    h.plugin.recoverLegacyRuntimeFromItems = async () => false;
+    h.plugin.canUndo = h.plugin.canRedo = () => false;
+    h.plugin[method] = () => called++;
+    const parent = new Element(); await h.view.renderTaskPanel(parent, h.plugin.selectedDate);
+    const pending = parent.find('momo-td-main-menu').onclick();
+    const modal = h.modals.at(-1);
+    assert.equal(modal.contentEl.all().filter(el => el.classes.has('momo-small-choice-item')).length, 3);
+    modal.contentEl.all().find(el => el.text === label).onclick();
+    await pending; assert.equal(called, 1);
+  }
+});
+
+test('monthly image export keeps journal choice and cancellation explicit', async () => {
+  for (const include of [true, false, null]) {
+    const h = harness(); const panel = new Element(); const button = new Element();
+    h.view.contentEl.querySelector = selector => selector === '.momo-td-calendar-panel' ? panel : null;
+    panel.querySelector = () => button;
+    let capture;
+    h.view.captureElementAsPng = async (...args) => { capture = args; return {}; };
+    const pending = h.view.saveMonthlyReviewImage('2026-09');
+    const modal = h.modals.at(-1);
+    if (include === null) modal.close();
+    else modal.contentEl.all().find(el => el.text === (include ? '회고록 포함' : '회고록 미포함')).onclick();
+    await pending;
+    if (include === null) assert.equal(capture, undefined);
+    else {
+      assert.equal(capture[0], panel);
+      assert.equal(capture[1].includes('.momo-td-review-journal-section'), !include);
+      assert.equal(capture[2].fixedPortrait, !include);
+    }
+    assert.equal(button.disabled, false);
+  }
 });
