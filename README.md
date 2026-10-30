@@ -4,6 +4,15 @@ Momoan Todo is an Obsidian task and routine manager built around Markdown.
 
 It brings daily tasks, recurring routines, categories and groups, and monthly reviews into one planner-focused interface without requiring a separate task service.
 
+## Repository guide
+
+This repository continues to maintain the standalone Obsidian plugin. Documentation cleanup does not change task data, routine rules, the plugin version, or release artifacts.
+
+- [Release notes](RELEASE-NOTES.md)
+- [Release checklist](RELEASE-CHECKLIST.md)
+- [Regression tests](tests/regression.test.cjs)
+- [Plugin metadata](manifest.json)
+
 ## What makes Momoan Todo different?
 
 Momoan Todo is designed less as a general-purpose task query system and more as a day-to-day personal planner inside Obsidian.
